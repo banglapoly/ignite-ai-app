@@ -1,0 +1,19 @@
+# dependencies / environments
+node_modules/
+.venv/
+venv/
+# build output & caches
+frontend/dist/
+dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.vite/
+*.log
+server.log
+# local scratch
+backend/data/pdfs/
+.DS_Store
+Thumbs.db
+*.tsbuildinfo

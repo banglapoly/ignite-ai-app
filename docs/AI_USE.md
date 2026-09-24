@@ -1,0 +1,5 @@
+# AI use disclosure
+
+- **In the product.** The flame-spread classifier is a classical ML model (scikit-learn gradient boosting) trained only on cited experiment rows. The explanation shown to users comes from a deterministic template, which fills in fields of the prediction object and the retrieved NTRS citations. There is optionally a *local* LLM (Ollama), which is off by default. If enabled, its output is discarded whenever it contains a number that is not in the prediction facts. No cloud AI service is called.
+- **In development.** An AI coding assistant helped write code, harvest the NTRS API and draft documentation. Every dataset row was transcribed from the cited report and carries its verbatim quote and table/page location, so reviewers can check it. The team should verify rows against the PDFs before submission: see `backend/scripts/build_dataset.py`.
+- **Imagery.** The 3D flame and station are procedurally generated shaders/geometry (artistic illustration). No AI-generated images are used.

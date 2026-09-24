@@ -1,0 +1,10 @@
+@echo off
+REM Flame in Freefall - start the local server on http://localhost:8000 (Ctrl+C to stop)
+setlocal
+cd /d "%~dp0"
+if not exist ".venv\Scripts\python.exe" ( echo Run setup.bat first. & exit /b 1 )
+if not exist "frontend\dist\index.html" ( echo Frontend not built - run setup.bat first. & exit /b 1 )
+start "" cmd /c "timeout /t 3 /nobreak >nul & start http://localhost:8000"
+cd backend
+"..\.venv\Scripts\python.exe" -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+endlocal
