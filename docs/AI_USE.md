@@ -1,5 +1,17 @@
-# AI use disclosure
+# AI use disclosure (IGNITE-AI)
 
-- **In the product.** The flame-spread classifier is a classical ML model (scikit-learn gradient boosting) trained only on cited experiment rows. The explanation shown to users comes from a deterministic template, which fills in fields of the prediction object and the retrieved NTRS citations. There is optionally a *local* LLM (Ollama), which is off by default. If enabled, its output is discarded whenever it contains a number that is not in the prediction facts. No cloud AI service is called.
-- **In development.** An AI coding assistant helped write code, harvest the NTRS API and draft documentation. Every dataset row was transcribed from the cited report and carries its verbatim quote and table/page location, so reviewers can check it. The team should verify rows against the PDFs before submission: see `backend/scripts/build_dataset.py`.
-- **Imagery.** The 3D flame and station are procedurally generated shaders/geometry (artistic illustration). No AI-generated images are used.
+- **In the product, at runtime.**
+  - No cloud or paid AI service is called.
+  - Predictions come from a classical scikit-learn gradient-boosting model trained only on cited experiment rows.
+  - Explanations are deterministic templates filled from the prediction object.
+  - *Ask IGNITE-AI* uses local TF-IDF retrieval and quotes the retrieved NASA passages verbatim, with source links. Lines built from real table rows are marked "DATA". It declines when nothing relevant is retrieved.
+  - An optional local LLM (Ollama) path exists for both explanations and Q&A. It is **off by default** (`IGNITE_LLM=ollama` enables it). Its output is discarded if it contains a number not present in the facts or passages it was given, or, for Q&A, if it does not cite a passage.
+- **In development.**
+  - An AI coding assistant helped write code, harvest the NTRS and PSI public APIs, and draft documentation.
+  - Every dataset row was transcribed from the cited report and carries its verbatim quote and table or page location, so reviewers can check it.
+  - Environment and safety facts carry verbatim quotes, which were checked against the source text.
+  - The team should re-verify rows against the PDFs before submission (`backend/scripts/build_dataset.py`).
+- **Imagery.**
+  - The 3D flame, module and window views are procedurally generated (shaders and geometry). They illustrate documented trends and are not a simulation.
+  - The team's AI-generated mockups were used only as look-and-feel inspiration. No numbers from them are displayed.
+  - No AI-generated images are shipped.

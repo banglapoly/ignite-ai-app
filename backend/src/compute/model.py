@@ -24,8 +24,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "experiments.csv"
 ART = ROOT / "data" / "artifacts"
 NUMERIC = ["oxygen_pct", "pressure_kpa", "flow_cm_s"]
+GRAVITY = "gravity_g"
 CATEGORICAL = ["material", "flow_direction"]
-FEATURES = NUMERIC + CATEGORICAL
+FEATURES = NUMERIC + [GRAVITY] + CATEGORICAL
 CLASSES = ["no_spread", "marginal_spread", "spread"]
 SEED = 42
 
@@ -37,7 +38,7 @@ def load() -> pd.DataFrame:
 
 def make_pipeline() -> Pipeline:
     pre = ColumnTransformer([
-        ("num", "passthrough", NUMERIC),
+        ("num", "passthrough", NUMERIC + [GRAVITY]),
         ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), CATEGORICAL),
     ])
     clf = GradientBoostingClassifier(n_estimators=150, max_depth=2, learning_rate=0.1,
@@ -45,15 +46,27 @@ def make_pipeline() -> Pipeline:
     return Pipeline([("pre", pre), ("clf", clf)])
 
 
+def gkey(g: float) -> str:
+    """Gravity levels are discrete in the data (0, 0.165, 0.38, 1 g); key them as strings."""
+    return f"{float(g):g}"
+
+
+def _box(g: pd.DataFrame) -> dict:
+    return {
+        **{c: [float(g[c].min()), float(g[c].max())] for c in NUMERIC},
+        "flow_directions": sorted(g["flow_direction"].unique().tolist()),
+        "n": int(len(g)),
+        "outcomes": {k: int(v) for k, v in g["outcome"].value_counts().items()},
+    }
+
+
 def envelope(df: pd.DataFrame) -> dict:
-    env = {"global": {c: [float(df[c].min()), float(df[c].max())] for c in NUMERIC}, "materials": {}}
+    """Per-material AND per-gravity-level training box. The range guard uses the box for the requested
+    (material, gravity) pair, so e.g. SIBAL at Mars gravity is refused because no such test exists."""
+    env = {"global": {c: [float(df[c].min()), float(df[c].max())] for c in NUMERIC},
+           "gravity_levels": sorted({gkey(g) for g in df[GRAVITY]}, key=float), "materials": {}}
     for m, g in df.groupby("material"):
-        env["materials"][m] = {
-            **{c: [float(g[c].min()), float(g[c].max())] for c in NUMERIC},
-            "flow_directions": sorted(g["flow_direction"].unique().tolist()),
-            "n": int(len(g)),
-            "outcomes": {k: int(v) for k, v in g["outcome"].value_counts().items()},
-        }
+        env["materials"][m] = {**_box(g), "by_gravity": {gkey(gv): _box(gg) for gv, gg in g.groupby(GRAVITY)}}
     return env
 
 
@@ -92,6 +105,7 @@ def train() -> dict:
             "classes": list(pipe.classes_),
             "n_train": int(len(df)),
             "n_sources": int(groups.nunique()),
+            "n_by_gravity": {gkey(k2): int(v) for k2, v in df[GRAVITY].value_counts().sort_index().items()},
             "cv_accuracy": round(float(cv_acc), 3),
         },
         "metrics": {
@@ -107,6 +121,8 @@ def train() -> dict:
             "confusion_matrix": {"labels": CLASSES, "matrix": cm.tolist(),
                                  "note": "rows = true class, columns = predicted class (out-of-fold)"},
             "per_class": {c: {kk: round(float(vv), 3) for kk, vv in rep[c].items()} for c in CLASSES},
+            "oof_accuracy_by_gravity": {gkey(gv): {"n": int(m.sum()), "accuracy": round(float((y_pred[m] == y[m]).mean()), 3)}
+                                        for gv in sorted(df[GRAVITY].unique()) for m in [(df[GRAVITY] == gv).to_numpy()]},
         },
         "class_counts": {k2: int(v) for k2, v in y.value_counts().items()},
         "training_range": envelope(df),

@@ -1,5 +1,5 @@
 @echo off
-REM Flame in Freefall - one-time local setup (Windows). Runs entirely on this PC.
+REM IGNITE-AI - one-time local setup (Windows). Runs entirely on this PC.
 setlocal
 cd /d "%~dp0"
 
@@ -26,5 +26,5 @@ call npm run build || (popd & exit /b 1)
 popd
 
 echo.
-echo Setup complete. Run start.bat to launch http://localhost:8000
+echo Setup complete. Run start.bat to launch http://localhost:8000 (landing) and http://localhost:8000/demo (tool)
 endlocal

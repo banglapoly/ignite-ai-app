@@ -1,7 +1,8 @@
 """Explanation layer.
 
 Default: deterministic templates that only restate fields of the prediction object.
-Optional: a LOCAL LLM through Ollama (set FLAME_LLM=ollama, FLAME_LLM_MODEL=llama3.2 etc.).
+Optional: a LOCAL LLM through Ollama (set IGNITE_LLM=ollama, IGNITE_LLM_MODEL=llama3.2 etc.; the older
+FLAME_LLM* names still work).
 The LLM only rephrases; any number in its output that does not appear in the prediction
 object makes us discard the LLM text and fall back to the template.
 """
@@ -21,10 +22,14 @@ def _exp(e: dict) -> str:
             f" - {e['outcome_detail']}")
 
 
+GNAME = {0.0: "microgravity (~0 g)", 0.165: "lunar gravity (0.165 g)", 0.38: "Martian gravity (0.38 g)", 1.0: "Earth gravity (1 g)"}
+
+
 def template(p: dict) -> dict:
     i = p["inputs"]
-    cond = (f"{_fmt(i['oxygen_pct'])}% O2, {_fmt(i['pressure_kpa'])} kPa, {_fmt(i['flow_cm_s'])} cm/s "
-            f"{i['flow_direction']} flow, material {i['material']}")
+    g = float(i.get("gravity_g", 0.0))
+    cond = (f"{GNAME.get(round(g, 3), f'{g:g} g')}, {_fmt(i['oxygen_pct'])}% O2, {_fmt(i['pressure_kpa'])} kPa, {_fmt(i['flow_cm_s'])} cm/s "
+            f"{i['flow_direction']} flow, material {i['material']}" + ("" if i.get("gas_mix", "air") == "air" else f", gas mix {i['gas_mix']}"))
     m = p["model"]
     if not p["in_training_range"]:
         lines = [f"No prediction. The requested conditions ({cond}) are outside the published experimental envelope "
@@ -34,7 +39,7 @@ def template(p: dict) -> dict:
         return {"source": "template", "text": "\n".join(lines)}
     pr = p["probabilities"][p["prediction"]]
     lines = [f"At {cond}, the model predicts {NICE[p['prediction']]} (probability {pr:g}).",
-             f"Model: {m['type']} trained on {m['n_train']} published microgravity tests; stratified cross-validated accuracy {m['cv_accuracy']:g}."]
+             f"Model: {m['type']} trained on {m['n_train']} published tests across gravity levels (0, 0.165, 0.38 and 1 g); stratified cross-validated accuracy {m['cv_accuracy']:g}."]
     if p.get("supporting_experiment"):
         lines.append("Evidence on the predicted side: " + _exp(p["supporting_experiment"]) + ".")
     if p.get("contrast_experiment"):
@@ -43,6 +48,11 @@ def template(p: dict) -> dict:
     if u:
         lines.append(f"Confidence: {u['level']} (top probability {u['max_probability']:g}, "
                      f"{u['neighbours_agreeing']} of 3 nearest experiments agree).")
+    from .model import gkey
+    acc_g = (m.get("oof_accuracy_by_gravity") or {}).get(gkey(g))
+    if g > 0 and acc_g:
+        lines.append(f"Caution: only {acc_g['n']} real experiments exist at this gravity level, so this output is essentially a lookup of the "
+                     f"nearest published test (out-of-fold accuracy at this gravity {acc_g['accuracy']:g}).")
     if u.get("level") == "low":
         lines.append("Treat this as a flag for testing, not as a clearance: the nearest published data disagree or are sparse.")
     return {"source": "template", "text": "\n".join(lines)}
@@ -53,7 +63,7 @@ def _numbers(text: str) -> set[str]:
 
 
 def maybe_llm(p: dict, abstracts: list[dict]) -> dict | None:
-    if os.environ.get("FLAME_LLM", "").lower() != "ollama":
+    if os.environ.get("IGNITE_LLM", os.environ.get("FLAME_LLM", "")).lower() != "ollama":
         return None
     facts = {"prediction_object": {k: p[k] for k in ("inputs", "in_training_range", "prediction", "probabilities", "model",
                                                      "nearest_experiments", "contrast_experiment") if k in p},
@@ -61,8 +71,8 @@ def maybe_llm(p: dict, abstracts: list[dict]) -> dict | None:
     prompt = ("You explain a fire-safety model output to a spacecraft operator in 4 sentences. Use ONLY the JSON facts. "
               "Never introduce a number that is not in the JSON. Cite report ids exactly.\nFACTS:\n" + json.dumps(facts))
     try:
-        req = urllib.request.Request(os.environ.get("FLAME_LLM_URL", "http://localhost:11434/api/generate"),
-                                     data=json.dumps({"model": os.environ.get("FLAME_LLM_MODEL", "llama3.2"),
+        req = urllib.request.Request(os.environ.get("IGNITE_LLM_URL", os.environ.get("FLAME_LLM_URL", "http://localhost:11434/api/generate")),
+                                     data=json.dumps({"model": os.environ.get("IGNITE_LLM_MODEL", os.environ.get("FLAME_LLM_MODEL", "llama3.2")),
                                                       "prompt": prompt, "stream": False}).encode(),
                                      headers={"Content-Type": "application/json"})
         text = json.load(urllib.request.urlopen(req, timeout=30)).get("response", "").strip()

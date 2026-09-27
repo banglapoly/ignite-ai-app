@@ -1,5 +1,5 @@
 @echo off
-REM Flame in Freefall - start the local server on http://localhost:8000 (Ctrl+C to stop)
+REM IGNITE-AI - start the local server on http://localhost:8000 (Ctrl+C to stop)
 setlocal
 cd /d "%~dp0"
 if not exist ".venv\Scripts\python.exe" ( echo Run setup.bat first. & exit /b 1 )

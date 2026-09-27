@@ -1,158 +1,182 @@
-# Flame in Freefall 🔥🛰️
-**NASA Space Apps Challenge 2026, Challenge 08: "Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data"**
-Team: `[Team name]` · Local event: Bangladesh · License: Apache-2.0
+﻿# IGNITE-AI 🔥🛰️
+**Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit**
 
-> **Problem.** Fire on a spacecraft behaves nothing like fire on Earth. Without buoyancy, flames can survive at oxygen levels and in gentle ventilation flows where they would behave differently on the ground. The data that tells us *where* a material stops burning is scattered across decades of NASA technical reports.
-> **Our solution.** Flame in Freefall is a flammability explorer that runs locally. You set oxygen %, pressure, ventilation flow and material. A gradient-boosting classifier trained **only on 124 published NASA microgravity experiments** predicts the flame-spread regime (`spread` / `marginal_spread` / `no_spread`), shows its uncertainty, **refuses to answer outside the tested envelope**, and cites the real experiments on either side of the boundary.
-> **Users.** Spacecraft fire-safety engineers, mission planners choosing cabin atmospheres (for example, exploration atmospheres at reduced pressure and elevated O₂), and students.
+NASA Space Apps Challenge 2026, Challenge 08: *Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data* · Team: `[Team name]` · Local event: Bangladesh · License: **Apache-2.0**
 
-![hero](docs/screenshots/01-hero-microgravity.png)
+> **Problem.** Fire behaves differently without gravity: flames become rounded, can be nearly invisible, and some materials burn at lower oxygen in low gravity than in the Earth screening test. The evidence is spread across decades of NASA reports and data archives.
+> **Solution.** IGNITE-AI runs locally. You pick an environment (Earth 1 g, Moon 0.165 g, Mars 0.38 g, ISS ~0 g, or a rocket-transit cabin) and set oxygen, pressure, ventilation fan speed, material and gas mix. A 3D flame reacts live. A classifier trained **only on 144 published NASA experiments** predicts `spread` / `marginal_spread` / `no_spread`, **refuses to predict outside the tested envelope** (including untested gravity levels and gas mixes), and shows the real experiments behind each answer. An offline assistant, **Ask IGNITE-AI**, answers questions from a NASA combustion knowledge base with verbatim, linked quotes.
+
+![landing](docs/screenshots/01-landing.png)
+
+| ISS µg | Earth 1 g | Moon 0.165 g | Mars refusal |
+|---|---|---|---|
+| ![](docs/screenshots/04-demo-iss.png) | ![](docs/screenshots/05-demo-earth.png) | ![](docs/screenshots/06-demo-moon.png) | ![](docs/screenshots/10b-demo-mars-refusal.png) |
+
+| Ask IGNITE-AI | Compare | Declines | Safety | Model card |
+|---|---|---|---|---|
+| ![](docs/screenshots/13-rag-answer-lunar.png) | ![](docs/screenshots/14-rag-compare-flex-bass2.png) | ![](docs/screenshots/15-rag-declines.png) | ![](docs/screenshots/12-safety-iss.png) | ![](docs/screenshots/17-model-card.png) |
 
 ## Contents
-- [Run it locally](#run-it-locally-windows)
-- [What's in the site](#whats-in-the-site)
-- [Data sources](#data-sources-every-row-is-traceable)
-- [Model card](#model-card-honest-metrics)
-- [API](#api)
-- [Limitations](#limitations)
-- [Repository layout](#repository-layout)
-- [AI use disclosure](docs/AI_USE.md)
-- [Past-winner research](docs/research-past-winners.md)
-
----
+[Run it](#run-it-locally-windows) · [Site structure](#site-structure) · [Data sources](#data-sources) · [Moon & Mars](#moon--mars-how-partial-gravity-is-handled) · [Ask IGNITE-AI (RAG)](#ask-ignite-ai-local-rag) · [Model card](#model-card-honest-metrics) · [Crawlable content](#crawlable-content-for-search-engines-and-ai-tools) · [API](#api) · [Limitations](#limitations) · [Layout](#repository-layout) · [AI use](docs/AI_USE.md)
 
 ## Run it locally (Windows)
-Requirements: **Python 3.11** and **Node.js 18+** (tested with Python 3.11.9 and Node 24). Everything runs on your PC; no cloud service or API key is needed.
-
+Requirements: **Python 3.11** and **Node.js 18+**. No cloud service, no API key.
 ```bat
 setup.bat      :: one time: .venv, pip install, train + test the model, npm install, build the site
-start.bat      :: serves the site and API on http://localhost:8000 and opens your browser
+start.bat      :: serves the site + API on http://localhost:8000 (landing) and http://localhost:8000/demo (tool)
+stop.bat       :: stops whatever is listening on port 8000
+dev.bat        :: hot-reload dev mode (backend :8000, Vite :5173)
 ```
-Stop the server with **Ctrl+C** in the start.bat window, by closing that window, or by running `stop.bat` (it stops whatever is listening on port 8000).
+Manual (any OS): `python -m venv .venv`, `pip install -r backend/requirements.txt`, then in `backend/` run `python -m src.compute.model` and `python -m tests.test_core`, in `frontend/` run `npm install` and `npm run build`, and finally in `backend/` run `python -m uvicorn app.main:app --port 8000`.
 
-Developer mode (hot reload): run `dev.bat`. The backend runs on :8000 with `--reload` and the Vite dev server runs on http://localhost:5173, proxying `/api` to :8000.
-
-Manual equivalent (any OS):
-```bash
-python -m venv .venv && .venv/bin/pip install -r backend/requirements.txt     # Windows: .venv\Scripts\...
-cd backend && ../.venv/bin/python -m src.compute.model && ../.venv/bin/python -m tests.test_core
-cd ../frontend && npm install && npm run build
-cd ../backend && ../.venv/bin/python -m uvicorn app.main:app --port 8000
-```
-
-Reproduce the data (optional, requires internet access):
+Refresh the data (optional, needs internet):
 ```bash
 cd backend
-python scripts/fetch_ntrs_corpus.py   # re-harvests NTRS titles/abstracts via the public NTRS API -> data/corpus/ntrs_corpus.json
-python scripts/build_dataset.py       # rebuilds data/experiments.csv/.parquet from the hand-transcribed, cited rows
-python -m src.compute.model           # retrain + cross-validate -> data/artifacts/model.joblib, model_card.json
+python scripts/fetch_psi.py           # NASA PSI metadata + public experimental tables -> data/psi/
+python scripts/fetch_ntrs_corpus.py   # NTRS titles/abstracts -> data/corpus/ntrs_corpus.json (285 records)
+python scripts/fetch_nasa_pages.py    # 3 NASA web pages (combustion research, ACME, SoFIE) -> data/corpus/nasa_pages.json
+python scripts/build_dataset.py       # rebuilds data/experiments.csv from the hand-transcribed, cited rows
+python -m src.compute.model           # retrain + cross-validate
 ```
 
-## What's in the site
-| Section | What it shows |
-|---|---|
-| **Hero (3D)** | An interactive three.js scene (react-three-fiber). Toggle between **Earth gravity** (a buoyant yellow teardrop flame) and **microgravity** (a dim, near-spherical blue flame). Drag to orbit. The low-poly station is procedural. This is an artistic illustration, not a simulation. |
-| **The problem / science** | Why fire differs in microgravity: no buoyant convection, diffusion-limited oxygen supply, and quenching at low flow. Each claim cites an NTRS record. |
-| **History timeline** | SSCE (Shuttle), drop-tower tests, BASS/BASS-II (ISS MSG), Saffire I–VI (Cygnus), plus FLEX/ACME/SoFIE context. All entries are cited. |
-| **Flammability explorer (MVP)** | Sliders for O₂ %, pressure kPa and flow cm/s, with the training envelope shaded; a material and flow-direction selector; a prediction card with class probabilities and uncertainty; a *range guard* refusal; a deterministic explanation; a 2D decision-boundary plot with the real experiments overlaid; the 3 nearest real experiments with clickable NTRS citations and quotes; and related reports from TF-IDF retrieval. |
-| **Killer demo** | Press **"Play the 21% → 17% O₂ demo"**. For SIBAL fabric at 1 atm and 3 cm/s concurrent flow, the prediction flips from `spread` to `no_spread` at about 17.5% O₂. The explanation names the real BASS-II tests on each side (NTRS 20150008962: sustained spread at 17.6% O₂ and quench at 17.2% O₂, both at 3 cm/s). |
-| **Data & model transparency** | The model card, CV accuracy vs the majority baseline, leave-reports-out accuracy, the confusion matrix, class definitions, the per-material training envelope, and a searchable table of all 124 rows with the source quote for each. The dataset is downloadable as a CSV. |
-| **For spacecraft operators** | Safety framing: how to read the output, why refusals matter, and that the tool is for decision support only and is not a certification tool (NASA-STD-6001 testing still governs). |
-| **Sources / Team / About** | The full reference list. The team section uses **placeholders** (`[Team member name]`) for the team to fill in. About the challenge, plus the AI-use disclosure. |
+## Site structure
+**Landing page `/`** (a 30-second read): title and tagline, the **[ Explore Space Fire Safety Tool ]** button, four key-number cards, **The Microgravity Fire Crisis** (cited, with a live 1 g vs ~0 g flame comparison), "why it matters", "how it works" and the data sources.
 
-## Data sources (every row is traceable)
-`backend/data/experiments.csv` (also `.parquet`) has **124 rows**. Each row carries `report_id`, `source_url`, `source_title`, `source_location` (table or page), a verbatim `quote` of the condition and outcome, and `notes` on any interpretation. Rows were transcribed by hand from the report tables/text in `backend/scripts/build_dataset.py`. **No values are synthetic or interpolated.**
+**Tool `/demo`**, from top to bottom:
+1. **3D viewport.** A procedural flame (layered shader shells with a blue base, a sooty yellow body and a halo, plus embers, smoke and airflow streaks, with bloom) sits in a combustion chamber inside a procedural module or habitat. The window view changes with the environment. The flame reacts to the inputs:
+   - **gravity:** teardrop → sphere, using √g buoyancy;
+   - **O₂ and pressure:** size, brightness and soot colour;
+   - **fan speed:** skew and elongation;
+   - **model output:** `marginal` pulses weakly, `no_spread` goes out and leaves smoke, and a refusal shows a grey "unknown" flame.
 
-| Rows | NTRS record | Source | What was extracted |
-|---:|---|---|---|
-| 46 | [19880006471](https://ntrs.nasa.gov/citations/19880006471) | Olson (1987), *The Effect of Microgravity on Flame Spread over a Thin Fuel*, NASA TM-100195 | Drop-tower, quiescent Kimwipes (single and double thickness), 1 atm, 14–100% O₂ (Tables A-I/A-III) |
-| 33 | [20150008962](https://ntrs.nasa.gov/citations/20150008962) | Zhao, T'ien, Ferkul, Olson (2015), BASS/BASS-II concurrent flame spread over SIBAL fabric | ISS MSG, 1 atm, 16.4–21% O₂, 2.2–53 cm/s. Sustained spread vs quench/blow-off/no ignition (appendix table) |
-| 13 | [19890014267](https://ntrs.nasa.gov/citations/19890014267) | Olson, Ferkul, T'ien (1989), opposed-flow extinction over a thin fuel, NASA TM-101479 | Drop-tower, opposed flow 0–6.75 cm/s, extinction limits (Table I) |
-| 9 | [20210011521](https://ntrs.nasa.gov/citations/20210011521) | Urban et al. (2021), Saffire IV and V, ICES-2021-266 | Large-scale Cygnus tests: SIBAL, cotton, PMMA (Tables 1–2) |
-| 7 | [20170008805](https://ntrs.nasa.gov/citations/20170008805) | Urban et al. (2017), Saffire-I/II | SIBAL, silicone, Nomex, PMMA (Table I) |
-| 6 | [20080034883](https://ntrs.nasa.gov/citations/20080034883) | Olson et al. (2008), exploration atmospheres, NASA/TM-2008-215260 | 0-g flammability limits for Nomex, Ultem and Mylar at 70.3 kPa and 30 cm/s (Table 1) |
-| 3 | [20240002981](https://ntrs.nasa.gov/citations/20240002981) | Urban et al. (2024), Saffire VI preliminary results | SIBAL in exploration atmospheres |
-| 3 | [20050177200](https://ntrs.nasa.gov/citations/20050177200) | NASA Lewis (1996), SSCE eight flights | Filter paper, 50% O₂, 1/1.5/2 atm |
-| 3 | [19970020608](https://ntrs.nasa.gov/citations/19970020608) | Altenkirch et al. (1997), SSCE thick-fuel results | Thick PMMA (decelerating spread) |
-| 1 | [19950007798](https://ntrs.nasa.gov/citations/19950007798) | SSCE aboard USML-1 (1994) | Filter paper, 35% O₂ / 1 atm |
+   HUD readouts show gravity, O₂, pressure, airflow, O₂ partial pressure (*computed*), buoyant flow vs Earth (*estimate √g*), fire-risk status, range guard and gas-mix status. It is an illustration, not a combustion simulation.
+2. **Environment tabs:** Earth (1 g), Moon (0.165 g), Mars (0.38 g), ISS µg (~0 g) and **Transit cabin (µg coast)**. Coasting between planets is free fall, so the transit tab uses the microgravity data, with Saffire (fires inside Cygnus spacecraft) as the closest analogue. Powered-flight thrust phases are not modelled, and the tab says so.
+3. **Environment data and conditions.** Sourced fact cards for the tab (gravity, cabin or habitat atmosphere, relevant experiments), each with a verbatim quote and link. Estimates carry an **ESTIMATE** badge. Below them:
+   - sliders for O₂, pressure and ventilation fan speed, with the tested band shaded in green;
+   - a material selector, a flow-direction selector and gas-mix chips (Normal air / Methane leak / Carbon dioxide build-up);
+   - the prediction, probabilities, confidence, per-gravity accuracy caution and explanation;
+   - an "O₂ slide" demo that walks down the tested range;
+   - the decision-boundary plot with the real tests;
+   - the nearest real experiments with quotes;
+   - the **Ask IGNITE-AI** panel.
+4. **Fire safety measures and insights** for the selected environment: detection, ventilation shutdown and isolation, suppression, material selection, crew procedures, and Moon/Mars or transit specifics. Every item quotes a NASA source.
+5. **Footer:**
+   - citations and resources (the PSI investigation table, the NTRS reports behind the rows, and the environment and safety sources);
+   - a FLEX CO₂ data summary;
+   - the model card, per-gravity accuracy, confusion matrix, envelope by material × gravity, and the full searchable dataset;
+   - the AI-use disclosure and team placeholders.
 
-Supporting citations used to confirm conditions (listed in `extra_sources`): [20210017785](https://ntrs.nasa.gov/citations/20210017785), [20260001992](https://ntrs.nasa.gov/citations/20260001992), [19960008387](https://ntrs.nasa.gov/citations/19960008387), [19990053971](https://ntrs.nasa.gov/citations/19990053971).
+## Data sources
+### Training rows: `backend/data/experiments.csv`, **144 rows from 13 NASA reports**
+Each row has `gravity_g`, `report_id`, `source_url`, `source_location` (table or page), a verbatim `quote`, and `notes`/`extra_sources`. Rows are transcribed in `backend/scripts/build_dataset.py`. **None are synthetic or interpolated.**
 
-**Retrieval corpus:** `backend/data/corpus/ntrs_corpus.json` holds 217 NTRS records (title, abstract, authors, date, URL), harvested from the public [NTRS API](https://ntrs.nasa.gov/api/citations/search) with 22 combustion queries (FLEX, BASS, Saffire, SoFIE, ACME, BRE, flammability limits, …).
+| Rows | Gravity | Source |
+|---:|---|---|
+| 46 | 0 g | [NTRS 19880006471](https://ntrs.nasa.gov/citations/19880006471) Olson 1987, quiescent thin cellulose (drop tower) |
+| 33 | 0 g | [NTRS 20150008962](https://ntrs.nasa.gov/citations/20150008962) BASS/BASS-II SIBAL concurrent spread (ISS MSG) |
+| 13 | 0 g | [NTRS 19890014267](https://ntrs.nasa.gov/citations/19890014267) Olson, Ferkul, T'ien 1989, opposed-flow extinction |
+| 9 / 7 / 3 | 0 g | Saffire IV–V [20210011521](https://ntrs.nasa.gov/citations/20210011521), Saffire I–II [20170008805](https://ntrs.nasa.gov/citations/20170008805), Saffire VI [20240002981](https://ntrs.nasa.gov/citations/20240002981) (Cygnus) |
+| 6 | 0 g | [NTRS 20080034883](https://ntrs.nasa.gov/citations/20080034883) Olson et al. 2008, exploration atmospheres |
+| 3 / 3 / 1 | 0 g | SSCE: [20050177200](https://ntrs.nasa.gov/citations/20050177200), [19970020608](https://ntrs.nasa.gov/citations/19970020608), [19950007798](https://ntrs.nasa.gov/citations/19950007798) |
+| **18 (new)** | **1 g, 0.38 g, 0.165 g** | [NTRS 20130010991](https://ntrs.nasa.gov/citations/20130010991) Olson & Ferkul 2012, Table I p.6: upward limiting oxygen (ULOI) and minimum oxygen (MOC) for Mylar G, Ultem 1000 and Nomex HT90-40 at 1 g (NASA White Sands), Martian and Lunar g (drop-tower centrifuge) |
+| **1 (new)** | 0.165 g | [NTRS 20260001966](https://ntrs.nasa.gov/citations/20260001966) Ferkul et al. 2026: SIBAL, lunar g, 21% O₂, 1 atm, "Steady, downward spread ... entire 20-sec test" |
+| **1 (new)** | 0.165 g | [NTRS 20250010653](https://ntrs.nasa.gov/citations/20250010653) LUCI (spinning New Shepard rocket): SIBAL downward spread in lunar g, air at normal pressure, steady spread 0.92 mm/s |
 
-**Class definitions** (mapping each report's own wording):
-- `spread`: sustained flame propagation.
-- `marginal_spread`: oscillatory spread, "unmeasurably small" spread, spread decelerating toward extinction, or an anchored/stabilised flame that does not propagate.
-- `no_spread`: no ignition, extinction/quench, blow-off, or an "insignificant burn".
+Rows by gravity: 0 g 124 · Moon 8 · Mars 6 · Earth 1 g 6. Classes: spread 88 · no_spread 32 · marginal 24.
 
-Unit conversions: psia → kPa (×6.895), atm → kPa (×101.325). Where a report gives an O₂ range, the midpoint is used and noted in `notes`.
+### NASA Physical Sciences Informatics (PSI), the primary official data source
+`scripts/fetch_psi.py` reads PSI's public JSON endpoints anonymously, the same ones the PSI web app uses. It saves metadata for **24 investigations** (objective, approach, hypothesis, hardware, dates, DOI, licence, publication list, file inventory) to `data/psi/psi_investigations.json`, and every public **experimental table** to `data/psi/tables/`. Investigations are CC0-1.0 where PSI states a licence.
+- Covered: FLEX [PSI-69](https://psi.nasa.gov/physci/repo/data/investigations/PSI-69), FLEX-2 PSI-68, BASS-II [PSI-25](https://psi.nasa.gov/physci/repo/data/investigations/PSI-25), BASS PSI-26, SPICE [PSI-107](https://psi.nasa.gov/physci/repo/data/investigations/PSI-107), SLICE PSI-106, CFI PSI-39, ACME BRE PSI-20, ACME Flame Design PSI-10, CLD PSI-21, E-FIELD PSI-22, s-Flame PSI-23, CFI-G PSI-159, SAME PSI-102, SAME-R PSI-101, DAFT/DAFT-2 PSI-47, SAFFIRE-I/II/III PSI-98/99/100, and modelling or guest investigations PSI-60, 62, 115, 117 and 142.
+- **How PSI data are used:**
+  - **Corroboration.** 40 training rows now carry PSI links in `extra_sources`/`notes`: 29 BASS-II tests whose O₂ matches the PSI-25 table exactly, and the Saffire I/II/III rows. Discrepancies are noted in the row notes, not "fixed". For example, PSI-99 lists Saffire 2-1 O₂ ≈ 21.5% where the NTRS paper gives ≈ 22.1%, and PSI lists some Saffire flows as 20 cm/s where NTRS gives 25.
+  - **FLEX (PSI-69)** has 274 droplet tests (methanol and heptane; pressure, O₂/N₂/CO₂/He fractions, extinction diameter, burn time, test end). They are shown as a separate real dataset (`/api/flex`, and the CO₂ panel when the "Carbon dioxide" gas chip is selected) and are indexed for Ask IGNITE-AI. They are **not** added to the flame-spread classifier, because droplet combustion is a different phenomenon.
+  - **BASS-II (PSI-25)**: the table has O₂ and fan settings but **no pressure column and no outcome column**, so it cannot add fully specified rows (corroboration only).
+  - **All other tables** (SPICE, SLICE, BRE, SAME, DAFT, …) describe gas-jet, smoke or aerosol tests without a flame-spread outcome over a solid. They are cited and indexed for Q&A, not used as training rows.
+- **Not downloadable or not used:** the legacy BASS-II "Test Matrix" spreadsheet and ReadMe on the old PSI host return S3 `NoSuchKey` errors. Most raw PSI data are very large video and image archives (mp4, zip, up to TB-scale per investigation), so they are cited, not processed. No login was needed for anything we used.
 
-**Not used for rows** (the source did not state every needed value in text or tables, e.g. pressure missing, or values only in figures): RITSI/spot-ignition (NTRS 20000070853), SKOROST, BASS-II PMMA rod data (figures only), and a BASS Nomex/Ultem summary slide. No NASA OSDR records are used as rows (all rows come from NTRS reports).
+### Other sources
+- NASA web pages (all verified to resolve and quoted as written): [Studying Combustion and Fire Safety](https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/) (flames "rounded or even spherical", FLEX cool flames, Saffire in Cygnus), [ACME](https://science.nasa.gov/mission/acme/) and [SoFIE](https://science.nasa.gov/mission/sofie/).
+- Safety facts:
+  - Friedman 2000, NASA/TM-2000-210337 ([NTRS 20000120278](https://ntrs.nasa.gov/citations/20000120278)): fire response, detectors, suppression, partial-gravity maxima, transit;
+  - ISS Fine Water Mist extinguisher ([20110012300](https://ntrs.nasa.gov/citations/20110012300));
+  - Orion extinguisher ([20180005251](https://ntrs.nasa.gov/citations/20180005251));
+  - Orion smoke detector ([20090020655](https://ntrs.nasa.gov/citations/20090020655));
+  - spacecraft fire-safety plan ([20205000063](https://ntrs.nasa.gov/citations/20205000063));
+  - Saffire IV–V lessons ([20210011521](https://ntrs.nasa.gov/citations/20210011521)).
+- NTRS retrieval corpus: 285 records harvested from the public NTRS API.
+
+## Moon & Mars: how partial gravity is handled
+Real flame-spread data at partial gravity are scarce. IGNITE-AI uses only what exists:
+- **Measured (training rows).** Olson & Ferkul 2012 Table I (Martian and Lunar g, drop-tower centrifuge, about 5 s of low g) for Mylar G, Ultem 1000 and Nomex HT90-40, plus two SIBAL lunar-g downward-spread tests (a parabolic-flight result reported by Ferkul et al. 2026, and the LUCI rocket).
+- **Range guard.** A material is predicted at a gravity level **only if real tests of that material exist at that level**, and only inside that (material, gravity) box. Otherwise the response is a refusal that names the gravity levels actually tested, for example "no real SIBAL_fabric experiment at Martian gravity (0.38 g) exists in the dataset (tested for this material: microgravity, lunar gravity); the model will not guess across gravity levels". Gravity is a model feature because real rows at 0, 0.165, 0.38 and 1 g support it.
+- **Honesty about accuracy.** Out-of-fold accuracy is 0.80 at 0 g, but only 0.38 at the Moon (n=8), 0.33 at Mars (n=6) and 0.17 at 1 g (n=6). The UI warns that partial-gravity outputs are effectively lookups of the nearest published test.
+- **Estimates, labelled.** "Buoyant flow vs Earth ≈ √g" (0.41× on the Moon, 0.62× on Mars) is shown with an **ESTIMATE** badge and the physics stated (buoyant velocity ∝ √(g·β·ΔT·L)). The 3D flame shape uses the same √g scaling, for illustration only.
+- **Sourced context.** Lunar habitat atmosphere 8.2 psia / 34% O₂ (up to 37%) and "Lunar gravity is nearly the most flammable condition" (NTRS 20260001966); Martian limits "up to 5.75% O₂ lower" than 1 g (NTRS 20130010991); partial-gravity maxima at 0.15–0.4 g (NTRS 20000120278). No Mars habitat atmosphere is baselined in our sources, and the tab says so.
+
+## Ask IGNITE-AI (local RAG)
+`backend/src/compute/kb.py` implements retrieval-augmented question answering with **no paid API and no model download**:
+- **Knowledge base (about 1,500 passages).** NTRS abstracts (chunked), PSI investigation metadata and publication lists, PSI experimental tables (small tables row by row, large ones summarised, FLEX statistics computed from the table), the 144 experiment rows with their quotes, the curated environment and safety facts, and NASA page paragraphs. Every passage keeps its source URL.
+- **Retrieval.** scikit-learn TF-IDF (1–2-grams, sublinear tf), with a small deterministic query expansion (for example "look" → shape/spherical, "Moon" ↔ "lunar"), a boost for curated facts, and diversity limits per source.
+- **Answer.** Extractive. The best-matching sentences are shown **verbatim in quotation marks** with `[n]` links. Statements templated from real table rows are marked **DATA**. If two or more investigations are named (for example "Compare FLEX and BASS-II"), a side-by-side table is built from PSI metadata.
+- **Declines** when the best score is below 0.07, when the question has no fire or space term, or when less than 60% of the question's specific (IDF-weighted) words appear in the retrieved passages. Example: "What is the capital of France?" returns a refusal with no citations.
+- **Optional local generation.** Set `IGNITE_LLM=ollama` (and `IGNITE_LLM_MODEL`). It is off by default. The prompt contains only the retrieved passages, and the output is rejected unless it cites `[n]` and every number in it appears in the passages.
+
+Example: *"Is lunar gravity more flammable than Earth?"*
+- "The main hypothesis is that some materials burning in Lunar-g are more flammable than on Earth." [NTRS 20210020516]
+- "Numerical and experimental evidence suggests that Lunar gravity is nearly the most flammable condition." [NTRS 20260001966]
+- "These are the first-ever, extended-duration (greater than 25 seconds) combustion tests performed in simulated Lunar gravity." [NTRS 20250010653]
 
 ## Model card (honest metrics)
 | | |
 |---|---|
-| Task | 3-class classification of the flame-spread regime |
-| Model | `sklearn.ensemble.GradientBoostingClassifier(n_estimators=150, max_depth=2, learning_rate=0.1, random_state=42)` inside a Pipeline with one-hot encoding |
-| Features | `oxygen_pct`, `pressure_kpa`, `flow_cm_s`, `material` (one-hot), `flow_direction` (quiescent/opposed/concurrent) |
-| Training data | n = **124** from 10 NTRS reports. Class counts: spread 82 · no_spread 23 · marginal_spread 19 |
-| **Stratified 5-fold CV accuracy** | **0.790** (out-of-fold) |
-| Balanced accuracy (5-fold) | 0.718 |
-| Repeated stratified CV (5×10) | 0.80 ± 0.06 |
-| Leave-reports-out (GroupKFold by report) | 0.718: a harder test, where whole reports are held out |
-| Majority-class baseline | 0.661 |
-| Per-class F1 | spread 0.86 · marginal 0.82 · **no_spread 0.48** |
+| Model | `GradientBoostingClassifier(n_estimators=150, max_depth=2, learning_rate=0.1)` + one-hot encoding |
+| Features | `oxygen_pct`, `pressure_kpa`, `flow_cm_s`, `gravity_g`, `material`, `flow_direction` |
+| Training data | 144 rows, 13 NTRS reports (0 g 124 · 0.165 g 8 · 0.38 g 6 · 1 g 6) |
+| **Stratified 5-fold CV accuracy** | **0.729** (balanced 0.646) |
+| Repeated CV (5×10) | 0.725 ± 0.064 |
+| Leave-reports-out (GroupKFold) | 0.688 |
+| Majority-class baseline | 0.611 |
+| OOF accuracy by gravity | 0 g 0.798 · Moon 0.375 · Mars 0.333 · 1 g 0.167 |
 
-Confusion matrix (out-of-fold; rows = true, columns = predicted):
+Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13,5,14],[6,16,2],[10,2,76]]`. The earlier microgravity-only model scored 0.790. The drop comes from the 20 new partial-gravity and 1 g rows: they are paired limit tests (a pass at one O₂, a fail just below), which cross-validation cannot predict well from 6–8 rows. We report this instead of dropping them.
 
-| | no_spread | marginal | spread |
-|---|---:|---:|---:|
-| **no_spread** | 10 | 2 | 11 |
-| **marginal_spread** | 1 | 16 | 2 |
-| **spread** | 8 | 2 | 72 |
+**Range guard:** refuses for an unknown material, a material never tested at the selected gravity, O₂/pressure/flow outside that (material, gravity) min–max, an untested flow direction, µg zero-flow without "quiescent", or any gas mix other than O₂/N₂.
 
-**Range guard.** The per-material min/max of O₂, pressure and flow (plus the tested flow directions) are stored in `model_card.json`. `/predict` returns `prediction: null`, `in_training_range: false` and the list of `range_violations` for any input outside that material's envelope, or for an unknown material. It still returns the nearest real experiments, so the user can see what *was* tested.
+**Explanation:** a deterministic template (`explain.py`). An optional Ollama path is guarded by a number check.
 
-**Uncertainty.** Each prediction reports the class probabilities, a confidence level (high/medium/low, from the top-class probability, the distance to the nearest real experiment and how many of the 3 nearest agree) and a *contrast experiment*: the nearest real test of the same material with a different outcome.
-
-**Explanation layer.** It is a deterministic template (`backend/src/compute/explain.py`) that phrases only the fields of the prediction object and the retrieved citations. An optional local LLM (Ollama) path exists but is **off by default**. Enable it with `FLAME_LLM=ollama` and `FLAME_LLM_MODEL=<model>`. Any LLM output containing a number that is not in the prediction facts is rejected, and the app falls back to the template.
+## Crawlable content for search engines and AI tools
+The server injects a **static HTML summary** into `#root` of `index.html` for `/` and `/demo`. It covers the crisis text, every environment fact with its source, the safety measures, the model metrics, the data sources, the AI disclosure and the team placeholders. So a plain `curl` of the page shows the real content, and React replaces it on load. Also available: `<meta name="description">`, a `<noscript>` note, `/llms.txt` (a plain-text summary with sources) and `/docs` (OpenAPI).
 
 ## API
-Every route is served both with and without the `/api` prefix.
-- `GET /health`: status plus model summary.
-- `GET /model`: the full model card (metrics, confusion matrix, envelope).
-- `GET /experiments[?material=]`: the training rows with citations. `GET /api/experiments.csv` downloads the CSV.
-- `POST /predict` with body `{"oxygen_pct":21,"pressure_kpa":101.3,"flow_cm_s":3,"material":"SIBAL_fabric","flow_direction":"concurrent"}` returns `prediction`, `probabilities`, `model{type,n_train,cv_accuracy,features,…}`, `in_training_range`, `range_violations`, `nearest_experiments[3]{report_id,source_url,quote,…}`, `contrast_experiment`, `uncertainty`, `explanation`, `related_reports`.
-- `GET /boundary?material=&flow_direction=&x=oxygen_pct&y=flow_cm_s`: a prediction grid for the decision-boundary plot.
-- `GET /corpus`: the retrieval corpus metadata.
+`GET /health` · `GET /api/model` · `GET /api/experiments[?material=&gravity_g=]` · `GET /api/experiments.csv` · `POST /api/predict` `{"oxygen_pct":21,"pressure_kpa":101.3,"flow_cm_s":3,"material":"SIBAL_fabric","flow_direction":"concurrent","gravity_g":0,"gas_mix":"air"}` · `GET /api/boundary?...&gravity_g=` · `GET /api/environments` · `GET /api/safety?env=iss` · `GET /api/flex[?rows=true&co2_only=true]` · `GET /api/psi` · `POST /api/ask {"question": "..."}` · `GET /api/kb` · `GET /llms.txt`
 
 ## Limitations
-- **Small data.** 124 rows from 10 reports. Three material groups (thin cellulose, SIBAL fabric, double cellulose) supply 79% of the rows. Nomex, Ultem, Mylar, cotton and silicone have only 1–4 rows each, so their predictions are close to lookups of those rows and their envelopes are tiny.
-- **Class imbalance.** `no_spread` recall is only 0.43. The model tends to over-predict `spread`, which is the *less* conservative error for safety. Treat any `spread` probability above about 20% as a warning.
-- **Envelope is a box.** The range guard checks per-feature min/max, so a point can sit inside the box but still be far from any real test (for example, a combination of high flow and low O₂ that was never tested). The nearest-experiment distance and the uncertainty level flag this, but do not refuse on it.
-- **Heterogeneous facilities.** Drop-tower tests (about 5 s of microgravity) are mixed with long-duration ISS and Cygnus tests, and sample sizes and geometries differ. Short drop-tower tests may label as "spread" a flame that would later self-extinguish.
-- **Label mapping.** Mapping each report's wording onto 3 classes involves judgement. It is documented per row in `notes`.
-- **Not a certification tool.** Material acceptance for flight is governed by NASA-STD-6001 testing. This tool is for exploration and decision support only.
+- The dataset is small: 144 rows. Partial-gravity and 1 g data have 6–8 rows per level and cover only 3–4 materials, and the low-g drop tests last about 5 s.
+- `no_spread` recall is weak (0.41), so the model tends to over-predict spread. Treat any sizeable `spread` probability as a warning.
+- The envelope is a per-feature box. A point inside the box can still be far from any test, which shows up as a larger nearest distance and lower confidence.
+- The 3D flame is an illustration of documented trends, not a CFD simulation.
+- The RAG is lexical (TF-IDF). Paraphrased questions may miss relevant passages, and it declines rather than guessing.
+- This is not a certification tool. NASA-STD-6001 testing governs material acceptance.
 
 ## Repository layout
 ```
 backend/
-  app/main.py              FastAPI app (API + serves frontend/dist)
-  src/compute/model.py     train, cross-validate, save artifact + envelope
-  src/compute/predict.py   range guard, prediction, nearest/contrast experiments, uncertainty
-  src/compute/retrieval.py TF-IDF retrieval over the NTRS corpus
-  src/compute/explain.py   deterministic explanation (+ optional, guarded local LLM)
-  scripts/                 fetch_ntrs_corpus.py, build_dataset.py (all rows with quotes)
-  data/                    experiments.csv/.parquet, corpus/, artifacts/model.joblib + model_card.json
-  tests/test_core.py       range refusal, metadata, 21->17% demo crossing
-frontend/                  Vite + React + TypeScript + three.js (@react-three/fiber, drei)
-docs/                      research-past-winners.md, AI_USE.md, screenshots/
-setup.bat start.bat stop.bat dev.bat
+  app/main.py                 FastAPI: API, static-HTML injection, /llms.txt, serves frontend/dist
+  src/compute/model.py        train + CV + per-(material, gravity) envelope
+  src/compute/predict.py      range guard, prediction, nearest/contrast experiments
+  src/compute/kb.py           Ask IGNITE-AI knowledge base + retrieval + extractive answers
+  src/compute/psi_data.py     readers for the PSI tables (FLEX statistics)
+  src/compute/retrieval.py    TF-IDF over NTRS (related reports for predictions)
+  src/compute/explain.py      deterministic explanation (+ optional guarded Ollama)
+  src/content/facts.py        cited environment facts, gas mixes, safety measures, PSI list
+  src/content/static_html.py  crawlable HTML summary + llms.txt
+  scripts/                    fetch_psi.py, fetch_ntrs_corpus.py, fetch_nasa_pages.py, build_dataset.py
+  data/                       experiments.csv, psi/, corpus/, artifacts/
+  tests/test_core.py          refusals (range, gravity, gas), demo crossings, RAG decline/cite
+frontend/                     Vite + React + TypeScript + three.js (@react-three/fiber, drei, postprocessing)
+  src/pages/Landing.tsx, Demo.tsx · src/three/Flame.tsx, Module.tsx · src/components/*
+docs/                         AI_USE.md, research-past-winners.md, screenshots/
 ```
 
-## Roadmap
-Extract more NTRS tables (FLARE, SoFIE results as they are published, NASA-STD-6001 Test 1 upward-limit data), add ACME gas-flame limits as a separate model, replace the box envelope with a convex-hull or density-based guard, and add calibrated probabilities.
-
 ## Credits and license
-Data: NASA Technical Reports Server (public NASA works). Libraries: FastAPI, scikit-learn, pandas, React, Vite, three.js, @react-three/fiber, @react-three/drei (all open source).
-NASA does not endorse this project. Code is © `[Team name]` 2026, licensed under the **Apache License 2.0** (see `LICENSE`).
+Data: NASA PSI and the NASA Technical Reports Server (public NASA works; PSI data CC0-1.0 where stated). Libraries (all open source): FastAPI, scikit-learn, pandas, React, Vite, three.js, @react-three/fiber, @react-three/drei, @react-three/postprocessing, postprocessing. The GLSL simplex noise is by Ashima Arts / Stefan Gustavson (MIT). The 3D scene is procedural, not a NASA model. NASA does not endorse this project. Code © `[Team name]` 2026, **Apache License 2.0** (see `LICENSE`).

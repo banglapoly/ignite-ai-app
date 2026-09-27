@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import joblib
 
-from .model import ART, DATA, NUMERIC, FEATURES, CLASSES
+from .model import ART, DATA, NUMERIC, FEATURES, CLASSES, GRAVITY, gkey
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
@@ -29,11 +29,25 @@ def _scale(card) -> dict:
     return {c: max(g[c][1] - g[c][0], 1e-9) for c in NUMERIC}
 
 
+GRAVITY_NAMES = {"0": "microgravity (~0 g)", "0.165": "lunar gravity (0.165 g)", "0.38": "Martian gravity (0.38 g)", "1": "Earth gravity (1 g)"}
+GAS_MIXES = {"air": "O2/N2 (normal air or N2-diluted/enriched O2)"}
+
+
 def check_range(inp: dict, card: dict) -> tuple[bool, list[str]]:
     reasons = []
-    env = card["training_range"]["materials"].get(inp["material"])
+    gas = inp.get("gas_mix", "air")
+    if gas != "air":
+        reasons.append(f"gas mix '{gas}' is not represented in the training data: every training experiment burned in "
+                       "O2/N2 atmospheres only, so the classifier cannot say anything about it")
+    menv = card["training_range"]["materials"].get(inp["material"])
+    if menv is None:
+        return False, reasons + [f"material '{inp['material']}' is not in the training data"]
+    gk = gkey(inp.get(GRAVITY, 0.0))
+    env = menv["by_gravity"].get(gk)
     if env is None:
-        return False, [f"material '{inp['material']}' is not in the training data"]
+        tested = ", ".join(GRAVITY_NAMES.get(k, k + " g") for k in menv["by_gravity"])
+        return False, reasons + [f"no real {inp['material']} experiment at {GRAVITY_NAMES.get(gk, gk + ' g')} exists in the dataset "
+                                 f"(tested for this material: {tested}); the model will not guess across gravity levels"]
     for c in NUMERIC:
         lo, hi = env[c]
         v = float(inp[c])
@@ -42,8 +56,9 @@ def check_range(inp: dict, card: dict) -> tuple[bool, list[str]]:
     if inp["flow_direction"] not in env["flow_directions"]:
         reasons.append(f"flow_direction '{inp['flow_direction']}' was never tested for {inp['material']} "
                        f"(tested: {', '.join(env['flow_directions'])})")
-    if float(inp["flow_cm_s"]) == 0 and inp["flow_direction"] != "quiescent":
-        reasons.append("flow_cm_s=0 must use flow_direction 'quiescent'")
+    g0 = float(inp.get(GRAVITY, 0.0)) == 0.0
+    if g0 and float(inp["flow_cm_s"]) == 0 and inp["flow_direction"] != "quiescent":
+        reasons.append("in microgravity flow_cm_s=0 must use flow_direction 'quiescent'")
     if float(inp["flow_cm_s"]) > 0 and inp["flow_direction"] == "quiescent":
         reasons.append("quiescent conditions require flow_cm_s=0")
     return (len(reasons) == 0), reasons
@@ -56,6 +71,7 @@ def distances(inp: dict, df: pd.DataFrame, card: dict) -> np.ndarray:
         d2 += ((df[c].to_numpy(dtype=float) - float(inp[c])) / s[c]) ** 2
     d = np.sqrt(d2)
     d += np.where(df["material"].to_numpy() == inp["material"], 0.0, 1.0)      # material mismatch penalty
+    d += np.where(np.isclose(df[GRAVITY].to_numpy(dtype=float), float(inp.get(GRAVITY, 0.0))), 0.0, 1.0)  # gravity mismatch
     d += np.where(df["flow_direction"].to_numpy() == inp["flow_direction"], 0.0, 0.25)
     return d
 
@@ -65,7 +81,7 @@ def _exp_record(r: pd.Series, dist: float) -> dict:
         "row_id": r["row_id"], "report_id": r["report_id"], "source_url": r["source_url"],
         "source_title": r["source_title"], "source_location": r["source_location"], "quote": r["quote"],
         "oxygen_pct": float(r["oxygen_pct"]), "pressure_kpa": float(r["pressure_kpa"]),
-        "flow_cm_s": float(r["flow_cm_s"]), "flow_direction": r["flow_direction"],
+        "flow_cm_s": float(r["flow_cm_s"]), "flow_direction": r["flow_direction"], "gravity_g": float(r[GRAVITY]),
         "material": r["material"], "material_detail": r["material_detail"], "facility": r["facility"],
         "outcome": r["outcome"], "outcome_detail": r["outcome_detail"], "distance": round(float(dist), 4),
     }
@@ -75,12 +91,13 @@ def predict(inp: dict, k: int = 3) -> dict:
     pipe, card, df = artifacts()
     inp = {"oxygen_pct": float(inp["oxygen_pct"]), "pressure_kpa": float(inp["pressure_kpa"]),
            "flow_cm_s": float(inp["flow_cm_s"]), "material": inp["material"],
-           "flow_direction": inp.get("flow_direction") or ("quiescent" if float(inp["flow_cm_s"]) == 0 else "concurrent")}
+           "flow_direction": inp.get("flow_direction") or ("quiescent" if float(inp["flow_cm_s"]) == 0 else "concurrent"),
+           GRAVITY: float(inp.get(GRAVITY) or 0.0), "gas_mix": inp.get("gas_mix") or "air"}
     ok, reasons = check_range(inp, card)
     d = distances(inp, df, card)
     order = np.argsort(d, kind="stable")
     nearest = [_exp_record(df.iloc[i], d[i]) for i in order[:k]]
-    model_meta = card["model"]
+    model_meta = {**card["model"], "oof_accuracy_by_gravity": card["metrics"].get("oof_accuracy_by_gravity", {})}
     out = {"inputs": inp, "in_training_range": ok, "model": model_meta}
     if not ok:
         out.update({"prediction": None, "probabilities": None, "range_violations": reasons,
@@ -94,7 +111,7 @@ def predict(inp: dict, k: int = 3) -> dict:
     probs = {c: round(float(proba[classes.index(c)]), 3) for c in CLASSES}
     pred = max(probs, key=probs.get)
     # contrast: nearest same-material experiment with a different outcome (the "other side")
-    same = df["material"].to_numpy() == inp["material"]
+    same = (df["material"].to_numpy() == inp["material"]) & np.isclose(df[GRAVITY].to_numpy(dtype=float), inp[GRAVITY])
     contrast = None
     for i in order:
         if same[i] and df.iloc[i]["outcome"] != pred:
@@ -116,6 +133,6 @@ def predict(inp: dict, k: int = 3) -> dict:
         "nearest_experiments": nearest, "supporting_experiment": support, "contrast_experiment": contrast,
         "uncertainty": {"max_probability": top[0], "margin_to_second": round(top[0] - top[1], 3),
                         "nearest_distance": round(near_d, 4), "neighbours_agreeing": agree, "level": level,
-                        "note": "Distance is Euclidean over range-normalised O2, pressure and flow (+1 for a different material)."},
+                        "note": "Distance is Euclidean over range-normalised O2, pressure and flow (+1 for a different material, +1 for a different gravity level)."},
     })
     return out

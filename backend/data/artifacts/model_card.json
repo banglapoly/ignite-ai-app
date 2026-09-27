@@ -7,6 +7,7 @@
       "oxygen_pct",
       "pressure_kpa",
       "flow_cm_s",
+      "gravity_g",
       "material",
       "flow_direction"
     ],
@@ -15,20 +16,26 @@
       "no_spread",
       "spread"
     ],
-    "n_train": 124,
-    "n_sources": 10,
-    "cv_accuracy": 0.79
+    "n_train": 144,
+    "n_sources": 13,
+    "n_by_gravity": {
+      "0": 124,
+      "0.165": 8,
+      "0.38": 6,
+      "1": 6
+    },
+    "cv_accuracy": 0.729
   },
   "metrics": {
     "cv_scheme": "StratifiedKFold(n_splits=5, shuffle=True, random_state=42); out-of-fold predictions",
-    "cv_accuracy": 0.79,
-    "cv_balanced_accuracy": 0.718,
-    "repeated_cv_accuracy_mean": 0.8,
-    "repeated_cv_accuracy_std": 0.062,
+    "cv_accuracy": 0.729,
+    "cv_balanced_accuracy": 0.646,
+    "repeated_cv_accuracy_mean": 0.725,
+    "repeated_cv_accuracy_std": 0.064,
     "repeated_cv_scheme": "RepeatedStratifiedKFold(5 folds x 10 repeats)",
-    "leave_reports_out_accuracy": 0.718,
+    "leave_reports_out_accuracy": 0.688,
     "leave_reports_out_scheme": "GroupKFold(5) grouped by report_id (whole reports held out)",
-    "majority_baseline_accuracy": 0.661,
+    "majority_baseline_accuracy": 0.611,
     "confusion_matrix": {
       "labels": [
         "no_spread",
@@ -37,48 +44,66 @@
       ],
       "matrix": [
         [
-          10,
-          2,
-          11
+          13,
+          5,
+          14
         ],
         [
-          1,
+          6,
           16,
           2
         ],
         [
-          8,
+          10,
           2,
-          72
+          76
         ]
       ],
       "note": "rows = true class, columns = predicted class (out-of-fold)"
     },
     "per_class": {
       "no_spread": {
-        "precision": 0.526,
-        "recall": 0.435,
-        "f1-score": 0.476,
-        "support": 23.0
+        "precision": 0.448,
+        "recall": 0.406,
+        "f1-score": 0.426,
+        "support": 32.0
       },
       "marginal_spread": {
-        "precision": 0.8,
-        "recall": 0.842,
-        "f1-score": 0.821,
-        "support": 19.0
+        "precision": 0.696,
+        "recall": 0.667,
+        "f1-score": 0.681,
+        "support": 24.0
       },
       "spread": {
-        "precision": 0.847,
-        "recall": 0.878,
-        "f1-score": 0.862,
-        "support": 82.0
+        "precision": 0.826,
+        "recall": 0.864,
+        "f1-score": 0.844,
+        "support": 88.0
+      }
+    },
+    "oof_accuracy_by_gravity": {
+      "0": {
+        "n": 124,
+        "accuracy": 0.798
+      },
+      "0.165": {
+        "n": 8,
+        "accuracy": 0.375
+      },
+      "0.38": {
+        "n": 6,
+        "accuracy": 0.333
+      },
+      "1": {
+        "n": 6,
+        "accuracy": 0.167
       }
     }
   },
   "class_counts": {
-    "spread": 82,
-    "no_spread": 23,
-    "marginal_spread": 19
+    "spread": 88,
+    "no_spread": 32,
+    "marginal_spread": 24
   },
   "training_range": {
     "global": {
@@ -95,49 +120,237 @@
         53.0
       ]
     },
+    "gravity_levels": [
+      "0",
+      "0.165",
+      "0.38",
+      "1"
+    ],
     "materials": {
       "Mylar_G": {
         "oxygen_pct": [
-          16.0,
-          17.0
+          14.1,
+          21.2
         ],
         "pressure_kpa": [
           70.3,
           70.3
         ],
         "flow_cm_s": [
-          30.0,
+          0.0,
           30.0
         ],
         "flow_directions": [
           "concurrent"
         ],
-        "n": 2,
+        "n": 8,
         "outcomes": {
-          "spread": 1,
-          "no_spread": 1
+          "no_spread": 4,
+          "spread": 3,
+          "marginal_spread": 1
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              16.0,
+              17.0
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              30.0,
+              30.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "spread": 1,
+              "no_spread": 1
+            }
+          },
+          "0.165": {
+            "oxygen_pct": [
+              14.1,
+              15.6
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "spread": 1,
+              "no_spread": 1
+            }
+          },
+          "0.38": {
+            "oxygen_pct": [
+              17.0,
+              18.0
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "spread": 1,
+              "no_spread": 1
+            }
+          },
+          "1": {
+            "oxygen_pct": [
+              20.0,
+              21.2
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "marginal_spread": 1,
+              "no_spread": 1
+            }
+          }
         }
       },
       "Nomex_HT90-40": {
         "oxygen_pct": [
-          22.0,
-          23.0
+          19.0,
+          23.5
         ],
         "pressure_kpa": [
           100.0,
           101.4
         ],
         "flow_cm_s": [
-          20.0,
+          0.0,
           30.0
         ],
         "flow_directions": [
           "concurrent"
         ],
-        "n": 3,
+        "n": 9,
         "outcomes": {
-          "no_spread": 2,
-          "spread": 1
+          "no_spread": 5,
+          "spread": 2,
+          "marginal_spread": 2
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              22.0,
+              23.0
+            ],
+            "pressure_kpa": [
+              100.0,
+              101.4
+            ],
+            "flow_cm_s": [
+              20.0,
+              30.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 3,
+            "outcomes": {
+              "no_spread": 2,
+              "spread": 1
+            }
+          },
+          "0.165": {
+            "oxygen_pct": [
+              19.9,
+              21.0
+            ],
+            "pressure_kpa": [
+              101.4,
+              101.4
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "spread": 1,
+              "no_spread": 1
+            }
+          },
+          "0.38": {
+            "oxygen_pct": [
+              19.0,
+              19.9
+            ],
+            "pressure_kpa": [
+              101.4,
+              101.4
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "marginal_spread": 1,
+              "no_spread": 1
+            }
+          },
+          "1": {
+            "oxygen_pct": [
+              22.1,
+              23.5
+            ],
+            "pressure_kpa": [
+              101.4,
+              101.4
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "marginal_spread": 1,
+              "no_spread": 1
+            }
+          }
         }
       },
       "PMMA_thick": {
@@ -162,6 +375,32 @@
         "outcomes": {
           "marginal_spread": 9,
           "spread": 1
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              21.95,
+              70.0
+            ],
+            "pressure_kpa": [
+              54.6,
+              202.6
+            ],
+            "flow_cm_s": [
+              0.0,
+              20.0
+            ],
+            "flow_directions": [
+              "concurrent",
+              "opposed",
+              "quiescent"
+            ],
+            "n": 10,
+            "outcomes": {
+              "marginal_spread": 9,
+              "spread": 1
+            }
+          }
         }
       },
       "SIBAL_fabric": {
@@ -174,21 +413,67 @@
           101.3
         ],
         "flow_cm_s": [
-          2.2,
+          0.0,
           53.0
         ],
         "flow_directions": [
-          "concurrent"
+          "concurrent",
+          "opposed"
         ],
-        "n": 39,
+        "n": 41,
         "outcomes": {
-          "spread": 29,
+          "spread": 31,
           "no_spread": 10
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              16.4,
+              31.0
+            ],
+            "pressure_kpa": [
+              54.1,
+              101.3
+            ],
+            "flow_cm_s": [
+              2.2,
+              53.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 39,
+            "outcomes": {
+              "spread": 29,
+              "no_spread": 10
+            }
+          },
+          "0.165": {
+            "oxygen_pct": [
+              20.0,
+              21.0
+            ],
+            "pressure_kpa": [
+              101.3,
+              101.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "opposed"
+            ],
+            "n": 2,
+            "outcomes": {
+              "spread": 2
+            }
+          }
         }
       },
       "Ultem_1000": {
         "oxygen_pct": [
-          23.0,
+          19.9,
           24.0
         ],
         "pressure_kpa": [
@@ -196,16 +481,107 @@
           70.3
         ],
         "flow_cm_s": [
-          30.0,
+          0.0,
           30.0
         ],
         "flow_directions": [
           "concurrent"
         ],
-        "n": 2,
+        "n": 8,
         "outcomes": {
-          "spread": 1,
-          "no_spread": 1
+          "no_spread": 4,
+          "spread": 2,
+          "marginal_spread": 2
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              23.0,
+              24.0
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              30.0,
+              30.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "spread": 1,
+              "no_spread": 1
+            }
+          },
+          "0.165": {
+            "oxygen_pct": [
+              19.9,
+              21.0
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "spread": 1,
+              "no_spread": 1
+            }
+          },
+          "0.38": {
+            "oxygen_pct": [
+              21.1,
+              22.0
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "marginal_spread": 1,
+              "no_spread": 1
+            }
+          },
+          "1": {
+            "oxygen_pct": [
+              23.0,
+              23.5
+            ],
+            "pressure_kpa": [
+              70.3,
+              70.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 2,
+            "outcomes": {
+              "marginal_spread": 1,
+              "no_spread": 1
+            }
+          }
         }
       },
       "cellulose_double": {
@@ -229,6 +605,31 @@
           "spread": 14,
           "marginal_spread": 3,
           "no_spread": 1
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              25.0,
+              100.0
+            ],
+            "pressure_kpa": [
+              101.3,
+              101.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "quiescent"
+            ],
+            "n": 18,
+            "outcomes": {
+              "spread": 14,
+              "marginal_spread": 3,
+              "no_spread": 1
+            }
+          }
         }
       },
       "cellulose_thin": {
@@ -253,6 +654,32 @@
           "spread": 30,
           "marginal_spread": 7,
           "no_spread": 4
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              14.0,
+              100.0
+            ],
+            "pressure_kpa": [
+              101.3,
+              101.3
+            ],
+            "flow_cm_s": [
+              0.0,
+              6.75
+            ],
+            "flow_directions": [
+              "opposed",
+              "quiescent"
+            ],
+            "n": 41,
+            "outcomes": {
+              "spread": 30,
+              "marginal_spread": 7,
+              "no_spread": 4
+            }
+          }
         }
       },
       "cotton_jersey": {
@@ -274,6 +701,29 @@
         "n": 1,
         "outcomes": {
           "spread": 1
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              26.2,
+              26.2
+            ],
+            "pressure_kpa": [
+              70.7,
+              70.7
+            ],
+            "flow_cm_s": [
+              20.0,
+              20.0
+            ],
+            "flow_directions": [
+              "concurrent"
+            ],
+            "n": 1,
+            "outcomes": {
+              "spread": 1
+            }
+          }
         }
       },
       "filter_paper": {
@@ -295,6 +745,29 @@
         "n": 4,
         "outcomes": {
           "spread": 4
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              35.0,
+              50.0
+            ],
+            "pressure_kpa": [
+              101.3,
+              202.6
+            ],
+            "flow_cm_s": [
+              0.0,
+              0.0
+            ],
+            "flow_directions": [
+              "quiescent"
+            ],
+            "n": 4,
+            "outcomes": {
+              "spread": 4
+            }
+          }
         }
       },
       "silicone": {
@@ -317,9 +790,33 @@
         "n": 4,
         "outcomes": {
           "no_spread": 4
+        },
+        "by_gravity": {
+          "0": {
+            "oxygen_pct": [
+              22.1,
+              22.1
+            ],
+            "pressure_kpa": [
+              100.0,
+              100.0
+            ],
+            "flow_cm_s": [
+              20.0,
+              20.0
+            ],
+            "flow_directions": [
+              "concurrent",
+              "opposed"
+            ],
+            "n": 4,
+            "outcomes": {
+              "no_spread": 4
+            }
+          }
         }
       }
     }
   },
-  "trained_at": "2026-09-24T21:13:40+00:00"
+  "trained_at": "2026-09-27T15:59:57+00:00"
 }

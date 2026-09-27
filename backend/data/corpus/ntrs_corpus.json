@@ -16,6 +16,38 @@
   ]
  },
  {
+  "ntrs_id": "19710003598",
+  "title": "Apollo 13 Mission Report",
+  "abstract": "The Apollo 13 mission, planned as a lunar landing in the Fra Mauro area, was aborted because of an abrupt loss of service module cryogenic oxygen associated with a fire in one of the two tanks at approximately 56 hours. The lunar module provided the necessary support to sustain a minimum operational condition for a safe return to earth. A circumlunar profile was executed as the most efficient means of earth return, with the lunar module providing power and life support until transfer to the command module just prior to entry. Although the mission was unsuccessful as planned, a lunar flyby and several scientific experiments were completed.",
+  "authors": [],
+  "date": "1970-09-01",
+  "doc_type": "TECHNICAL_MEMORANDUM",
+  "url": "https://ntrs.nasa.gov/citations/19710003598",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/19710003598/downloads/19710003598.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "19720014600",
+  "title": "Space Simulation",
+  "abstract": "The National Aeronautics and Space Administration served as a cosponsor of the Sixth Space Simulation Symposium. These proceedings were published as a NASA Special Publication in order to give the participants and attendees of the conference a permanent record of the material presented and to make the technology of space simulation available to others who may find in this technology solutions to problems extant in their respective fields. Space exploration has posed the most challenging technical difficulties man has yet faced and solved. The technology evolved by the space program has relevance to many other fields, especially to the area of environment control and modification. This latter field promises to be one of extreme importance in this decade. The technology of space simulation has evolved many solutions to problems of a similar nature to those now affecting our environment. NASA is pleased to cooperate with the Institute of Environmental Sciences, the American Institute of Aeronautics and Astronautics, and the American Society for Testing and Materials in advancing the frontiers of knowledge in the important area of space simulation and to make these proceedings available to other areas of science and technology.",
+  "authors": [
+   "John F Clark"
+  ],
+  "date": "1972-05-01",
+  "doc_type": "SPECIAL_PUBLICATION",
+  "url": "https://ntrs.nasa.gov/citations/19720014600",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/19720014600/downloads/19720014600.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
   "ntrs_id": "19780059625",
   "title": "Analytical model of high pressure burning rates in a transient environment",
   "abstract": "A transient ballistics and combustion model is derived to represent the closed vessel experiment that is widely used to characterize the high pressure burning rates of solid propellants. The model is applied to explain why burning rates deduced from the closed vessel are in basic agreement with those measured from an equilibrium strand burner in the case of homogeneous propellants, but differ significantly in the case of nitramine composite propellants. Thermal profile time lag effects become small at high pressure because the burning rates become high. However, the development of the burning surface structure of those nitramine propellants which exhibit shifts in pressure exponent causes the mass burning rate to lag and then exceed the equilibrium value. It is necessary to consider this mechanism in applications dealing with high pressures and pressurization rates.",
@@ -186,6 +218,24 @@
    "microgravity flame spread oxygen flow velocity extinction",
    "microgravity flame spread thin fuel quenching limit",
    "opposed flow flame spread microgravity"
+  ]
+ },
+ {
+  "ntrs_id": "19890018844",
+  "title": "Status of the US Space Station ECLSS and internal TCS",
+  "abstract": "The U.S. Space Station includes many elements and systems. Responsibility for these have been delegated to four NASA centers via a work packaging concept. Marshall Space Flight Center (MSFC) is responsible for work package one (WPOI) which includes the habitation, laboratory modules, the logistic carrier elements, as well as the environmental control and life support system (ECLSS), the internal thermal control system (ITCS), and the internal audio and video systems. Current status of the ECLSS and internal thermal are the subjects of this paper.\n\nThe ECLSS is composed of six subsystem groups: the temperature humidity control, the atmosphere control and supply, the air revitalization, water reclamation and management, fecal waste management, and the fire detection and suppression subsystems. The internal TCS consists of all WP01 elements of passive and active thermal measures. The ECLSS and ITCS provide services for the permanently orbiting pressurized modules as well as the pressurized and unpressurized logistics carriers.\n\nThe logistics carriers are used as ground-to-station ferries for both resupply and initial delivery of selected new equipment and later replacement items. Equipment, which cannot be subjected to the rigors of the space environment, will be carried in the pressurized logistic carrier; while an unpressurized carrier is used to resupply other commodities, such as external fluid consumables. The laboratory module houses the equipment for both payloads and subsystem maintenance and repair. The habitation module is dedicated to providing living and sleeping quarters including a galley, sleeping provisions, hygiene facilities, medical services as well as services for exercise and relaxation. The four nodes that join the two modules at their ends also house electronics as well as work stations and outside viewing cupolas. The airlocks, one providing an emergency hyperbaric chamber capability, are also attached. This assembly constitutes the U.S. provided portion of the initial station. Additional international modules and docking provisions for future attached pressurized payload as well as dual logistic module and growth capabilities are also provided.\n\nThe primary heat rejection mechanism is achieved via a central set of radiators provided by another work package. The interface with the central TCS at the module heat exchangers defines the active control interface boundary of the ITCS with the central TCS.\n\nAll internal cooling of the permanent orbital elements are provided via internal active fluid loops within the elements utilizing water as the transport media. Cabin and equipment cooling are provided by forced air flow and cold plate heat sinks. A special active cooling loop is provided in the laboratory module to accommodate experiments and other payloads. Coatings and insulation are used in conjunction with the active components to passively limit heat losses/gains.\n\nThe most challenging ECLSS new technology issues relate to oxygen and water recovery. Closure of the oxygen loop requires the use of new regenerative CO 2 removal and concentration techniques, CO 2 reduction to convert the CO 2 to water with a waste by-product, and the electrolysis of water to produce breathing oxygen for water recovery. For water recovery three separate loops are currently planned. One loop provides potable water by utilizing a combination of recovered condensate and CO 2 reduction water. A second loop purifies hygiene water from waste from the showers, clothes washer, hygiene/hand wash stations and a dishwasher. The third loop provides hygiene water by the reclamation and purification of urine water.\n\nThis paper outlines the basic services provided by the ECLSS and ITCS and describes the ECLSS functional distribution throughout the pressurized assembly.",
+  "authors": [
+   "R. Humphries",
+   "L. Turner",
+   "J. Reuter",
+   "D. Patterson"
+  ],
+  "date": "1988-12-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/19890018844",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
   ]
  },
  {
@@ -604,6 +654,23 @@
   ],
   "queries": [
    "Solid Surface Combustion Experiment"
+  ]
+ },
+ {
+  "ntrs_id": "19930040901",
+  "title": "Downward Diffusion Flame Spread and Extinction in Variable Gravitational Fields - Lunar and Martian Simulations",
+  "abstract": "This paper describes experimental observations of downward, opposed-flow flame spreading made under partial-gravity conditions aboard NASA research aircraft. Flame spreading and flammability limit behavior of a thin cellulosic fuel tested at normal pressure in oxygen/nitrogen mixtures of 21 percent oxygen, by volume, and below are described over effective acceleration levels ranging from 0.05 to 0.6 times normal earth gravity. Downward burning flammability and flame spread rates are shown to be enhanced by reductions in gravitational acceleration. These data have fire safety implications for the planning of lunar and Martian outposts.",
+  "authors": [
+   "Sacksteder, Kurt R.",
+   "Tien, James S."
+  ],
+  "date": "1993-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/19930040901",
+  "pdf": [],
+  "queries": [
+   "lunar martian gravity flammability",
+   "partial gravity flame spread"
   ]
  },
  {
@@ -1381,7 +1448,25 @@
    "DARTFire radiative flame spread",
    "Mist experiment microgravity",
    "microgravity smoldering",
-   "ignition extinction solid fuel low speed flow microgravity"
+   "ignition extinction solid fuel low speed flow microgravity",
+   "partial gravity flame spread"
+  ]
+ },
+ {
+  "ntrs_id": "19990053966",
+  "title": "NASA Microgravity Combustion Science Program",
+  "abstract": "Combustion has been a subject of increasingly vigorous scientific research for over a century, not surprising considering that combustion accounts for approximately 85% of the world's energy production and is a key element of many critical technologies used by contemporary society. Although combustion technology is vital to our standard of living, it also poses great challenges to maintaining a habitable environment. A major goal of combustion research is production of fundamental (foundational) knowledge that can be used in developing accurate simulations of complex combustion processes, replacing current \"cut-and-try\" approaches and allowing developers to improve the efficiency of combustion devices, to reduce the production of harmful emissions, and to reduce the incidence of accidental uncontrolled combustion. With full understanding of the physics and chemistry involved in a given combustion process, including details of the unit processes and their interactions, physically accurate models which can then be used for parametric exploration of new combustion domains via computer simulation can be developed, with possible resultant definition of radically different approaches to accomplishment of various combustion goals. Effects of gravitational forces on earth impede combustion studies more than they impede most other areas of science. The effects of buoyancy are so ubiquitous that we often do not appreciate the enormous negative impact that they have had on the rational development of combustion science. Microgravity offers potential for major gains in combustion science understanding in that it offers unique capability to establish the flow environment rather than having it dominated by uncontrollable (under normal gravity) buoyancy effects and, through this control, to extend the range of test conditions that can be studied. It cannot be emphasized too strongly that our program is dedicated to taking advantage of microgravity to untangle complications caused by gravity, allowing major strides in our understanding of combustion processes and in subsequent development of improved combustion devices leading to improved quality of life on Earth. Fire and/or explosion events aboard spacecraft could be devastating to international efforts to expand the human presence in space. Testing to date has shown that ignition and flame spread on fuel surfaces (e.g., paper, wire insulation) behave quite differently under partial gravity and microgravity conditions. In addition, fire signatures-i.e., heat release, smoke production, flame visibility, and radiation-are now known to be quite different in reduced gravity environments; this research has provided data to improve the effectiveness of fire prevention practices, smoke and fire detectors, and fire extinguishment systems. The more we can apply our scientific and technological understanding to potential fire behavior in microgravity and partial gravity, the more assurance can be given to those people whose lives depend on the environment aboard spacecraft or eventually on habitats on the Moon or Mars.",
+  "authors": [
+   "Merrill K King"
+  ],
+  "date": "1999-05-18",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/19990053966",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/19990053966/downloads/19990053966.pdf"
+  ],
+  "queries": [
+   "partial gravity flame spread"
   ]
  },
  {
@@ -1634,7 +1719,24 @@
   "pdf": [],
   "queries": [
    "opposed flow flame spread microgravity",
-   "concurrent flow flame spread microgravity"
+   "concurrent flow flame spread microgravity",
+   "partial gravity flame spread"
+  ]
+ },
+ {
+  "ntrs_id": "19990063325",
+  "title": "ECLSS Design for the International Space Station Nodes 2 and 3",
+  "abstract": "The International Space Station (ISS) modules Nodes 2 and 3 are currently under development by Alenia Spazio and the Marshall Space Flight Center (MSFC). The design of the Environmental Control and Life Support Systems (ECLSS) for these two modules have some similarities but many differences. The Node 2 ECLSS provides inter- and intramodule ventilation, temperature and humidity control, fire detection and suppression, and distribution of atmosphere samples, low pressure and recharge oxygen and nitrogen, fuel cell water and wastewater. Design Review 1 was held in March 1998. Fabrication of the ducting, tubing, and support structure is ongoing with Design Review 2 planned for December 1999. In addition to providing the same functions as Node 2, the ECLSS for Node 3 includes carbon dioxide removal, trace contaminant control, atmosphere monitoring, atmosphere pressure control, oxygen generation, urine and potable water processing, waste management, and potable water distribution to support the habitability functions relocated from the U.S. Hab module. Scarring for future incorporation of carbon dioxide reduction is also included. Design Review 1 is planned for July 1999. An overview of each Node's system design as well as issues and challenges are discussed.",
+  "authors": [
+   "Carrasquillo, Robyn L.",
+   "Bertotto, Dario"
+  ],
+  "date": "1999-01-01",
+  "doc_type": "REPRINT",
+  "url": "https://ntrs.nasa.gov/citations/19990063325",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
   ]
  },
  {
@@ -1773,6 +1875,24 @@
   ]
  },
  {
+  "ntrs_id": "20000120278",
+  "title": "Progress in Fire Detection and Suppression Technology for Future Space Missions",
+  "abstract": "Fire intervention technology (detection and suppression) is a critical part of the strategy of spacecraft fire safety. This paper reviews the status, trends, and issues in fire intervention, particularly the technology applied to the protection of the International Space Station and future missions beyond Earth orbit. An important contribution to improvements in spacecraft fire safety is the understanding of the behavior of fires in the non-convective (microgravity) environment of Earth-orbiting and planetary-transit spacecraft. A key finding is the strong influence of ventilation flow on flame characteristics, flammability limits and flame suppression in microgravity. Knowledge of these flow effects will aid the development of effective processes for fire response and technology for fire suppression.",
+  "authors": [
+   "Friedman, Robert",
+   "Urban, David L."
+  ],
+  "date": "2000-09-01",
+  "doc_type": "PREPRINT",
+  "url": "https://ntrs.nasa.gov/citations/20000120278",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20000120278/downloads/20000120278.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
   "ntrs_id": "20010057271",
   "title": "Effect of Marangoni Convection Generated by Voids on Segregation During Low-G and 1-G Solidification",
   "abstract": "Solidification experiments, especially microgravity solidification experiments, are often compromised by the evolution of unwanted voids or bubbles in the melt. Although these voids and/or bubbles are highly undesirable, there is currently no effective means of preventing their formation or of eliminating their adverse effects, particularly during microgravity experiments. Marangoni convection caused by these voids can drastically change the transport processes in the melt. Recent microgravity experiments by Matthiesen (1) Andrews (2) and Fripp (3) are perfect examples of how voids and bubbles can affect the outcome of costly space experiments and significantly increase the level of difficulty in interpreting their results. Formation of bubbles have caused problems in microgravity experiments for a long time. Even in the early Skylab mission an unexpectedly large number of bubbles were detected in the four materials processing experiments reported by Papazian and Wilcox (4). They demonstrated that while during ground-based tests bubbles were seen to detach from the interface easily and float to the top of the melt, in low-gravity tests no detachment from the interface occurred and large voids were grown in the crystal. More recently, the lead-tin-telluride crystal growth experiment of Fripp et al.(3) flown aboard the USMP-3 mission has provided very interesting results. The purpose of the study was to investigate the effect of natural convection on the solidification process by growing the samples at different orientations with respect to the gravitational field. Large pores and voids were found in the three solid crystal samples processed in space. Post-growth characterization of the compositional profiles of the cells indicated considerable levels of mixing even in the sample grown in the hot-on-top stable configuration. The mixing was attributed to thermocapillary convection caused by the voids and bubbles which evolved during growth. Since the thermocapillary convection is orientation-independent, diffusion-controlled growth was not possible in any of the samples, even the top-heated one. These results are consistent with recent studies of thermocapillary convection generated by a bubble on a heated surface undertaken by Kassemi and Rashidnia (5-7) where it is numerically and experimentally shown that the thermocapillary flow generated by a bubble in a model fluid (silicone oil) can drastically modify the temperature field through vigorous mixing of the fluid around it, especially under microgravity conditions.",
@@ -1790,6 +1910,26 @@
   ],
   "queries": [
    "Solid Surface Combustion Experiment"
+  ]
+ },
+ {
+  "ntrs_id": "20010059376",
+  "title": "Upward Flame Spread Over Thin Solids in Partial Gravity",
+  "abstract": "The effects of partial-gravity, reduced pressure, and sample width on upward flame spread over a thin cellulose fuel were studied experimentally and the results were compared to a numerical flame spread simulation. Fuel samples 1-cm, 2-cm, and 4-cm wide were burned in air at reduced pressures of 0.2 to 0.4 atmospheres in simulated gravity environments of 0.1-G, 0.16-G (Lunar), and 0.38-G (Martian) onboard the NASA KC-135 aircraft and in normal-gravity tests. Observed steady flame propagation speeds and pyrolysis lengths were approximately proportional to the gravity level. Flames spread more quickly and were longer with the wider samples and the variations with gravity and pressure increased with sample width. A numerical simulation of upward flame spread was developed including three-dimensional Navier-Stokes equations, one-step Arrhenius kinetics for the gas phase flame and for the solid surface decomposition, and a fuel-surface radiative loss. The model provides detailed structure of flame temperatures, the flow field interactions with the flame, and the solid fuel mass disappearance. The simulation agrees with experimental flame spread rates and their dependence on gravity level but predicts a wider flammable region than found by experiment. Some unique three-dimensional flame features are demonstrated in the model results.",
+  "authors": [
+   "Feier, I. I.",
+   "Shih, H. Y.",
+   "Sacksteder, K. R.",
+   "Tien, J. S."
+  ],
+  "date": "2001-01-01",
+  "doc_type": "PREPRINT",
+  "url": "https://ntrs.nasa.gov/citations/20010059376",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20010059376/downloads/20010059376.pdf"
+  ],
+  "queries": [
+   "partial gravity flame spread"
   ]
  },
  {
@@ -1812,7 +1952,10 @@
    "Mist experiment microgravity",
    "spacecraft fire safety low gravity flammability",
    "microgravity smoldering",
-   "ignition extinction solid fuel low speed flow microgravity"
+   "ignition extinction solid fuel low speed flow microgravity",
+   "partial gravity flame spread",
+   "International Space Station fire detection and suppression",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -1941,7 +2084,9 @@
   "queries": [
    "microgravity flame spread thin fuel quenching limit",
    "opposed flow flame spread microgravity",
-   "concurrent flow flame spread microgravity"
+   "concurrent flow flame spread microgravity",
+   "lunar martian gravity flammability",
+   "partial gravity flame spread"
   ]
  },
  {
@@ -1960,7 +2105,8 @@
    "https://ntrs.nasa.gov/api/citations/20010074017/downloads/20010074017.pdf"
   ],
   "queries": [
-   "Solid Surface Combustion Experiment"
+   "Solid Surface Combustion Experiment",
+   "lunar martian gravity flammability"
   ]
  },
  {
@@ -2035,7 +2181,27 @@
    "https://ntrs.nasa.gov/api/citations/20010074096/downloads/20010074096.pdf"
   ],
   "queries": [
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "lunar martian gravity flammability"
+  ]
+ },
+ {
+  "ntrs_id": "20010074098",
+  "title": "Physical and Chemical Aspects of Fire Suppression in Extraterrestrial Environments",
+  "abstract": "A fire, whether in a spacecraft or in occupied spaces on extraterrestrial bases, can lead to mission termination or loss of life. While the fire-safety record of US space missions has been excellent, the advent of longer duration missions to Mars, the moon, or aboard the International Space Station (ISS) increases the likelihood of fire events, with more limited mission termination options. The fire safety program of NASA's manned space flight program is based largely upon the principles of controlling the flammability of on-board materials and greatly eliminating sources of ignition. As a result, very little research has been conducted on fire suppression in the microgravity or reduced-gravity environment. The objectives of this study are: to obtain fundamental knowledge of physical and chemical processes of fire suppression, using gravity and oxygen concentration as independent variables to simulate various extraterrestrial environments, including spacecraft and surface bases in Mars and moon missions; to provide rigorous testing of analytical models, which include comprehensive descriptions of combustion and suppression chemistry; and to provide basic research results useful for technological advances in fire safety, including the development of new fire-extinguishing agents and approaches, in the microgravity environment associated with ISS and in the partial-gravity Martian and lunar environments.",
+  "authors": [
+   "Takahashi, F.",
+   "Linteris, G. T.",
+   "Katta, V. R."
+  ],
+  "date": "2001-05-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20010074098",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20010074098/downloads/20010074098.pdf"
+  ],
+  "queries": [
+   "lunar martian gravity flammability"
   ]
  },
  {
@@ -2096,6 +2262,24 @@
   "pdf": [],
   "queries": [
    "Mist experiment microgravity"
+  ]
+ },
+ {
+  "ntrs_id": "20030053425",
+  "title": "Research Needs in Fire Safety for the Human Exploration and Utilization of Space: Proceedings and Research Plan",
+  "abstract": "The purpose of the workshop documented in this publication was to bring together personnel responsible for the design and operations of the International Space Station (ISS) and the fire protection research community to review the current knowledge in fire safety relative to spacecraft. From this review, research needs were identified that were then used to formulate a research plan with specific objectives. In this document, I have attempted to capture the very informative and lively discussions that occurred in the plenary sessions and the working groups. I hope that it will be useful to readers and serve as a significant step in assuring fire protection for the crews of current and future spacecraft.",
+  "authors": [
+   "Ruff, Gary A."
+  ],
+  "date": "2003-04-01",
+  "doc_type": "CONFERENCE_PROCEEDINGS",
+  "url": "https://ntrs.nasa.gov/citations/20030053425",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20030053425/downloads/20030053425.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -2214,7 +2398,8 @@
    "Mist experiment microgravity",
    "spacecraft fire safety low gravity flammability",
    "microgravity smoldering",
-   "ignition extinction solid fuel low speed flow microgravity"
+   "ignition extinction solid fuel low speed flow microgravity",
+   "partial gravity flame spread"
   ]
  },
  {
@@ -2387,7 +2572,8 @@
   ],
   "queries": [
    "concurrent flow flame spread microgravity",
-   "Solid Surface Combustion Experiment"
+   "Solid Surface Combustion Experiment",
+   "partial gravity flame spread"
   ]
  },
  {
@@ -2485,7 +2671,25 @@
   "queries": [
    "microgravity flame spread oxygen flow velocity extinction",
    "spacecraft fire safety low gravity flammability",
-   "microgravity smoldering"
+   "microgravity smoldering",
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20040084156",
+  "title": "Most Probable Fire Scenarios in Spacecraft and Extraterrestrial Habitats: Why NASA's Current Test 1 Might Not Always Be Conservative",
+  "abstract": "NASA s current method of material screening determines fire resistance under conditions representing a worst-case for normal gravity flammability - the Upward Flame Propagation Test (Test 1[1]). Its simple pass-fail criteria eliminates materials that burn for more than 12 inches from a standardized ignition source. In addition, if a material drips burning pieces that ignite a flammable fabric below, it fails. The applicability of Test 1 to fires in microgravity and extraterrestrial environments, however, is uncertain because the relationship between this buoyancy-dominated test and actual extraterrestrial fire hazards is not understood. There is compelling evidence that the Test 1 may not be the worst case for spacecraft fires, and we don t have enough information to assess if it is adequate at Lunar or Martian gravity levels.",
+  "authors": [
+   "Olson, S. L."
+  ],
+  "date": "2004-06-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20040084156",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20040084156/downloads/20040084156.pdf"
+  ],
+  "queries": [
+   "lunar martian gravity flammability"
   ]
  },
  {
@@ -2503,7 +2707,8 @@
   "url": "https://ntrs.nasa.gov/citations/20040084168",
   "pdf": [],
   "queries": [
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -2559,6 +2764,23 @@
   ]
  },
  {
+  "ntrs_id": "20040142354",
+  "title": "Combustion and Reacting Systems for Exploration",
+  "abstract": "Contents include the foloving: 1. Spacecraft Fire Prevention, Detection, and Suppression. 2. Advanced Life Support. Air/water revitalization, waste management. 3. In Situ Resource Utilization (ISRU). Fuel/consumables from regolith/atmosphere. 4. Extra vehicular Activity. Air revitalization, power systems (MEMS scale combustors). 5. In-situ Fabrication and Repair.Of these we have the lead responsibility in Fire Safety.",
+  "authors": [
+   "Urban, David L."
+  ],
+  "date": "2004-08-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20040142354",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20040142354/downloads/20040142354.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
   "ntrs_id": "20040161185",
   "title": "Strategic Research to Enable NASA's Exploration Missions Conference and Workshop: Poster Session",
   "abstract": "Reports are presented from volume 2 of the conference titled Strategic Research to Enable NASA's Exploration Missions, poster session. Topics included spacecraft fire suppression and fire extinguishing agents,materials flammability, various topics on the effects of microgravity including crystal growth, fluid mechanics, electric particulate suspension, melting and solidification, bubble formation, the sloshing of liquid fuels, biological studies, separation of carbon dioxide and carbon monoxide for Mars ISRU.",
@@ -2574,7 +2796,8 @@
   "queries": [
    "microgravity flame spread oxygen flow velocity extinction",
    "spacecraft fire safety low gravity flammability",
-   "microgravity smoldering"
+   "microgravity smoldering",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -2597,6 +2820,26 @@
   ]
  },
  {
+  "ntrs_id": "20040161199",
+  "title": "Understanding Material Property Impacts on Co-Current Flame Spread: Improving Understanding Crucial for Fire Safety",
+  "abstract": "The prospect of long-term manned space flight brings fresh urgency to the development of an integrated and fundamental approach to the study of material flammability. Currently, NASA uses two tests, the upward flame propagation test and heat and visible smoke release rate test, to assess the flammability properties of materials to be used in space under microgravity conditions. The upward flame propagation test can be considered in the context of the 2-D analysis of Emmons. This solution incorporates material properties by a \"mass transfer number\", B in the boundary conditions.",
+  "authors": [
+   "Ruff, Gary",
+   "Rangwala, Ali S.",
+   "Buckley, Steven G.",
+   "Torero, Jose L."
+  ],
+  "date": "2004-08-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20040161199",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20040161199/downloads/20040161199.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
   "ntrs_id": "20040161201",
   "title": "Tests of Flammability of Cotton Fabrics and Expected Skin Burns in Microgravity",
   "abstract": "During a shuttle launch and other portions of space flight, astronauts wear specialized flame resistant clothing. However during most of their missions on board the Space Shuttle or International Space Station, astronauts wear ordinary clothing, such as cotton shirts and pants. As the behaviour of flames is considerably different in microgravity than under earth s gravity, fabrics are expected to burn in a different fashion in microgravity than when tested on earth. There is interest in determining how this change in burning behaviour may affect times to second and third degree burn of human skin, and how the results of standard fabric flammability tests conducted under earth s gravity correlate with the expected fire behaviour of textiles in microgravity. A new experimental apparatus was developed to fit into the Spacecraft Fire Safety Facility (SFSF), which is used on NASA s KC-135 low gravity aircraft. The new apparatus was designed to be similar to the apparatus used in standard vertical flammability tests of fabrics. However, rather than using a laboratory burner, the apparatus uses a hot wire system to ignite 200 mm high by 80 mm wide fabric specimens. Fabric temperatures are measured using thermocouples and/or an infrared imaging system, while flame spread rates are measured using real time observations or video. Heat flux gauges are placed between 7 and 13 mm away from the fabric specimen, so that heat fluxes from the burning fabric to the skin can be estimated, along with predicted times required to produce skin burns.",
@@ -2614,6 +2857,85 @@
   ],
   "queries": [
    "spacecraft fire safety low gravity flammability"
+  ]
+ },
+ {
+  "ntrs_id": "20040161216",
+  "title": "Spacecraft Fire Suppression: Testing and Evaluation",
+  "abstract": "The objective of this project is the testing and evaluation of the effectiveness of a variety of fire suppressants and fire-response techniques that will be used in the next generation of spacecraft (Crew Exploration Vehicle, CEV) and planetary habitats. From the many lessons learned in the last 40 years of space travel, there is common agreement in the spacecraft fire safety community that a new fire suppression system will be needed for the various types of fire threats anticipated in new space vehicles and habitats. To date, there is no single fire extinguishing system that can address all possible fire situations in a spacecraft in an effective, reliable, clean, and safe way. The testing conducted under this investigation will not only validate the various numerical models that are currently being developed, but it will provide new design standards on fire suppression that can then be applied to the next generation of spacecraft extinguishment systems. The test program will provide validation of scaling methods by conducting small, medium, and large scale fires. A variety of suppression methods will be tested, such as water mist, carbon dioxide, and nitrogen with single and multiple injection points and direct or distributed agent deployment. These injection methods cover the current ISS fire suppression method of a portable hand-held fire extinguisher spraying through a port in a rack and also next generation spacecraft units that may have a multi-point suppression delivery system built into the design. Consideration will be given to the need of a crew to clean-up the agent and recharge the extinguishers in flight in a long-duration mission. The fire suppression methods mentioned above will be used to extinguish several fire scenarios that have been identified as the most relevant to spaceflight, such as overheated wires, cable bundles, and circuit boards, as well as burning cloth and paper. Further testing will be conducted in which obstructions and ventilation will be added to represent actual spacecraft conditions (e.g., a series of cards in a card rack).",
+  "authors": [
+   "Abbud-Madrid, Angel",
+   "McKinnon, J. Thomas",
+   "Delplanque, Jean-Pierre",
+   "Kailasanath, Kazhikathra",
+   "Gokoglu, Suleyman",
+   "Wu, Ming-Shin"
+  ],
+  "date": "2004-08-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20040161216",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20040161216/downloads/20040161216.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist",
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20040161242",
+  "title": "EPS (Electric Particulate Suspension) Microgravity Technology Provides NASA with New Tools",
+  "abstract": "The Electric Particulate Suspension is a fire safety ignition test system being developed at Iowa State University with NASA support for evaluating combustion properties of powders, powder-gas mixtures, and pure gases in microgravity and gravitational atmospheres (quenching distance, ignition energy, flammability limits). A separate application is the use of EPS technology to control heat transfer in vacuum and space environment enclosures. In combustion testing, ignitable powders (aluminum, magnesium) are introduced in the EPS test cell and ignited by spark, while the addition of inert particles act as quenching media. As a combustion research tool, the EPS method has potential as a benchmark design for quenching powder flames that would provide NASA with a new fire safety standard for powder ignition testing. The EPS method also supports combustion modeling by providing accurate measurement of flame-quenching distance as an important parameter in laminar flame theory since it is closely related to characteristic flame thickness and flame structure. In heat transfer applications, inert powder suspensions (copper, steel) driven by electric fields regulate heat flow between adjacent surfaces enclosures both in vacuum (or gas) and microgravity. This simple E-field control can be particularly useful in space environments where physical separation is a requirement between heat exchange surfaces.",
+  "authors": [
+   "Colver, Gerald M.",
+   "Greene, Nate",
+   "Xu, Hua"
+  ],
+  "date": "2004-08-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20040161242",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20040161242/downloads/20040161242.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20040161243",
+  "title": "Partially Premixed Flame (PPF) Research for Fire Safety",
+  "abstract": "Incipient fires typically occur after the partial premixing of fuel and oxidizer. The mixing of product species into the fuel/oxidizer mixture influences flame stabilization and fire spread. Therefore, it is important to characterize the impact of different levels of fuel/oxidizer/product mixing on flame stabilization, liftoff and extinguishment under different gravity conditions. With regard to fire protection, the agent concentration required to achieve flame suppression is an important consideration. The initial stage of an unwanted fire in a microgravity environment will depend on the level of partial premixing and the local conditions such as air currents generated by the fire itself and any forced ventilation (that influence agent and product mixing into the fire). The motivation of our investigation is to characterize these impacts in a systematic and fundamental manner.",
+  "authors": [
+   "Puri, Ishwar K.",
+   "Aggarwal, Suresh K.",
+   "Lock, Andrew J.",
+   "Hegde, Uday"
+  ],
+  "date": "2004-08-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20040161243",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20040161243/downloads/20040161243.pdf"
+  ],
+  "queries": [
+   "partial gravity flame spread"
+  ]
+ },
+ {
+  "ntrs_id": "20040161244",
+  "title": "Most Probable Fire Scenarios in Spacecraft and Extraterrestrial Habitats: Why NASA's Current Test 1 Might Not Always be Conservative",
+  "abstract": "NASA's current method of material screening determines fire resistance under conditions representing a worst-case for normal gravity flammability - the Upward Flame Propagation Test (Test 1). Its simple pass-fail criteria eliminates materials that burn for more than 12 inches from a standardized ignition source. In addition, if a material drips burning pieces that ignite a flammable fabric below, it fails. The applicability of Test 1 to fires in microgravity and extraterrestrial environments, however, is uncertain because the relationship between this buoyancy-dominated test and actual extraterrestrial fire hazards is not understood. There is compelling evidence that the Test 1 may not be the worst case for spacecraft fires, and we don t have enough information to assess if it is adequate at Lunar or Martian gravity levels.",
+  "authors": [
+   "Olson, S. L."
+  ],
+  "date": "2004-08-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20040161244",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20040161244/downloads/20040161244.pdf"
+  ],
+  "queries": [
+   "lunar martian gravity flammability"
   ]
  },
  {
@@ -2753,6 +3075,36 @@
   ]
  },
  {
+  "ntrs_id": "20050217228",
+  "title": "Summary of Resources for the International Space Station Environmental Control and Life Support System For Core Complete Modules",
+  "abstract": "The Core Complete Environmental Control and Life Support (ECLS) System for the International Space Station (ISS) will consist of components and subsystems in both the United States (U.S.) and International Partner elements which together will perform the functions of Temperature and Humidity Control (THC), Atmosphere Control and Supply (ACS), Atmosphere Revitalization (AR), Water Recovery and Management (WRM), Fire Detection and Suppression (FDS), and Vacuum System (VS) for the station. Due to limited resources available on ISS, detailed attention is given to minimizing and tracking all resources associated with all systems, beginning with estimates during the hardware development phase through measured actuals when flight hardware is built and delivered. A summary of resources consumed by the addition of future U.S. ECLS system hardware to get to Core Complete is presented, including launch weight, average continuous and peak power loads, on-orbit volume and resupply logistics.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2004-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20050217228",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20050217419",
+  "title": "International Space Station (ISS) Node 1 Environmental Control and Life Support (ECLS) System Keep Out Zone On-Orbit Problems",
+  "abstract": "The International Space Station (ISS) Environmental Control and Life Support (ECLS) system performance can be impacted by operations on ISS. This is especially important for the Temperature and Humidity Control (THC) and for the Fire Detection and Suppression (FDS) subsystems. It is also more important for Node 1 since it has become a convenient area for many crew tasks and for stowing hardware prior to Shuttle arrival. This paper will discuss the current requirements for ECLS keep out zones in Node 1; the issues with stowage in Node 1 during Increment 7 and how they impacted the keep out zone requirements; and the solution during Increment 7 and 8 for maintaining the keep out zones in Node 1.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2004-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20050217419",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
   "ntrs_id": "20050217476",
   "title": "Soldering Tested in Reduced Gravity",
   "abstract": "Whether used occasionally for contingency repair or routinely in nominal repair operations, soldering will become increasingly important to the success of future long-duration human space missions. As a result, it will be critical to have a thorough understanding of the service characteristics of solder joints produced in reduced-gravity environments. The National Center for Space Exploration Research (via the Research for Design program), the NASA Glenn Research Center, and the NASA Johnson Space Center are conducting an experimental program to explore the influence of reduced gravity environments on the soldering process. Solder joint characteristics that are being considered include solder fillet geometry, porosity, and microstructural features. Both through-hole (see the drawing and image on the preceding figure) and surface-mounted devices are being investigated. This effort (the low-gravity portion being conducted on NASA s KC-135 research aircraft) uses the soldering hardware currently available on the International Space Station. The experiment involves manual soldering by a contingent of test operators, including both highly skilled technicians and less skilled individuals to provide a skill mix that might be encountered in space mission crews. The experiment uses both flux-cored solder and solid-core solder with an externally applied flux. Other experimental parameters include the type of flux, gravitational level (nominally zero,",
@@ -2771,6 +3123,68 @@
   ],
   "queries": [
    "Solid Surface Combustion Experiment"
+  ]
+ },
+ {
+  "ntrs_id": "20060003630",
+  "title": "The Fluids and Combustion Facility: Enabling the Exploration of Space",
+  "abstract": "The Fluids and Combustion Facility (FCF) is an International Space Station facility designed to support physical and biological research as well as technology experiments in space. The FCF consists of two racks called the Combustion Integrated Rack (CIR) and the Fluids Integrated Rack (FIR). The capabilities of the CIR and the FIR and plans for their utilization will support the President's vision for space exploration. The CIR will accommodate physical research and technology experiments that address needs in the areas of spacecraft fire prevention, detection and suppression, incineration of solid wastes, and power generation. Initial experiments will provide data to support design decisions for exploration spacecraft. The CIR provides a large sealed chamber in a near-weightless environment. The chamber supports many simulated atmospheres including lunar or Martian environments. The FIR will accommodate experiments that address needs for advanced life support, power, propulsion, and spacecraft thermal control systems. The FIR can also serve as a platform for experiments that address human health and performance, medical technologies, and biological sciences. The FIR provides a large volume for payload hardware, reconfigurable diagnostics, customizable software, active rack-level vibration isolation, and data acquisition and management in a nearly uniform temperature environment.",
+  "authors": [
+   "Weiland, Karen J.",
+   "Gati, Frank G.",
+   "Hill, Myron E.",
+   "O'Malley Terence F.",
+   "Zurawski, Robert L."
+  ],
+  "date": "2005-12-01",
+  "doc_type": "TECHNICAL_MEMORANDUM",
+  "url": "https://ntrs.nasa.gov/citations/20060003630",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20060003630/downloads/20060003630.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20060008649",
+  "title": "THE FLUIDS AND COMBUSTION FACILITY: ENABLING THE EXPLORATION OF SPACE",
+  "abstract": "The Fluids and Combustion Facility (FCF) is an International Space Station facility designed to support physical and biological research as well as technology experiments in space. The FCF consists of two racks called the Combustion Integrated Rack (CIR) and the Fluids Integrated Rack (FIR). The capabilities of the CIR and the FIR and plans for their utilization will support the President s vision for space exploration. The CIR will accommodate physical research and technology experiments that address needs in the areas of spacecraft fire prevention, detection and suppression, incineration of solid wastes, and power generation. Initial experiments will provide data to support design decisions for exploration spacecraft. The CIR provides a large sealed chamber in a near-weightless environment. The chamber supports many simulated atmospheres including lunar or Martian environments. The FIR will accommodate experiments that address needs for advanced life support, power, propulsion, and spacecraft thermal control systems. The FIR can also serve as a platform for experiments that address human health and performance, medical technologies, and biological sciences. The FIR provides a large volume for payload hardware, reconfigurable diagnostics, customizable software, active rack-level vibration isolation, and data acquisition and management in a nearly uniform temperature environment.",
+  "authors": [
+   "Weiland, Karen J.",
+   "Gati, Frank G.",
+   "Hill, Myron E.",
+   "OMalley, Terence",
+   "Zurawski, Robert L."
+  ],
+  "date": "2005-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20060008649",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20060008649/downloads/20060008649.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20060013463",
+  "title": "Exploration Spacecraft and Space Suit Internal Atmosphere Pressure and Composition",
+  "abstract": "The design of habitat atmospheres for future space missions is heavily driven by physiological and safety requirements. Lower EVA prebreathe time and reduced risk of decompression sickness must be balanced against the increased risk of fire and higher cost and mass of materials associated with higher oxygen concentrations. Any proposed increase in space suit pressure must consider impacts on space suit mass and mobility. Future spacecraft designs will likely incorporate more composite and polymeric materials both to reduce structural mass and to optimize crew radiation protection. Narrowed atmosphere design spaces have been identified that can be used as starting points for more detailed design studies and risk assessments.",
+  "authors": [
+   "Lange, Kevin",
+   "Duffield, Bruce",
+   "Jeng, Frank",
+   "Campbell, Paul"
+  ],
+  "date": "2005-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20060013463",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20060013463/downloads/20060013463.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -2827,6 +3241,39 @@
   ]
  },
  {
+  "ntrs_id": "20060054003",
+  "title": "Research & Technology 2005",
+  "abstract": "This report selectively summarizes NASA Glenn Research Center's research and technology accomplishments for fiscal year 2005. It comprises 126 short articles submitted by the staff scientists and engineers. The report is organized into three major sections: Programs and Projects, Research and Technology, and Engineering and Technical Services. A table of contents and an author index have been developed to assist readers in finding articles of special interest. This report is not intended to be a comprehensive summary of all the research and technology work done over the past fiscal year. Most of the work is reported in Glenn-published technical reports, journal articles, and presentations prepared by Glenn staff and contractors. In addition, university grants have enabled faculty members and graduate students to engage in sponsored research that is reported at technical meetings or in journal articles. For each article in this report, a Glenn contact person has been identified, and where possible, a reference document is listed so that additional information can be easily obtained. The diversity of topics attests to the breadth of research and technology being pursued and to the skill mix of the staff that makes it possible. For more information, visit Glenn's Web site at http://www.nasa.gov/glenn/. This document is available online (http://www.grc.nasa.gov/WWW/RT/). For publicly available reports, visit the Glenn Technical Report Server (http://gltrs.grc.nasa.gov).",
+  "authors": [],
+  "date": "2006-05-01",
+  "doc_type": "TECHNICAL_MEMORANDUM",
+  "url": "https://ntrs.nasa.gov/citations/20060054003",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20060054003/downloads/20060054003.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20070010766",
+  "title": "Technology Development for Fire Safety in Exploration Spacecraft and Habitats",
+  "abstract": "Fire during an exploration mission far from Earth is a particularly critical risk for exploration vehicles and habitats. The Fire Prevention, Detection, and Suppression (FPDS) project is part of the Exploration Technology Development Program (ETDP) and has the goal to enhance crew health and safety on exploration missions by reducing the likelihood of a fire, or, if one does occur, minimizing the risk to the mission, crew, or system. Within the past year, the FPDS project has been formalized within the ETDP structure and has seen significant progress on its tasks in fire prevention, detection, and suppression. As requirements for Constellation vehicles and, specifically, the CEV have developed, the need for the FPDS technologies has become more apparent and we continue to make strides to infuse them into the Constellation architecture. This paper describes the current structure of the project within the ETDP and summarizes the significant programmatic activities. Major technical accomplishments are identified as are activities planned for FY07.",
+  "authors": [
+   "Ruff, Gary A.",
+   "Urban, David L."
+  ],
+  "date": "2006-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20070010766",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20070010766/downloads/20070010766.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
   "ntrs_id": "20070013692",
   "title": "Microgravity Effects on Combustion of Polymers",
   "abstract": "A viewgraph presentation describing various microgravity effects on the combustion of polymers is shown. The topics include: 1) Major combustion processes and controlling mechanisms in normal and microgravity environments; 2) Review of some buoyancy effects on combustion: melting of thermoplastics; flame strength, geometry and temperature; smoldering combustion; 3) Video comparing polymeric rods burning in normal and microgravity environments; and 4) Relation to spacecraft fire safety of current knowledge of polymers microgravity combustion.",
@@ -2843,6 +3290,95 @@
   ],
   "queries": [
    "microgravity smoldering"
+  ]
+ },
+ {
+  "ntrs_id": "20070013892",
+  "title": "The Microgravity Science Glovebox (MSG), a Resource for Gravity-Dependent Phenomena Research on the International Space Station (ISS)",
+  "abstract": "The Microgravity Science Glovebox (MSG) is a double rack facility aboard the International Space Station (ISS) designed for gravity-dependent phenomena investigation handling. The MSG has been operating in the ISS US Laboratory Module since July 2002. The MSG facility provides an enclosed working area for investigation manipulation and observation in the ISS. The MSG s unique design provides two levels of containment to protect the ISS crew from hazardous operations. Research investigations operating inside the MSG are provided a large 255 liter work volume, 1000 watts of dc power via a versatile supply interface (120,28, +/-12, and 5 Vdc), 1000 watts of cooling capability, video and data recording and real time downlink, ground commanding capabilities, access to ISS Vacuum Exhaust and Vacuum Resource Systems, and gaseous nitrogen supply. With these capabilities, the MSG is an ideal platform for research required to advance the technology readiness levels (TRL) needed for the Crew Exploration Vehicle and the Exploration Initiative. Areas of research that will benefit from investigations in the MSG include thermal management, fluid physics, spacecraft fire safety, materials science, combustion and reacting control systems, in situ fabrication and repair, and advanced life support technologies. This paper will provide a detailed explanation of the MSG facility, a synopsis of the research that has already been accomplished in the MSG, an overview of investigations planning to operate in the MSG, and possible augmentations that can be added to the MSG facility to further enhance the resources provided to investigations.",
+  "authors": [
+   "Spivey, Reggie A.",
+   "Jeter, Linda B.",
+   "Vonk, Chris"
+  ],
+  "date": "2007-01-11",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20070013892",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20070013892/downloads/20070013892.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20070013992",
+  "title": "The Microgravity Science Glovebox (MSG), a Resource for Gravity-Dependent Phenomena Research on the International Space Station (ISS)",
+  "abstract": "The Microgravity Science Glovebox (MSG) is a double rack facility aboard the International Space Station (ISS) designed for gravity-dependent phenomena investigation handling. The MSG has been operating in the ISS US Laboratory Module since July 2002. The MSG facility provides an enclosed working area for investigation manipulation and observation in the ISS. The MSG's unique design provides two levels of containment to protect the ISS crew from hazardous operations. Research investigations operating inside the MSG are provided a large 255 liter work volume, 1000 watts of dc power via a versatile supply interface (120,28, plus or minus 12, and 5 Vdc), 1000 watts of cooling capability, video and data recording and real time downlink, ground commanding capabilities, access to ISS Vacuum Exhaust' and Vacuum Resource 'Systems, and gaseous nitrogen supply. With these capabilities, the MSG is an ideal platform for research required to advance the technology readiness levels (TRL) needed for the Crew Exploration Vehicle and the Exploration Initiative. Areas of research that will benefit from investigations in the MSG include thermal management, fluid physics, spacecraft fire safety, materials science, combustion and reacting control systems, in situ fabrication and repair, and advanced life support technologies. This paper will provide a detailed explanation of the MSG facility, a synopsis of the research that has already been accomplished in the MSG, an overview of investigations planning to operate in the MSG, and possible augmentations that can be added to-the MSG facility to further enhance the resources provided to investigations.",
+  "authors": [
+   "Spivey, Reggie A.",
+   "Jeter, Linda B.",
+   "Vonk, Chris"
+  ],
+  "date": "2007-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20070013992",
+  "pdf": [],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20070018272",
+  "title": "International Space Station Temperature and Humidity Control Subsystem Verification for Node 1",
+  "abstract": "The International Space Station (ISS) Node 1 Environmental Control and Life Support (ECLS) System is comprised of five subsystems: Atmosphere Control and Supply (ACS), Atmosphere Revitalization (AR), Fire Detection and Suppression (FDS), Temperature and Humidity Control (THC), and Water Recovery and Management (WRM). This paper provides a summary of the nominal operation of the Node 1 THC subsystem design. The paper will also provide a discussion of the detailed Element Verification methodologies for nominal operation of the Node 1 THC subsystem operations utilized during the Qualification phase.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2007-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20070018272",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20070018272/downloads/20070018272.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20070018809",
+  "title": "International Space Station Atmosphere Control and Supply, Atmosphere Revitalization, and Water Recovery and Management Subsystem - Verification for Node 1",
+  "abstract": "The International Space Station (ISS) Node 1 Environmental Control and Life Support (ECLS) System is comprised of five subsystems: Atmosphere Control and Supply (ACS), Atmosphere Revitalization (AR), Fire Detection and Suppression (FDS), Temperature and Humidity Control (THC), and Water Recovery and Management (WRM). This paper provides a summary of the nominal operation of the Node 1 ACS, AR, and WRM design and detailed Element Verification methodologies utilized during the Qualification phase for Node 1.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2007-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20070018809",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20070018809/downloads/20070018809.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20070021223",
+  "title": "Crew Exploration Vehicle Environmental Control and Life Support Fire Protection Approach",
+  "abstract": "As part of preparing for the Crew Exploration Vehicle (CEV), the National Aeronautics and Space Administration (NASA) worked on developing the requirements to manage the fire risk. The new CEV poses unique challenges to current fire protection systems. The size and configuration of the vehicle resembles the Apollo capsule instead of the current Space Shuttle or the International Space Station. The smaller free air volume and fully cold plated avionic bays of the CEV requires a different approach in fire protection than the ones currently utilized. The fire protection approach discussed in this paper incorporates historical lessons learned and fire detection and suppression system design philosophy spanning from Apollo to the International Space Station. Working with NASA fire and materials experts, this approach outlines the best requirements for both the closed out area of the vehicle, such as the avionics bay, and the crew cabin area to address the unique challenges due to the size and configuration of the CEV.",
+  "authors": [
+   "Lewis, John F.",
+   "Barido, Richard",
+   "Tuan, George C."
+  ],
+  "date": "2007-01-01",
+  "doc_type": "PREPRINT",
+  "url": "https://ntrs.nasa.gov/citations/20070021223",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20070021223/downloads/20070021223.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
   ]
  },
  {
@@ -2867,6 +3403,25 @@
   ]
  },
  {
+  "ntrs_id": "20070031687",
+  "title": "Gravity-Dependent Combustion and Fluids Research - From Drop Towers to Aircraft to the ISS",
+  "abstract": "Driven by the need for knowledge related to the low-gravity environment behavior of fluids in liquid fuels management, thermal control systems and fire safety for spacecraft, NASA embarked on a decades long research program to understand, accommodate and utilize the relevant phenomena. Beginning in the 1950s, and continuing through to today, drop towers and aircraft were used to conduct an ever broadening and increasingly sophisticated suite of experiments designed to elucidate the underlying gravity-dependent physics that drive these processes. But the drop towers and aircraft afford only short time periods of continuous low gravity. Some of the earliest rocket test flights and manned space missions hosted longer duration experiments. The relatively longer duration low-g times available on the space shuttle during the 1980s and 1990s enabled many specialized experiments that provided unique data for a wide range of science and engineering disciplines. Indeed, a number of STS-based Spacelab missions were dedicated solely to basic and applied microgravity research in the biological, life and physical sciences. Between 1980 and 2000, NASA implemented a vigorous Microgravity Science Program wherein combustion science and fluid physics were major components. The current era of space stations from the MIR to the International Space Station have opened up a broad range of opportunities and facilities that are now available to support both applied research for technologies that will help to enable the future exploration missions and for a continuation of the non-exploration basic research that began over fifty years ago. The ISS-based facilities of particular value to the fluid physics and combustion/fire safety communities are the Fluids and Combustion Facility Combustion Integrated Rack and the Fluids Integrated Rack.",
+  "authors": [
+   "Urban, David L.",
+   "Singh, Bhim S.",
+   "Kohl, Fred J."
+  ],
+  "date": "2007-05-25",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20070031687",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20070031687/downloads/20070031687.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
   "ntrs_id": "20070032922",
   "title": "Transient Numerical Modeling of Catalytic Channels",
   "abstract": "This paper presents a transient model of catalytic combustion suitable for isolated channels and monolith reactors. The model is a lumped two-phase (gas and solid) model where the gas phase is quasi-steady relative to the transient solid. Axial diffusion is neglected in the gas phase; lateral diffusion, however, is accounted for using transfer coefficients. The solid phase includes axial heat conduction and external heat loss due to convection and radiation. The combustion process utilizes detailed gas and surface reaction models. The gas-phase model becomes a system of stiff ordinary differential equations while the solid phase reduces, after discretization, into a system of stiff ordinary differential-algebraic equations. The time evolution of the system came from alternating integrations of the quasi-steady gas and transient solid. This work outlines the numerical model and presents some sensitivity studies on important parameters including internal transfer coefficients, catalytic surface site density, and external heat-loss (if applicable). The model is compared to two experiments using CO fuel: (1) steady-state conversion through an isothermal platinum (Pt) tube and (2) transient propagation of a catalytic reaction inside a small Pt tube. The model requires internal mass-transfer resistance to match the experiments at lower residence times. Under mass-transport limited conditions, the model reasonably predicted exit conversion using global mass-transfer coefficients. Near light-off, the model results did not match the experiment precisely even after adjustment of mass-transfer coefficients. Agreement improved for the first case after adjusting the surface kinetics such that the net rate of CO adsorption increased compared to O2. The CO / O2 surface mechanism came from a sub-set of reactions in a popular CH4 / O2 mechanism. For the second case, predictions improved for lean conditions with increased external heat loss or adjustment of the kinetics as in the first case. Finally, the results show that different initial surface-species distribution leads to different steady-states under certain conditions. These results demonstrate the utility of a lumped two-phase model of a transient catalytic combustor with detailed chemistry.",
@@ -2882,6 +3437,55 @@
   "pdf": [],
   "queries": [
    "Solid Surface Combustion Experiment"
+  ]
+ },
+ {
+  "ntrs_id": "20080013429",
+  "title": "International Space Station Environmental Control and Life Support Emergency Response Verification for Node 1",
+  "abstract": "The International Space Station (ISS) Node 1 Environmental Control and Life Support (ECLS) System is comprised of five subsystems: Atmosphere Control and Supply (ACS), Atmosphere Revitalization (AR), Fire Detection and Suppression (FDS), Temperature and Humidity Control (THC), and Water Recovery and Management (WRM). This paper provides a summary of the Node 1 Emergency Response capability, which includes nominal and off-nominal FDS operation, off nominal ACS operation, and off-nominal THC operation. These subsystems provide the capability to help aid the crew members during an emergency cabin depressurization, a toxic spill, or a fire. The paper will also provide a discussion of the detailed Node 1 ECLS Element Verification methodologies for operation of the Node 1 Emergency Response hardware operations utilized during the Qualification phase.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2008-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20080013429",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20080013594",
+  "title": "An Overview of the Microgravity Science Glovebox (MSG) Facility, and the Gravity-Dependent Phenomena Research Performed in the MSG on the International Space Station (ISS)",
+  "abstract": "The Microgravity Science Glovebox (MSG) is a double rack facility aboard the International Space Station (ISS) designed for gravity-dependent phenomena investigation handling. The MSG has been operating in the ISS US Laboratory Module since July 2002. The MSG facility provides an enclosed working area for investigation manipulation and observation, The MSG's unique design provides two levels of containment to protect the ISS crew from hazardous operations. Research investigations operating inside the MSG are provided a large 255 liter work volume, 1000 watts of dc power via a versatile supply interface (120, 28, +/-12, and 5 Vdc), 1000 watts of cooling capability, video and data recording and real time downlink, ground commanding capabilities, access to ISS Vacuum Exhaust and Vacuum Resource Systems, and gaseous nitrogen supply. With these capabilities, the MSG is an ideal platform for research required to advance the technology readiness levels (TRL) needed for the Crew Exploration Vehicle and the Exploration Initiative. Areas of research that will benefit from investigations in the MSG include thermal management, fluid physics, spacecraft fire safety, materials science, combustion, reaction control systems, in situ fabrication and repair, and advanced life support technologies. This paper will provide a detailed explanation of the MSG facility, a synopsis of the research that has already been accomplished in the MSG and an overview of investigations planning to operate in the MSG. In addition, this paper will address possible changes to the MSG utilization process that will be brought about by the transition to ISS as a National Laboratory.",
+  "authors": [
+   "Spivey, Reggie A.",
+   "Sheredy, William A.",
+   "Flores, Ginger"
+  ],
+  "date": "2008-01-07",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20080013594",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20080013594/downloads/20080013594.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20080014094",
+  "title": "Lessons Learned from the Node 1 Fire Detection and Suppression Subsystem Design",
+  "abstract": "This paper will provide an overview of the International Space Station (ISS) Environmental Control and Life Support (ECLS) design of the Node 1 Fire Detection and Suppression (FDS) subsystem and it will document some of the lessons that have been learned to date for this subsystem.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2008-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20080014094",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
   ]
  },
  {
@@ -2907,6 +3511,37 @@
   ]
  },
  {
+  "ntrs_id": "20090001159",
+  "title": "International Space Station Environmental Control and Life Support System Acceptance Testing for Node 1 Atmosphere Control and Supply Subsystem",
+  "abstract": "The International Space Station (ISS) Node 1 Environmental Control and Life Support (ECLS) System is comprised of five subsystems: Atmosphere Control and Supply (ACS), Atmosphere Revitalization (AR), Fire Detection and Suppression (FDS), Temperature and Humidity Control (THC), and Water Recovery and Management (WRM). This paper provides a summary of the Node 1 ECLS ACS subsystem design and a detailed discussion of the ISS ECLS Acceptance Testing methodology utilized for that subsystem.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2009-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20090001159",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20090006884",
+  "title": "International Space Station United States Laboratory Module Water Recovery Management Subsystem Verification from Flight 5A to Stage ULF2",
+  "abstract": "The International Space Station (ISS) Environmental Control and Life Support (ECLS) system comprises of seven subsystems: Atmosphere Control and Supply (ACS), Atmosphere Revitalization (AR), Fire Detection and Suppression (FDS), Temperature and Humidity Control (THC), Vacuum System (VS), Water Recovery and Management (WRM), and Waste Management (WM). This paper provides a summary of the nominal operation of the United States (U.S.) Laboratory Module WRM design and detailed element methodologies utilized during the Qualification phase of the U.S. Laboratory Module prior to launch and the Qualification of all of the modification kits added to it from Flight 5A up and including Stage ULF2.",
+  "authors": [
+   "Williams, David E.",
+   "Labuda, Laura"
+  ],
+  "date": "2009-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20090006884",
+  "pdf": [],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
   "ntrs_id": "20090014812",
   "title": "Multi-User Droplet Combustion Apparatus - Flame Extinguishment Experiment",
   "abstract": "Multi-User Droplet Combustion Apparatus Flame Extinguishment Experiment (MDCA-FLEX) will assess the effectiveness of fire suppressants in microgravity and quantify the effect of different possible crew exploration atmospheres on fire suppression. The goal of this research is to provide definition and direction for large scale fire suppression tests and selection of the fire suppressant for next generation crew exploration vehicles.",
@@ -2925,6 +3560,248 @@
   ],
   "queries": [
    "Flame Extinguishment Experiment FLEX droplet"
+  ]
+ },
+ {
+  "ntrs_id": "20090020655",
+  "title": "Smoke Detection for the Orion Crew Exploration Vehicle",
+  "abstract": "The Orion Crew Exploration Vehicle (CEV) requires a smoke detector for the detection of particulate smoke products as part of the Fire Detection and Suppression (FDS) system. The smoke detector described in this paper is an adaptation of a mature commercial aircraft design for manned spaceflight. Changes made to the original design include upgrading the materials and electronic to space-qualified parts, and modifying the mechanical design to withstand launch and landing loads. The results of laboratory characterization of the response of the new design to test particles are presented.",
+  "authors": [
+   "Sutin, Brian M.",
+   "Niu, William",
+   "Steiner, George",
+   "O'Hara, William",
+   "Lewis, John F."
+  ],
+  "date": "2009-01-01",
+  "doc_type": "PREPRINT",
+  "url": "https://ntrs.nasa.gov/citations/20090020655",
+  "pdf": [],
+  "queries": [
+   "explicit id"
+  ]
+ },
+ {
+  "ntrs_id": "20090022202",
+  "title": "John F. Kennedy Space Center's Technology Development and Application 2006-2007 Report",
+  "abstract": "Topics covered include: Reversible Chemochromic Hydrogen Detectors; Determining Trajectory of Triboelectrically Charged Particles, Using Discrete Element Modeling; Using Indium Tin Oxide To Mitigate Dust on Viewing Ports; High-Performance Polyimide Powder Coatings; Controlled-Release Microcapsules for Smart Coatings for Corrosion Applications; Aerocoat 7 Replacement Coatings; Photocatalytic Coatings for Exploration and Spaceport Design; New Materials for the Repair of Polyimide Electrical Wire Insulation; Commodity-Free Calibration; Novel Ice Mitigation Methods; Crack Offset Measurement With the Projected Laser Target Device; New Materials for Structural Composites and Protective Coatings; Fire Chemistry Testing of Spray-On Foam Insulation (SOFI); Using Aerogel-Based Insulation Material To Prevent Foam Loss on the Liquid-Hydrogen Intertank; Particle Ejection and Levitation Technology (PELT); Electrostatic Characterization of Lunar Dust; Numerical Analysis of Rocket Exhaust Cratering; RESOLVE Projects: Lunar Water Resource Demonstration and Regolith Volatile Characterization; Tribocharging Lunar Soil for Electrostatic Beneficiation; Numerically Modeling the Erosion of Lunar Soil by Rocket Exhaust Plumes; Trajectory Model of Lunar Dust Particles; Using Lunar Module Shadows To Scale the Effects of Rocket Exhaust Plumes; Predicting the Acoustic Environment Induced by the Launch of the Ares I Vehicle; Measuring Ultrasonic Acoustic Velocity in a Thin Sheet of Graphite Epoxy Composite; Hail Size Distribution Mapping; Launch Pad 39 Hail Monitor Array System; Autonomous Flight Safety System - Phase III; The Photogrammetry Cube; Bird Vision System; Automating Range Surveillance Through Radio Interferometry and Field Strength Mapping Techniques; Next-Generation Telemetry Workstation; GPS Metric Tracking Unit; and Space-Based Range.",
+  "authors": [],
+  "date": "2008-03-03",
+  "doc_type": "TECHNICAL_MEMORANDUM",
+  "url": "https://ntrs.nasa.gov/citations/20090022202",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20090022202/downloads/20090022202.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20100001376",
+  "title": "Fine-Water-Mist Multiple-Orientation-Discharge Fire Extinguisher",
+  "abstract": "A fine-water-mist fire-suppression device has been designed so that it can be discharged uniformly in any orientation via a high-pressure gas propellant. Standard fire extinguishers used while slightly tilted or on their side will not discharge all of their contents. Thanks to the new design, this extinguisher can be used in multiple environments such as aboard low-gravity spacecraft, airplanes, and aboard vehicles that may become overturned prior to or during a fire emergency. Research in recent years has shown that fine water mist can be an effective alternative to Halons now banned from manufacture. Currently, NASA uses carbon dioxide for fire suppression on the International Space Station (ISS) and Halon chemical extinguishers on the space shuttle. While each of these agents is effective, they have drawbacks. The toxicity of carbon dioxide requires that the crew don breathing apparatus when the extinguishers are deployed on the ISS, and Halon use in future spacecraft has been eliminated because of international protocols on substances that destroy atmospheric ozone. A major advantage to the new system on occupied spacecraft is that the discharged system is locally rechargeable. Since the only fluids used are water and nitrogen, the system can be recharged from stores of both carried aboard the ISS or spacecraft. The only support requirement would be a pump to fill the water and a compressor to pressurize the nitrogen propellant gas. This system uses a gaseous agent to pressurize the storage container as well as to assist in the generation of the fine water mist. The portable fire extinguisher hardware works like a standard fire extinguisher with a single storage container for the agents (water and nitrogen), a control valve assembly for manual actuation, and a discharge nozzle. The design implemented in the proof-of-concept experiment successfully extinguished both open fires and fires in baffled enclosures.",
+  "authors": [
+   "Butz, James R.",
+   "Turchi, Craig S.",
+   "Kimball, Amanda",
+   "McKinnon, Thomas",
+   "Riedel, Edward"
+  ],
+  "date": "2010-01-01",
+  "doc_type": "OTHER",
+  "url": "https://ntrs.nasa.gov/citations/20100001376",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20100001376/downloads/20100001376.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist"
+  ]
+ },
+ {
+  "ntrs_id": "20100032918",
+  "title": "CECE: Expanding the Envelope of Deep Throttling Technology in Liquid Oxygen/Liquid Hydrogen Rocket Engines for NASA Exploration Missions",
+  "abstract": "As one of the first technology development programs awarded by NASA under the Vision for Space Exploration, the Pratt & Whitney Rocketdyne (PWR) Deep Throttling, Common Extensible Cryogenic Engine (CECE) program was selected by NASA in November 2004 to begin technology development and demonstration toward a deep throttling, cryogenic engine supporting ongoing trade studies for NASA s Lunar Lander descent stage. The CECE program leverages the maturity and previous investment of a flight-proven hydrogen/oxygen expander cycle engine, the PWR RL10, to develop and demonstrate an unprecedented combination of reliability, safety, durability, throttlability, and restart capabilities in high-energy, cryogenic, in-space propulsion. The testbed selected for the deep throttling demonstration phases of this program was a minimally modified RL10 engine, allowing for maximum current production engine commonality and extensibility with minimum program cost. Four series of demonstrator engine tests have been successfully completed between April 2006 and April 2010, accumulating 7,436 seconds of hot fire time over 47 separate tests. While the first two test series explored low power combustion (chug) and system instabilities, the third test series investigated and was ultimately successful in demonstrating several mitigating technologies for these instabilities and achieved a stable throttling ratio of 13:1. The fourth test series significantly expanded the engine s operability envelope by successfully demonstrating a closed-loop control system and extensive transient modeling to enable lower power engine starting, faster throttle ramp rates, and mission-specific ignition testing. The final hot fire test demonstrated a chug-free, minimum power level of 5.9%, corresponding to an overall 17.6:1 throttling ratio achieved. In total, these tests have provided an early technology demonstration of an enabling cryogenic propulsion concept with invaluable system-level technology data acquisition toward design and development risk mitigation for future lander descent main engines.",
+  "authors": [
+   "Giuliano, Victor J.",
+   "Leonard, Timothy G.",
+   "Lyda, Randy T.",
+   "Kim, Tony S."
+  ],
+  "date": "2010-07-25",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20100032918",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20100032918/downloads/20100032918.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20100032962",
+  "title": "CECE: Expanding the Envelope of Deep Throttling in Liquid Oxygen/Liquid Hydrogen Rocket Engines For NASA Exploration Missions",
+  "abstract": "As one of the first technology development programs awarded by NASA under the Vision for Space Exploration, the Pratt & Whitney Rocketdyne (PWR) Deep Throttling, Common Extensible Cryogenic Engine (CECE) program was selected by NASA in November 2004 to begin technology development and demonstration toward a deep throttling, cryogenic engine supporting ongoing trade studies for NASA s Lunar Lander descent stage. The CECE program leverages the maturity and previous investment of a flight-proven hydrogen/oxygen expander cycle engine, the PWR RL10, to develop technology and demonstrate an unprecedented combination of reliability, safety, durability, throttlability, and restart capabilities in a high-energy cryogenic engine. The testbed selected for the deep throttling demonstration phases of this program was a minimally modified RL10 engine, allowing for maximum current production engine commonality and extensibility with minimum program cost. Three series of demonstrator engine tests, the first in April-May 2006, the second in March-April 2007 and the third in November-December 2008, have demonstrated up to 13:1 throttling (104% to 8% thrust range) of the hydrogen/oxygen expander cycle engine. The first two test series explored a propellant feed system instability (\"chug\") environment at low throttled power levels. Lessons learned from these two tests were successfully applied to the third test series, resulting in stable operation throughout the 13:1 throttling range. The first three tests have provided an early demonstration of an enabling cryogenic propulsion concept, accumulating over 5,000 seconds of hot fire time over 27 hot fire tests, and have provided invaluable system-level technology data toward design and development risk mitigation for the NASA Altair and future lander propulsion system applications. This paper describes the results obtained from the highly successful third test series as well as the test objectives and early results obtained from a fourth test series conducted over March-May 2010",
+  "authors": [
+   "Giuliano, Victor J.",
+   "Leonard, Timothy G.",
+   "Lyda, Randy T.",
+   "Kim, Tony S."
+  ],
+  "date": "2010-07-25",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20100032962",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20100032962/downloads/20100032962.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20100039446",
+  "title": "Commercial Orbital Transportation Cargo Services Environmental Control and Life Support Integration",
+  "abstract": "The International Space Station s (ISS) largest crew and cargo resupply vehicle, the Space Shuttle, will retire in 2011. To help augment ISS resupply and return capability, NASA announced a project to promote the development of Commercial Orbital Transportation Services (COTS) for the ISS in January of 2006. By December of 2008, NASA entered into space act agreements with SpaceX and Orbital Sciences Corporation for COTS development and ISS Commercial Resupply Services (CRS). The intent of CRS is to fly multiple resupply missions each year to ISS with SpaceX s Dragon vehicle providing resupply and return capabilities and Orbital Science Corporation s Cygnus vehicle providing resupply capability to ISS. The ISS program launched an integration effort to ensure that these new commercial vehicles met the requirements of the ISS vehicle and ISS program needs. The Environmental Control and Life Support System (ECLSS) requirements cover basic cargo vehicle needs including maintaining atmosphere, providing atmosphere circulation, and fire detection and suppression. The ISS-COTS integration effort brought unique challenges combining NASA s established processes and design knowledge with the commercial companies new initiatives and limited experience with human space flight. This paper will discuss the ISS ECLS COTS integration effort including challenges, successes, and lessons learned.",
+  "authors": [
+   "Duchesne, Stephanie",
+   "Williams, Dave",
+   "Orozco, Nicole",
+   "Philistine, Cynthia"
+  ],
+  "date": "2010-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20100039446",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20100039446/downloads/20100039446.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20100039627",
+  "title": "International Space Station Environmental Control and Life Support System Acceptance Testing for Node 1 Temperature and Humidity Control Subsystem",
+  "abstract": "The International Space Station (ISS) Node 1 Environmental Control and Life Support (ECLS) System is comprised of five subsystems: Atmosphere Control and Storage (ACS), Atmosphere Revitalization (AR), Fire Detection and Suppression (FDS), Temperature and Humidity Control (THC), and Water Recovery and Management (WRM). This paper will provide a summary of the Node 1 ECLS THC subsystem design and a detailed discussion of the ISS ECLS Acceptance Testing methodology utilized for this subsystem.The International Space Station (ISS) Node 1 Environmental Control and Life Support (ECLS) System is comprised of five subsystems: Atmosphere Control and Storage (ACS), Atmosphere Revitalization (AR), Fire Detection and Suppression (FDS), Temperature and Humidity Control (THC), and Water Recovery and Management (WRM). This paper will provide a summary of the Node 1 ECLS THC subsystem design and a detailed discussion of the ISS ECLS Acceptance Testing methodology utilized for this subsystem.",
+  "authors": [
+   "Williams, David E."
+  ],
+  "date": "2011-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20100039627",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20100039627/downloads/20100039627.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20110012300",
+  "title": "Development of the International Space Station (ISS) Fine Water Mist (FWM) Portable Fire Extinguisher",
+  "abstract": "NASA is developing a Fine Water Mist Portable Fire Extinguisher for use on the International Space Station. The International Space Station presently uses two different types of fire extinguishers: a water foam extinguisher in the Russian Segment, and a carbon dioxide extinguisher in the US Segment and Columbus and Kibo pressurized elements. Changes in emergency breathing equipment make Fine Water Mist operationally preferable. Supplied oxygen breathing systems allow for safe discharge of a carbon dioxide fire extinguisher, without concerns of the crew inhaling unsafe levels of carbon dioxide. But the Portable Breathing Apparatus (PBA) offers no more than 15 minutes of capability, and continued use of hose based supplied oxygen system increases the oxygen content in a fire situation. NASA has developed a filtering respirator cartridge for use in a fire environment. It is qualified to provide up to 90 minutes of capability, and because it is a filtering respirator it does not add oxygen to the environment. The fire response respirator cartridge does not filter carbon dioxide (CO2), so a crew member discharging a CO2 fire extinguisher while wearing this filtering respirator would be at risk of inhaling unsafe levels of CO2. Fine Water Mist extinguishes a fire without creating a large volume of air with reduced oxygen and elevated CO2. From a flight hardware design perspective, the fine water mist fire extinguisher has two major elements: (1) the nozzle and crew interface, and (2) the tank. The nozzle and crew interface has been under development for several years. It has gone through several design iterations, and has been part of more than 400 fire challenge and spray characterizations. The crew and vehicle interface aspects of the design will use the heritage of the CO2 based Portable Fire Extinguisher, to minimize the disruption to the crew and integration impacts to the ISS. The microgravity use environment of the system poses a set of unique design requirements specifically for the tank. The nozzle requirements drive a tank pressure that is 2-5 times higher than any commercially available water mist systems. Microgravity requires deliberate separation of gas and water, facilitated by a bladder, a diaphragm, a piston, or separate tanks. This paper will describe the design details of the tank and the nozzle, and discuss the trade studies that informed the decisions to select the tank and nozzle configuration.",
+  "authors": [
+   "Clements, Anna L."
+  ],
+  "date": "2011-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20110012300",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20110012300/downloads/20110012300.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist"
+  ]
+ },
+ {
+  "ntrs_id": "20110012896",
+  "title": "Developing Standards to Qualify a Fine Water Mist Fire Extinguisher for Human Spaceflight",
+  "abstract": "NASA is developing a Fine Water Mist Portable Fire Extinguisher for use on the International Space Station. The International Space Station presently uses two different types of fire extinguishers: a water foam extinguisher in the Russian Segment, and a carbon dioxide extinguisher in the US Segment and Columbus and Kibo pressurized elements. Changes in emergency breathing equipment make Fine Water Mist operationally preferable. Supplied oxygen breathing systems allow for safe discharge of a carbon dioxide fire extinguisher, without concerns of the crew inhaling unsafe levels of carbon dioxide. But the Portable Breathing Apparatus offers no more than 15 minutes of capability, and continued use of hose based supplied oxygen systems increases the oxygen content in a fire situation. NASA has developed a filtering respirator cartridge for use in a fire environment. It is qualified to provide up to 90 minutes of capability, and because it is a filtering respirator it does not add oxygen to the environment. The fire response respirator cartridge does not filter carbon dioxide, so a crew member discharging a CO2 fire extinguisher while wearing this filtering respirator would be at risk of inhaling unsafe levels of CO2. Fine Water Mist extinguishes a fire without creating a large volume of air with reduced oxygen and elevated CO2. Compared to the carbon dioxide based Portable Fire Extinguisher, the flight qualification of Fine Water Mist systems requires special care. Qualification of the CO2 based Portable Fire Extinguisher began with the assumption that any fire on ISS would be extinguished if the air in the fire environment reached a critical concentration of CO2. Qualification of a CO2 based system requires the developers to make assertions and assumptions about vehicle geometry and the ability of the extinguisher to deliver CO2 in different geometric configurations, but the developers did not need to make assertions or assumptions about the size of the fire, the temperature, or the heat generation rate. Fine Water Mist systems extinguish a fire predominantly by removing heat -- so qualification standards must evaluate geometry, but also temperature, heat transfer, and heat generation rate. This paper outlines and describes the methods used to develop standards used to qualify Fine Water Mist systems for a human spaceflight environment.",
+  "authors": [
+   "Graf, John"
+  ],
+  "date": "2011-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20110012896",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20110012896/downloads/20110012896.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist"
+  ]
+ },
+ {
+  "ntrs_id": "20110023202",
+  "title": "Development of the International Space Station (ISS) Fine Water Mist (FWM) Portable Fire Extinguisher ICES Abstract",
+  "abstract": "NASA is developing a Fine Water Mist (FWM) Portable Fire Extinguisher (PFE) for use on the International Space Station. The International Space Station presently uses two different types of fire extinguishers: a water foam extinguisher in the Russian Segment, and a carbon dioxide extinguisher in the US Segment and Columbus and Kibo pressurized elements. Changes in emergency breathing equipment make Fine Water Mist operationally preferable. Supplied oxygen breathing systems allow for safe discharge of a carbon dioxide fire extinguisher, without concerns of the crew inhaling unsafe levels of carbon dioxide. But the Portable Breathing Apparatus (PBA) offers no more than 15 minutes of capability, and continued use of hose based supplied oxygen system increases the oxygen content in a fire situation. NASA has developed a filtering respirator cartridge for use in a fire environment. It is qualified to provide up to 90 minutes of capability, and because it is a filtering respirator it does not add oxygen to the environment. The fire response respirator cartridge does not filter carbon dioxide (CO2), so a crew member discharging a CO2 fire extinguisher while wearing this filtering respirator would be at risk of inhaling unsafe levels of CO2. FWM extinguishes a fire without creating a large volume of air with reduced oxygen and elevated CO2. The following paper will discuss the unique functional and performance requirements that have been levied on the FWM PFE. In addition, the NASA ISS specific fire standards will be described which were developed to establish acceptable extinguisher performance. The paper will also discuss the flight hardware design. The fin e water mist fire extinguisher has two major elements: (1) the nozzle and crew interface, and (2) the tank. The nozzle and crew interface have been under development for several years. They have gone through several design iterations, and have been part of more than 400 fire challenge and spray characterizations. The crew and vehicle interface aspects of the design will use the heritage of the CO2 based Portable Fire Extinguisher, to minimize the disruption to the crew and integration impacts to the ISS. The microgravity use environment of the system poses a set of unique design requirements specifically for the tank. The nozzle requirements drive a tank pressure that is 2-5 times higher than any commercially available water mist systems. Microgravity requires deliberate separation of gas and water, facilitated by a bladder, a diaphragm, a piston, or separate tanks. This paper will describe status of the project to date, the design details of the tank and the nozzle, and discuss the trade studies that informed the decisions to select the tank and nozzle configuration.",
+  "authors": [
+   "Clements, Anna L.",
+   "Carlile, Christie",
+   "Graf, John",
+   "Young, Gina"
+  ],
+  "date": "2011-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20110023202",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20110023202/downloads/20110023202.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist"
+  ]
+ },
+ {
+  "ntrs_id": "20120015332",
+  "title": "Benefits of a Single-Person Spacecraft for Weightless Operations",
+  "abstract": "Historically, less than 20 percent of crew time related to extravehicular activity (EVA) is spent on productive external work. For planetary operations space suits are still the logical choice; however for safe and rapid access to the weightless environment, spacecraft offer compelling advantages. FlexCraft, a concept for a single-person spacecraft, enables any-time access to space for short or long excursions by different astronauts. For the International Space Station (ISS), going outside is time-consuming, requiring pre-breathing, donning a fitted space suit, and pumping down an airlock. For each ISS EVA this is between 12.5 and 16 hours. FlexCraft provides immediate access to space because it operates with the same cabin atmosphere as its host. Furthermore, compared to the space suit pure oxygen environment, a mixed gas atmosphere lowers the fire risk and allows use of conventional materials and systems. For getting to the worksite, integral propulsion replaces hand-over-hand translation or having another crew member operate the robotic arm. This means less physical exertion and more time at the work site. Possibly more important, in case of an emergency, FlexCraft can return from the most distant point on ISS in less than a minute. The one-size-fits-all FlexCraft means no on-orbit inventory of parts or crew time required to fit all astronauts. With a shirtsleeve cockpit, conventional displays and controls are used, there is no suit trauma and because the work is not strenuous, no rest days are required. Furthermore, there is no need to collect hand tools because manipulators are equipped with force multiplying end-effectors that can deliver the precise torque for the job. FlexCraft is an efficient solution for asteroid exploration allowing all crew to use one vehicle with no risk of contamination. And, because FlexCraft is a vehicle, its design offers better radiation and micro-meteoroid protection than space suits.",
+  "authors": [
+   "Griffin, Brand Norman"
+  ],
+  "date": "2012-07-15",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20120015332",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20120015332/downloads/20120015332.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20120016545",
+  "title": "Cargo Commercial Orbital Transportation Services Environmental Control and Life Support Integration",
+  "abstract": "The International Space Station s (ISS) largest crew and cargo resupply vehicle, the Space Shuttle, retired in 2011. To help augment ISS resupply and return capability, NASA announced a project to promote the development of Commercial Orbital Transportation Services (COTS) for the ISS in January of 2006. By December of 2008, NASA entered into space act agreements with SpaceX and Orbital Sciences Corporation for COTS development and ISS Commercial Resupply Services (CRS). The intent of CRS is to fly multiple resupply missions each year to ISS with SpaceX s Dragon vehicle providing resupply and return capabilities and Orbital Science Corporation s Cygnus vehicle providing resupply capability to ISS. The ISS program launched an integration effort to ensure that these new commercial vehicles met the requirements of the ISS vehicle and ISS program needs. The Environmental Control and Life Support System (ECLSS) requirements cover basic cargo vehicle needs including maintaining atmosphere, providing atmosphere circulation, and fire detection and suppression. The ISS-COTS integration effort brought unique challenges combining NASA s established processes and design knowledge with the commercial companies new initiatives and limited experience with human space flight. This paper will discuss the ISS ECLS COTS integration effort including challenges, successes, and lessons learned.",
+  "authors": [
+   "Duchesne, Stephanie",
+   "Thacker, Karen",
+   "Williams, Dave"
+  ],
+  "date": "2012-01-01",
+  "doc_type": "OTHER",
+  "url": "https://ntrs.nasa.gov/citations/20120016545",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20120016545/downloads/20120016545.pdf"
+  ],
+  "queries": [
+   "International Space Station fire detection and suppression"
+  ]
+ },
+ {
+  "ntrs_id": "20120018019",
+  "title": "Development of the International Space Station (ISS) Fine Water Mist (FWM) Portable Fire Extinguisher",
+  "abstract": "The National Aeronautics and Space Administration (NASA) is developing a Fine Water Mist (FWM) Portable Fire Extinguisher (PFE) for use on the International Space Station (ISS). The ISS presently uses two different types of fire extinguishers: a water foam extinguisher in the Russian Segment, and a carbon dioxide extinguisher in the United States Orbital Segments, which include Columbus and Kibo pressurized elements. Currently, there are operational concerns with the emergency breathing equipment and the carbon dioxide extinguisher. The toxicity of the carbon dioxide requires the crew members to have an oxygen supply present during a fire event, therefore inherently creating an unsafe environment. The FWM PFE extinguishes a fire without creating a hazardous breathing environment for crew members. The following paper will discuss the unique functional and performance requirements that have been levied on the FWM PFE, identify unique microgravity design considerations for liquid and gas systems, as well as discuss the NASA ISS specific fire standards that were developed to establish an acceptable portable fire extinguisher s performance.",
+  "authors": [
+   "Rodriquez, Branelle",
+   "Graf, John",
+   "Carlile, Christie",
+   "Young, GIna"
+  ],
+  "date": "2012-01-01",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20120018019",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20120018019/downloads/20120018019.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist"
   ]
  },
  {
@@ -3006,6 +3883,66 @@
   ]
  },
  {
+  "ntrs_id": "20130010973",
+  "title": "Determination of Survivable Fires",
+  "abstract": "At NASA, there exists no standardized design or testing protocol for spacecraft fire suppression systems (either handheld or total flooding designs). An extinguisher's efficacy in safely suppressing any reasonable or conceivable fire is the primary benchmark. That concept, however, leads to the question of what a reasonable or conceivable fire is. While there exists the temptation to over-size' the fire extinguisher, weight and volume considerations on spacecraft will always (justifiably) push for the minimum size extinguisher required. This paper attempts to address the question of extinguisher size by examining how large a fire a crew member could successfully survive and extinguish in the confines of a spacecraft. The hazards to the crew and equipment during an accidental fire include excessive pressure rise resulting in a catastrophic rupture of the vehicle skin, excessive temperatures that burn or incapacitate the crew (due to hyperthermia), carbon dioxide build-up or other accumulation of other combustion products (e.g. carbon monoxide). Estimates of these quantities are determined as a function of fire size and mass of material burned. This then becomes the basis for determining the maximum size of a target fire for future fire extinguisher testing.",
+  "authors": [
+   "Dietrich, D. L.",
+   "Niehaus, J. E.",
+   "Ruff, G. A.",
+   "Urban, D. L.",
+   "Takahashi, F.",
+   "Easton, J. W.",
+   "Abbott, A. A.",
+   "Graf, J. C."
+  ],
+  "date": "2012-07-15",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20130010973",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20130010973/downloads/20130010973.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20130010991",
+  "title": "Evaluating Material Flammability in Microgravity and Martian Gravity Compared to the NASA Standard Normal Gravity Test",
+  "abstract": "Drop tower tests are conducted at Martian gravity to determine the flammability of three materials compared to previous tests in other normal gravity and reduced gravity environments. The comparison is made with consideration of a modified NASA standard test protocol. Material flammability limits in the different gravity and flow environments are tabulated to determine the factor of safety associated with normal gravity flammability screening. Previous testing at microgravity and Lunar gravity indicated that some materials burned to lower oxygen concentrations in low gravity than in normal gravity, although the low g extinction limit criteria are not the same as 1g due to time constraints in drop testing. Similarly, the data presented in this paper for Martian gravity suggest that there is a gravity level below Earth s at which materials burn more readily than on Earth. If proven for more materials, this may indicate the need to include a factor of safety on 1g flammability limits.",
+  "authors": [
+   "Oslon, Sandra. L.",
+   "Ferkul, Paul"
+  ],
+  "date": "2012-07-15",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20130010991",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20130010991/downloads/20130010991.pdf"
+  ],
+  "queries": [
+   "lunar martian gravity flammability"
+  ]
+ },
+ {
+  "ntrs_id": "20130011664",
+  "title": "Development of the International Space Station Fine Water Mist Portable Fire Extinguisher",
+  "abstract": "The National Aeronautics and Space Administration (NASA) is developing a Fine Water Mist (FWM) Portable Fire Extinguisher (PFE) for use on the International Space Station (ISS). The ISS presently uses two different types of fire extinguishers: a water foam extinguisher in the Russian Segments, and a carbon dioxide extinguisher in the United States Orbital Segments, which include Columbus and Kibo pressurized elements. Currently, there are operational and compatibility concerns with the emergency breathing equipment and the carbon dioxide extinguisher. ISS emergency response breathing equipment does not filter carbon dioxide; therefore, crew members are required to have an oxygen supply present during a fire event since the carbon dioxide PFE creates an unsafe breathing environment. The ISS program recommended a nontoxic fire extinguisher to mitigate this operational risk. The FWM PFE can extinguish a fire without creating a hazardous breathing environment for crewmembers. This paper will discuss the unique functional and performance requirements that have been levied on the FWM PFE, identify unique microgravity design considerations for liquid and gas systems, and discuss the NASA ISS specific fire standards that were developed to establish an acceptable portable fire extinguisher s performance.",
+  "authors": [
+   "Rodriquez, Branelle",
+   "Young, GIna"
+  ],
+  "date": "2013-01-01",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20130011664",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20130011664/downloads/20130011664.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist"
+  ]
+ },
+ {
   "ntrs_id": "20130012832",
   "title": "Flammability Aspects of a Cotton-Fiberglass Fabric in Opposed and Concurrent Airflow in Microgravity",
   "abstract": "Microgravity combustion tests burning fabric samples were performed aboard the International Space Station. The cotton-fiberglass blend samples were mounted inside a small wind tunnel which could impose air flow speeds up to 40 cm/s. The wind tunnel was installed in the Microgravity Science Glovebox which supplied power, imaging, and a level of containment. The effects of air flow speed on flame appearance, flame growth, and spread rates were determined in both the opposed and concurrent flow configuration. For the opposed flow configuration, the flame quickly reached steady spread for each flow speed, and the spread rate was fastest at an intermediate value of flow speed. These tests show the enhanced flammability in microgravity for this geometry, since, in normal gravity air, a flame self-extinguishes in the opposed flow geometry (downward flame spread). In the concurrent flow configuration, flame size grew with time during the tests. A limiting length and steady spread rate were obtained only in low flow speeds ( 10 cm/s) for the short-length samples that fit in the small wind tunnel. For these conditions, flame spread rate increased linearly with increasing flow. This is the first time that detailed transient flame growth data was obtained in purely forced flows in microgravity. In addition, by decreasing flow speed to a very low value (around 1 cm/s), quenching extinction was observed. The valuable results from these long-duration experiments validate a number of theoretical predictions and also provide the data for a transient flame growth model under development.",
@@ -3024,6 +3961,28 @@
   "queries": [
    "opposed flow flame spread microgravity",
    "concurrent flow flame spread microgravity"
+  ]
+ },
+ {
+  "ntrs_id": "20130013749",
+  "title": "Large Scale Flame Spread Environmental Characterization Testing",
+  "abstract": "Under the Advanced Exploration Systems (AES) Spacecraft Fire Safety Demonstration Project (SFSDP), as a risk mitigation activity in support of the development of a large-scale fire demonstration experiment in microgravity, flame-spread tests were conducted in normal gravity on thin, cellulose-based fuels in a sealed chamber. The primary objective of the tests was to measure pressure rise in a chamber as sample material, burning direction (upward/downward), total heat release, heat release rate, and heat loss mechanisms were varied between tests. A Design of Experiments (DOE) method was imposed to produce an array of tests from a fixed set of constraints and a coupled response model was developed. Supplementary tests were run without experimental design to additionally vary select parameters such as initial chamber pressure. The starting chamber pressure for each test was set below atmospheric to prevent chamber overpressure. Bottom ignition, or upward propagating burns, produced rapid acceleratory turbulent flame spread. Pressure rise in the chamber increases as the amount of fuel burned increases mainly because of the larger amount of heat generation and, to a much smaller extent, due to the increase in gaseous number of moles. Top ignition, or downward propagating burns, produced a steady flame spread with a very small flat flame across the burning edge. Steady-state pressure is achieved during downward flame spread as the pressure rises and plateaus. This indicates that the heat generation by the flame matches the heat loss to surroundings during the longer, slower downward burns. One heat loss mechanism included mounting a heat exchanger directly above the burning sample in the path of the plume to act as a heat sink and more efficiently dissipate the heat due to the combustion event. This proved an effective means for chamber overpressure mitigation for those tests producing the most total heat release and thusly was determined to be a feasible mitigation strategy to incorporate into the microgravity experiment.",
+  "authors": [
+   "Clayman, Lauren K.",
+   "Olson, Sandra L.",
+   "Gokoghi, Suleyman A.",
+   "Brooker, John E.",
+   "Ferkul, Paul V.",
+   "Kacher, Henry F."
+  ],
+  "date": "2013-04-01",
+  "doc_type": "TECHNICAL_MEMORANDUM",
+  "url": "https://ntrs.nasa.gov/citations/20130013749",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20130013749/downloads/20130013749.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3100,6 +4059,61 @@
   ]
  },
  {
+  "ntrs_id": "20140006578",
+  "title": "Development of Large-Scale Spacecraft Fire Safety Experiments",
+  "abstract": "The status is presented of a spacecraft fire safety research project that is under development to reduce the uncertainty and risk in the design of spacecraft fire safety systems by testing at nearly full scale in low-gravity. Future crewed missions are expected to be more complex and longer in duration than previous exploration missions outside of low-earth orbit. This will increase the challenge of ensuring a fire-safe environment for the crew throughout the mission. Based on our fundamental uncertainty of the behavior of fires in low-gravity, the need for realistic scale testing at reduced gravity has been demonstrated. To address this gap in knowledge, a project has been established under the NASA Advanced Exploration Systems Program under the Human Exploration and Operations Mission directorate with the goal of substantially advancing our understanding of the spacecraft fire safety risk. Associated with the project is an international topical team of fire experts from other space agencies who conduct research that is integrated into the overall experiment design. The experiments are under development to be conducted in an Orbital Science Corporation Cygnus vehicle after it has undocked from the ISS. Although the experiment will need to meet rigorous safety requirements to ensure the carrier vehicle does not sustain damage, the absence of a crew removes the need for strict containment of combustion products. The tests will be fully automated with the data downlinked at the conclusion of the test before the Cygnus vehicle reenters the atmosphere. A computer modeling effort will complement the experimental effort. The international topical team is collaborating with the NASA team in the definition of the experiment requirements and performing supporting analysis, experimentation and technology development. The status of the overall experiment and the associated international technology development efforts are summarized.",
+  "authors": [
+   "Ruff, Gary A.",
+   "Urban, David",
+   "Fernandez-Pello, A. Carlos",
+   "T'ien, James S.",
+   "Torero, Jose L.",
+   "Legros, Guillaume",
+   "Eigenbrod, Christian",
+   "Smirnov, Nickolay",
+   "Fujita, Osamu",
+   "Cowlard, Adam J.",
+   "Rouvreau, Sebastien",
+   "Minster, Olivier",
+   "Toth, Balazs",
+   "Jomaas, Grunde"
+  ],
+  "date": "2013-07-14",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20140006578",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20140006578/downloads/20140006578.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20140006579",
+  "title": "Evaluation of Low-Gravity Smoke Particulate for Spacecraft Fire Detection",
+  "abstract": "Tests were conducted on the International Space Station to evaluate the smoke particulate size from materials and conditions that are typical of those expected in spacecraft fires. Five different materials representative of those found in spacecraft (Teflon, Kapton, cotton, silicone rubber and Pyrell) were heated to temperatures below the ignition point with conditions controlled to provide repeatable sample surface temperatures and air flow. The air flow past the sample during the heating period ranged from quiescent to 8 cm/s. The effective transport time to the measurement instruments was varied from 11 to 800 seconds to simulate different smoke transport conditions in spacecraft. The resultant aerosol was evaluated by three instruments which measured different moments of the particle size distribution. These moment diagnostics were used to determine the particle number concentration (zeroth moment), the diameter concentration (first moment), and the mass concentration (third moment). These statistics were combined to determine the diameter of average mass and the count mean diameter and by assuming a log-normal distribution, the geometric mean diameter and the geometric standard deviations were also calculated. Smoke particle samples were collected on TEM grids using a thermal precipitator for post flight analysis. The TEM grids were analyzed to determine the particle morphology and shape parameters. The different materials produced particles with significantly different morphologies. Overall the majority of the average smoke particle sizes were found to be in the 200 to 400 nanometer range with the quiescent cases and the cases with increased transport time typically producing with substantially larger particles. The results varied between materials but the smoke particles produced in low gravity were typically twice the size of particles produced in normal gravity. These results can be used to establish design requirements for future spacecraft smoke detectors.",
+  "authors": [
+   "Urban, David",
+   "Ruff, Gary A.",
+   "Mulholland George",
+   "Meyer, Marit",
+   "Yuan, Zeng guang",
+   "Cleary, Thomas",
+   "Yang, Jiann",
+   "Greenberg, Paul",
+   "Bryg, Victoria"
+  ],
+  "date": "2013-05-19",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20140006579",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20140006579/downloads/20140006579.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
   "ntrs_id": "20140006584",
   "title": "Unmanned Vehicle Material Flammability Test",
   "abstract": "Microgravity combustion phenomena have been an active area of research for the past 3 decades however, there have been very few experiments directly studying spacecraft fire safety under low-gravity conditions. Furthermore, none of these experiments have studied sample and environment sizes typical of those expected in a spacecraft fire. All previous experiments have been limited to samples of the order of 10 cm in length and width or smaller. Terrestrial fire safety standards for all other habitable volumes on earth, e.g. mines, buildings, airplanes, ships, etc., are based upon testing conducted with full-scale fires. Given the large differences between fire behavior in normal and reduced gravity, this lack of an experimental data base at relevant length scales forces spacecraft designers to base their designs using 1-g understanding. To address this question a large scale spacecraft fire experiment has been proposed by an international team of investigators. This poster presents the objectives, status and concept of this collaborative international project to examine spacecraft material flammability at realistic scales. The concept behind this project is to utilize an unmanned spacecraft such as Orbital Cygnus vehicle after it has completed its delivery of cargo to the ISS and it has begun its return journey to earth. This experiment will consist of a flame spread test involving a meter scale sample ignited in the pressurized volume of the spacecraft and allowed to burn to completion while measurements are made. A computer modeling effort will complement the experimental effort. Although the experiment will need to meet rigorous safety requirements to ensure the carrier vehicle does not sustain damage, the absence of a crew removes the need for strict containment of combustion products. This will facilitate the examination of fire behavior on a scale that is relevant to spacecraft fire safety and will provide unique data for fire model validation. This will be the first opportunity to examine microgravity flame behavior at scales approximating a spacecraft fire.",
@@ -3127,6 +4141,31 @@
   ],
   "queries": [
    "spacecraft fire safety low gravity flammability"
+  ]
+ },
+ {
+  "ntrs_id": "20140006585",
+  "title": "Evaluation of Low-Gravity Smoke Particulate for Spacecraft Fire Detection",
+  "abstract": "Tests were conducted on the International Space Station to evaluate the smoke particulate size from materials and conditions that are typical of those expected in spacecraft fires. Five different materials representative of those found in spacecraft (Teflon, Kapton, cotton, silicone rubber and Pyrell) were heated to temperatures below the ignition point with conditions controlled to provide repeatable sample surface temperatures and air flow. The air flow past the sample during the heating period ranged from quiescent to 8 cm/s. The effective transport time to the measurement instruments was varied from 11 to 800 seconds to simulate different smoke transport conditions in spacecraft. The resultant aerosol was evaluated by three instruments which measured different moments of the particle size distribution. These moment diagnostics were used to determine the particle number concentration (zeroth moment), the diameter concentration (first moment), and the mass concentration (third moment). These statistics were combined to determine the diameter of average mass and the count mean diameter and by assuming a log-normal distribution, the geometric mean diameter and the geometric standard deviations were also calculated. Smoke particle samples were collected on TEM grids using a thermal precipitator for post flight analysis. The TEM grids were analyzed to determine the particle morphology and shape parameters. The different materials produced particles with significantly different morphologies. Overall the majority of the average smoke particle sizes were found to be in the 200 to 400 nanometer range with the quiescent cases and the cases with increased transport time typically producing with substantially larger particles. The results varied between materials but the smoke particles produced in low gravity were typically twice the size of particles produced in normal gravity. These results can be used to establish design requirements for future spacecraft smoke detectors.",
+  "authors": [
+   "Urban, David",
+   "Ruff, Gary A.",
+   "Greenberg, Paul",
+   "Meyer, Marit",
+   "Mulholland, George",
+   "Yuan, Zeng-guang",
+   "Bryg, Victoria",
+   "Cleary, Thomas",
+   "Yang, Jiann"
+  ],
+  "date": "2013-05-19",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20140006585",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20140006585/downloads/20140006585.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3161,6 +4200,23 @@
   ],
   "queries": [
    "Solid Surface Combustion Experiment"
+  ]
+ },
+ {
+  "ntrs_id": "20140008776",
+  "title": "Nuclear Thermal Rocket (NTR) Development Risk Communication",
+  "abstract": "There are clear advantages of development of a Nuclear Thermal Rocket (NTR) for a crewed mission to Mars. NTR for in-space propulsion enables more ambitious space missions by providing high thrust at high specific impulse (approximately 900 sec) that is 2 times the best theoretical performance possible for chemical rockets. Missions can be optimized for maximum payload capability to take more payload with reduced total mass to orbit; saving cost on reduction of the number of launch vehicles needed. Or missions can be optimized to minimize trip time significantly to reduce the deep space radiation exposure to the crew. NTR propulsion technology is a game changer for space exploration. However, \"NUCLEAR\" is a word that is feared and vilified by some groups and the hostility towards development of any nuclear systems can meet great opposition by the public as well as from national leaders and people in authority. Communication of nuclear safety will be critical to the success of the development of the NTR. Why is there a fear of nuclear? A bomb that can level a city is a scary weapon. The first and only times the Nuclear Bomb was used in a war was on Hiroshima and Nagasaki during World War 2. The \"Little Boy\" atomic bomb was dropped on Hiroshima on August 6, 1945 and the \"Fat Man\" on Nagasaki 3 days later on August 9th. Within the first 4 months of bombings, 90- 166 thousand people died in Hiroshima and 60-80 thousand died in Nagasaki. It is important to note for comparison that over 500 thousand people died and 5 million made homeless due to strategic bombing (approximately 150 thousand tons) of Japanese cities and war assets with conventional non-nuclear weapons between 1942- 1945. A major bombing campaign of \"firebombing\" of Tokyo called \"Operation Meetinghouse\" on March 9 and 10 consisting of 334 B-29's dropped approximately1,700 tons of bombs around 16 square mile area and over 100 thousand people have been estimated to have died. The declaration of death is very clear for conventional weapons and then the declaration of death due to radiation becomes vague and unclear. This may have been due to people mis-understanding the dangers and effects of radiation when assessing the damage and harm to people initially, but it is also become insidious when expressing opposition to nuclear energy. A nuclear radiation accident can be scary due to the power involved and the fear of radiation release. The International Atomic Energy Agency defines a nuclear and radiation accident a \"an event that has led to significant consequences to people, the environment or the facility.\" There have been 3 commercial nuclear reactor accidents (Chernobyl, Three Mile Island, and Fukushima) that stand out to the public and much of the information about the result and impact to workers, environment, and public can be misleading. Often information is presented without clear correlation with radiation and other pertinent information is left out presenting a very scary situation to affect the emotions of the reader. A very boring but \"critically acclaimed\" movie was made in 1979 called \"The China Syndrome\" starring Jane Fonda and Jack Lemmon. The film was released on March 16, 1979, 12 days before the 3-Mile Island nuclear accident in Pennsylvania. The basis from the movie was from a few nuclear plant incidents and in particular, the Brown's Ferry Alabama Power Plant fire. In one scene from the movie, a physicist Dr. Elliott Lowell played by Donald Hotton states that a China Syndrome event would make \"an area the size of Pennsylvania\" permanently uninhabitable. Real serious nuclear incidents like Chernobyl and Fukushima are often sited to make people fear the consequences of using nuclear power. However, the consequences are at best poorly communicated and at worst fictitiously inflated to instigate social unrest against nuclear power. There is an article being circulated on Facebook with a title \"28 Signs that the (US) West Coast is being absolutely fried with nuclear radiation from Fukushima\" which focus on mis-information and fear mongering. Nuclear power and NTR are powerful resources that can open many doors for future prosperity and capability. With great power comes great responsibility. Radiation and its effects need to be better understood, quantified, and communicated. A human mission to mars has its own risks of deep space radiation and is considered a considerable risk at 400 milli-Sieverts per year in deep space and 245 milli-Sieverts per year on the surface of Mars as measured by the Mars Curiosity mission. Although these quantities of ionizing radiation are within the astronaut career limit, it exceeds the yearly average amounts of ionizing radiation. Astronaut crews have experienced these levels of radiation before, but for durations shorter than a year, and a mission to Mars could possibly be 3 years in length. There is also evidence that people can comfortably handle higher levels of ionizing radiation where the radiation occurs naturally like Ramsar, Iran when people can experience 270 milli-Sieverts per year. A risk posture that the development, test, and flight of an NTR will meet opposition from groups who oppose nuclear energy must be likely and the impact can be sever to the effort. Active risk mitigation must be taken for an NTR full-scale development project. The NTR design must take into account safety for transport and off nominal conditions. Nuclear fuel element must consider containment of fission products and Low Enriched Uranium (LEU) that may meet less opposition should be considered for safety and security reasons. Even though testing was conducted on Rover/NERVA safely and successfully in the 60's with exhaust sent heavenward in to open air, modern testing of NTR must consider full containment and no release of ionizing radiation to the public and must meet the current requirement of no more than 0.1 milli-Sieverts per year to the public. 0.1 milli-Sieverts is equivalent to eating one banana or a 20 hour plane flight. Good communication with the public and regulatory agencies will be essential to show that all effort is applied toward protection to the public and astronauts. The inspiring endeavor to put humans on Mars to study the planet, search for life, and learn more about this Solar System will be full of risks but it will be worth it. NTR will be worth the development effort if it allows humans to explore our Solar System.",
+  "authors": [
+   "Kim, Tony"
+  ],
+  "date": "2014-02-24",
+  "doc_type": "ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20140008776",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20140008776/downloads/20140008776.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3206,6 +4262,24 @@
    "concurrent flow flame spread microgravity",
    "Burning and Suppression of Solids BASS",
    "FLARE fire safety spacecraft"
+  ]
+ },
+ {
+  "ntrs_id": "20140011433",
+  "title": "Large-Scale Spacecraft Fire Safety Experiments in ISS Resupply Vehicles",
+  "abstract": "Our understanding of the fire safety risk in manned spacecraft has been limited by the small scale of the testing we have been able to conduct in low-gravity. Fire growth and spread cannot be expected to scale linearly with sample size so we cannot make accurate predictions of the behavior of realistic scale fires in spacecraft based on the limited low-g testing to date. As a result, spacecraft fire safety protocols are necessarily very conservative and costly. Future crewed missions are expected to be longer in duration than previous exploration missions outside of low-earth orbit and accordingly, more complex in terms of operations, logistics, and safety. This will increase the challenge of ensuring a fire-safe environment for the crew throughout the mission. Based on our fundamental uncertainty of the behavior of fires in low-gravity, the need for realistic scale testing at reduced gravity has been demonstrated. To address this concern, a spacecraft fire safety research project is underway to reduce the uncertainty and risk in the design of spacecraft fire safety systems by testing at nearly full scale in low-gravity. This project is supported by the NASA Advanced Exploration Systems Program Office in the Human Exploration and Operations Mission Directorate. The activity of this project is supported by an international topical team of fire experts from other space agencies to maximize the utility of the data and to ensure the widest possible scrutiny of the concept. The large-scale space flight experiment will be conducted on three missions; each in an Orbital Sciences Corporation Cygnus vehicle after it has deberthed from the ISS. Although the experiment will need to meet rigorous safety requirements to ensure the carrier vehicle does not sustain damage, the absence of a crew allows the fire products to be released into the cabin. The tests will be fully automated with the data downlinked at the conclusion of the test before the Cygnus vehicle reenters the atmosphere. The international topical team is collaborating with the NASA team in the definition of the experiment requirements and performing supporting analysis, experimentation and technology development.",
+  "authors": [
+   "Ruff, Gary A.",
+   "Urban, David"
+  ],
+  "date": "2013-11-07",
+  "doc_type": "PRESENTATION",
+  "url": "https://ntrs.nasa.gov/citations/20140011433",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20140011433/downloads/20140011433.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3417,6 +4491,23 @@
   ]
  },
  {
+  "ntrs_id": "20160006356",
+  "title": "HESTIA Commodities Exchange Pallet and Sounding Rocket Test Stand",
+  "abstract": "During my Spring 2016 internship, my two major contributions were the design of the Commodities Exchange Pallet and the design of a test stand for a 100 pounds-thrust sounding rocket. The Commodities Exchange Pallet is a prototype developed for the Human Exploration Spacecraft Testbed for Integration and Advancement (HESTIA) program. Under the HESTIA initiative the Commodities Exchange Pallet was developed as a method for demonstrating multi-system integration thru the transportation of In-Situ Resource Utilization produced oxygen and water to a human habitat. Ultimately, this prototype's performance will allow for future evaluation of integration, which may lead to the development of a flight capable pallet for future deep-space exploration missions. For HESTIA, my main task was to design the Commodities Exchange Pallet system to be used for completing an integration demonstration. Under the guidance of my mentor, I designed, both, the structural frame and fluid delivery system for the commodities pallet. The fluid delivery system includes a liquid-oxygen to gaseous-oxygen system, a water delivery system, and a carbon-dioxide compressors system. The structural frame is designed to meet safety and transportation requirements, as well as the ability to interface with the ER division's Portable Utility Pallet. The commodities pallet structure also includes independent instrumentation oxygen/water panels for operation and system monitoring. My major accomplishments for the commodities exchange pallet were the completion of the fluid delivery systems and the structural frame designs. In addition, parts selection was completed in order to expedite construction of the prototype, scheduled to begin in May of 2016. Once the commodities pallet is assembled and tested it is expected to complete a fully integrated transfer demonstration with the ISRU unit and the Environmental Control and Life Support System test chamber in September of 2016. In addition to the development of the Commodities Exchange Pallet, I also assisted in preparation for testing the upper stage of a sounding rocket developed as a Center Innovation Fund project. The main objective of this project is to demonstrate the integration between a propulsion system and a solid oxide fuel cell (SOFC). The upper stage and SOFC are scheduled to complete an integrated test in August of 2016. As part of preparation for scheduled testing, I was responsible for designing the upper stage's test stand/support structure and main engine plume deflector to be used during hot-fire testing (fig. 3). The structural components of the test stand need to meet safety requirements for operation of the propulsion system, which consist of a 100 pounds-thrust main engine and two 15 pounds-thrust reaction control thrusters. My main accomplishment for this project was the completion of the design and the parts selection for construction of the structure, scheduled to begin late April of 2016.",
+  "authors": [
+   "Chaparro, Javier "
+  ],
+  "date": "2013-04-08",
+  "doc_type": "OTHER",
+  "url": "https://ntrs.nasa.gov/citations/20160006356",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20160006356/downloads/20160006356.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
   "ntrs_id": "20160010292",
   "title": "Spacecraft Fire Safety Demonstration",
   "abstract": "A presentation of the Saffire Experiment goals and scientific objectives for the Joint CSA/ESA/JAXA/NASA Increments 47 and 48 Science Symposium. The purpose of the presentation is to inform the ISS Cadre and the other investigators of the Saffire goals and objectives to enable them to best support a successful Saffire outcome.",
@@ -3472,7 +4563,8 @@
   ],
   "queries": [
    "Saffire spacecraft fire experiment",
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3492,7 +4584,8 @@
   ],
   "queries": [
    "Saffire spacecraft fire experiment",
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3630,6 +4723,30 @@
   ]
  },
  {
+  "ntrs_id": "20180005251",
+  "title": "Orion Portable Fire Extinguisher Performance Testing Against a Laptop Lithium-Ion Battery Stored-Energy Fire-Method, Magnesium Fires, and Combustion By-Product Toxicity",
+  "abstract": "As part of the qualification of the International Space Station (ISS) fine water mist portable fire extinguisher (PFE), several test methods were developed to determine firefighting capability against stored-energy sources. The most challenging of these devised stored-energy fire test methods proved to be the Lithium-ion (Li-ion) battery fire test scenario. The Orion crew capsule will utilize a different PFE technology from ISS (water spray rather than water mist), which spurred the need for the same type of evaluation focused on the sources of stored energy slated for use on Orion. Laptops were identified as a realistic source for stored-energy fires, requiring a modified Li-ion battery fire test scenario. In addition to open test cell (ambient oxygen concentration) testing to evaluate new proposed PFE performance, sealed chamber (20.9% and elevated oxygen concentration) testing was also performed. Chamber testing included combustion product sampling at various fire progression points for analysis and application to Orion emergency equipment design and response planning. The PFE stored-energy fire test methodology was modified and testing performed. Initial tests indicated ignition of the laptop magnesium laptop cases was possible. Additional tests were performed to characterize the laptop magnesium case fire behavior in various configurations. The new water spray PFE technology proved effective in extinguishing laptop stored-energy fires, and much was learned in the way these types of fires progressed. Findings indicate potential laptop magnesium case ignition mitigation strategies need to be further investigated.",
+  "authors": [
+   "Harper, Susana A.",
+   "Juarez, Alfredo",
+   "Woods, Brenton L.",
+   "Beeson, Harold D.",
+   "Coan-Skow, Mary R.",
+   "Nagel, Christopher R.",
+   "Casper, Stephanie E.",
+   "Tarver, Sterling B."
+  ],
+  "date": "2018-07-08",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20180005251",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20180005251/downloads/20180005251.pdf"
+  ],
+  "queries": [
+   "ISS portable fire extinguisher water mist"
+  ]
+ },
+ {
   "ntrs_id": "20190033433",
   "title": "Infrared Measurements of Forward Heat Conduction during Simulated Microgravity Flame Spread in the Narrow Channel Apparatus",
   "abstract": "An infrared (IR) camera provides a way of examining temperature trends associated with simulated microgravity flame spread in the Narrow Channel Apparatus (NCA). The IR camera measures the surface temperature of solid poly methyl methacrylate (PMMA) fuel. These tests examine the forward conduction of heat ahead of the flame front in the non-thermally thin fuel.The NCA is a combustion wind tunnel that simulates a microgravity flame spread environment by employing a narrow gap between the fuel and ceiling of the device, limiting the effects of buoyancy. Test conditions of a 5 mm gap, mean opposed flow velocity of 15 cm/s, and fuel thickness of 3 mm are used.PMMA is selected as the fuel due to repeatability of test results, ease of computational modeling, and known combustion mechanics. Using specific lens and bandpass filter combinations the PMMA can be imaged as effectively opaque. The spectral emissivity for PMMA was calculated and incorporated into the calibration of the camera.Surface temperatures from the IR camera are compared to results from thermocouples embedded in the surface of the fuel. The IR camera results show that nontrivial forward conduction occurs during tests, and therefore must be included in computational models of the process.",
@@ -3694,6 +4811,25 @@
    "concurrent flow flame spread microgravity",
    "Saffire spacecraft fire experiment",
    "spacecraft fire safety low gravity flammability"
+  ]
+ },
+ {
+  "ntrs_id": "20205000063",
+  "title": "Spacecraft Fire Safety Technology Development Plan For Exploration Missions",
+  "abstract": "To date, NASA\u2019s spaceflight operations in the past 5 decades have been limited to a narrow range of conditions from a fire safety perspective. The currently anticipated missions outside of low earth orbit will substantially expand this parameter space to include, extended durations, dormancy intervals, increased oxygen concentrations, partial gravity conditions and the presence of surface dust. All of these changes can have significant impacts on fire safety system design and operations. The overall state of understanding is discussed in this paper along with the identification of the needs for spacecraft fire safety technology development. These needs have been assembled into a roadmap maintained by the Environmental Control and Life Support System Capability Leadership Team that has evolved as the exploration mission concepts have changed. This roadmap continues to communicate the spacecraft fire safety needs for exploration and guide technology development efforts. This paper summarizes the major recent developments in our understanding of spacecraft fire behavior and mitigation. A review of the major technology development needs and discussion of their objectives, status, and future plans is presented. The plan for transitioning knowledge, hardware, and modeling capability resulting from these development efforts to specific exploration vehicle programs and missions is also discussed.",
+  "authors": [
+   "Gary A Ruff",
+   "David L Urban",
+   "Daniel L Dietrich"
+  ],
+  "date": "",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20205000063",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20205000063/downloads/ICES-2020_173%20Fire%20Safety%20revised%20final%20manuscript%20-%202020%2007%2020.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3820,7 +4956,9 @@
   ],
   "queries": [
    "concurrent flow flame spread microgravity",
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "partial gravity flame spread",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3893,7 +5031,9 @@
   ],
   "queries": [
    "concurrent flow flame spread microgravity",
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "partial gravity flame spread",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -3938,7 +5078,8 @@
    "https://ntrs.nasa.gov/api/citations/20210020516/downloads/Fire%20on%20the%20Moon-Overview%20charts-v1.pdf"
   ],
   "queries": [
-   "Solid Surface Combustion Experiment"
+   "Solid Surface Combustion Experiment",
+   "partial gravity flame spread"
   ]
  },
  {
@@ -3976,6 +5117,55 @@
   ]
  },
  {
+  "ntrs_id": "20210022402",
+  "title": "Topical: Solid Fuel Combustion in Partial and Micro-Gravity ",
+  "abstract": "The risk of fire remains an ever-present danger in spaceflight. Most fire safety hazards originate in or eventually involve solid fuels, whether they be cellulosic (e.g., cotton fabric), hydrocarbons (e.g., plastics) or high-energy density electrode materials (e.g., batteries). A key approach to ensuring safety has been to focus on reducing the potential flammability of these materials \u2013 achieved by limiting their ignitability, potential for flame spread, and ultimate heat-release potential if ignited [1-3]. This approach has been relatively effective despite several close calls [4].  The limits of our understanding, however, are continually being challenged as future spaceflight missions incorporate partial gravity, enhanced oxygen, new types and classes of materials (e.g., composites), and higher energy-density batteries. This presents both an exciting scientific opportunity to enhance our understanding of solid fuel combustion processes while also posing a dire threat to future long-duration missions to the Moon and Mars.",
+  "authors": [
+   "Michael Gollner",
+   "Indrek Wichman",
+   "Ya-Ting Liao",
+   "Luca Carmignani",
+   "Erica Belmont",
+   "Subrata Bhattacharjee",
+   "John de Ris",
+   "Daniel Dietrich",
+   "Christian Eigenbrod",
+   "Makoto Endo",
+   "Carlos Fernandez-Pello",
+   "Claire Fortenberry",
+   "Augustin Guibaud",
+   "Michael Johnston",
+   "Grunde Jomaas",
+   "Amanda Kimball",
+   "Sara McAllister",
+   "Randall McDermott",
+   "Fletcher Miller",
+   "Justin Niehaus",
+   "Vedha Nayagam",
+   "Sandra Olson",
+   "Rosa Padilla",
+   "James Quintiere",
+   "Guillermo Rein",
+   "Paul Ronney",
+   "Sarah Scott",
+   "Albert Simeoni",
+   "Ali Tohidi",
+   "James Urban",
+   "Qingsheng Wang",
+   "Forman Williams",
+   "Jiann Yang"
+  ],
+  "date": "2021-10-31",
+  "doc_type": "WHITE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20210022402",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20210022402/downloads/217-_GollnerMichaelJ.pdf"
+  ],
+  "queries": [
+   "partial gravity flame spread"
+  ]
+ },
+ {
   "ntrs_id": "20210022542",
   "title": "Recent Research on Flames of Gaseous Fuel Aboard the International Space Station ",
   "abstract": "Research for a set of six independent experiments with flames of gaseous fuels has been carried out on the International Space Station (ISS) since 2017 using the Combustion Integrated Rack (CIR) and a set of modular hardware.  While ISS testing has been completed for most of the studies in the Advanced Combustion via Microgravity Experiments (ACME) project, it is expected to continue into 2022.  The objectives and selected findings for each investigation are briefly discussed after a short review of the advantages of studying combustion in microgravity, previous research conducted in space, and the experimental hardware and its operation.",
@@ -3990,6 +5180,26 @@
   ],
   "queries": [
    "Advanced Combustion via Microgravity Experiments ACME"
+  ]
+ },
+ {
+  "ntrs_id": "20210023340",
+  "title": "Topical: Recommendations for Fire Extinguisher Research for Crewed Missions",
+  "abstract": "Fire extinguishers are a necessary component of crewed space missions, providing a measure of fire safety beyond material selection and other controls. The elevated oxygen levels and presence of reduced but significant buoyancy during proposed Lunar and Martian missions presents both elevated fire risk and challenges in understanding and designing for extinguisher performance. This white paper proposes experimental and modeling research into the performance of fire extinguishers in Lunar and Martian atmosphere and gravity environments, exploring the use of additives to water extinguishers and research into alternative extinguishing materials, and exploration into the use of Froude number scaling relationships, used in terrestrial water extinguishing research and design, in the Lunar and Martian environment.",
+  "authors": [
+   "John W Easton",
+   "Gordon Berger",
+   "Claire Fortenberry",
+   "Rosa Padilla"
+  ],
+  "date": "2021-10-31",
+  "doc_type": "WHITE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20210023340",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20210023340/downloads/20%20-EastonJohnW%20-Final.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -4031,7 +5241,8 @@
   ],
   "queries": [
    "opposed flow flame spread microgravity",
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "partial gravity flame spread"
   ]
  },
  {
@@ -4183,7 +5394,8 @@
    "https://ntrs.nasa.gov/api/citations/20240015018/downloads/ASGSR%20Poster%202024.pdf"
   ],
   "queries": [
-   "spacecraft fire safety low gravity flammability"
+   "spacecraft fire safety low gravity flammability",
+   "exploration spacecraft fire safety design"
   ]
  },
  {
@@ -4201,6 +5413,26 @@
   ],
   "queries": [
    "flammability limits microgravity PMMA"
+  ]
+ },
+ {
+  "ntrs_id": "20250010653",
+  "title": "Lunar Combustion Investigation: Flammability Results from a Rotating Sounding Rocket",
+  "abstract": "The Lunar Combustion Investigation (LUCI) demonstrates the feasibility of conducting material flammability experiments in partial-g.  A spinning Blue Origin New Shepard sounding rocket yields Lunar gravity by using centrifugal acceleration.  These are the first-ever, extended-duration (greater than 25 seconds) combustion tests performed in simulated Lunar gravity.  A steady vehicle rotation of 11 RPM is established, with an effective radius of rotation of 1.22 m at the experiment location.  Two samples are burned simultaneously in air at normal pressure.  The first sample is a cotton-fiberglass composite fabric sheet and the second a 4-mm diameter rod of acrylic plastic (polymethyl methacrylate).  Flame images from two orthogonal cameras are used to determine flame spread and growth rates, and the burn lasts for over two and a half minutes.  The oxygen concentration in the chamber is measured.  As the burns progress, the oxygen concentration drops, enabling a limiting value for extinction to be defined.  The effect of Coriolis force is discussed.  Results from this experiment are compared to related 1-g work, drop tower tests, aircraft experiments, and modeling.  The results are applicable to NASA\u2019s exploration efforts in that they guide the selection of fire-safe materials and environments and ensure safety of future spacecraft and Lunar habitats.  The data also provides fundamental understanding of fires.  Finally, the experiment is a steppingstone to the ultimate goal of performing burn tests on the Lunar surface in the Flammability of Materials on the Moon (FM2) experiment which is planned to launch in late 2026. ",
+  "authors": [
+   "Paul V Ferkul",
+   "Michael C Johnston",
+   "Nathan Kralik",
+   "Ya-Ting Liao"
+  ],
+  "date": "",
+  "doc_type": "PRESENTATION",
+  "url": "https://ntrs.nasa.gov/citations/20250010653",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20250010653/downloads/ASGSR%202025-LUCI-Ferkul-Presentation-v2-20250010653.pdf"
+  ],
+  "queries": [
+   "partial gravity flame spread"
   ]
  },
  {
@@ -4250,6 +5482,68 @@
   ]
  },
  {
+  "ntrs_id": "20260000641",
+  "title": "Computational Fluid Dynamics Analysis of Flame Dynamics in Partial Gravity Environments in a Rotating Centrifuge",
+  "abstract": "The safety of spacecraft and crew members is a critical concern for space research and exploration missions. It is already known that fire hazards in a microgravity environment present unique challenges, primarily due to the absence of buoyancy, which significantly alters fire behavior. The NASA\u2019s Artemis program, which aims to send humans to the Moon, introduces a new set of challenges due to the Moon partial gravity compared to the Earth. This necessitates a better understanding of fire behavior in partial gravity conditions. However, conducting experiments in true partial gravity environments is challenging, and the use of centrifuges to create artificial partial gravity introduces complications, including the Coriolis force and limitations in chamber size. Consequently, there have been limited studies on flame dynamics in partial gravity. To address these challenges, this research employs Computational Fluid Dynamics (CFD) techniques to investigate flame behavior in a partial gravity environment created by a rotating centrifuge. The numerical model is validated against NASA's previous experiments and provides information on the effects of the Coriolis force and flow recirculation in the chamber. The analysis reveals that the interaction between buoyancy, Coriolis force, and flow recirculation plays a significant role in flame behavior. The flame tilt angle observed in both the experiments and the numerical results is caused by the combined effects of these forces and their variations along the flame length. In conclusion, this research contributes to our understanding of how flames behave in partial gravity environments created by rotating centrifuges. It emphasizes the complexity of flame dynamics in such conditions and provides valuable insights for future centrifuge experiments, with the goal of improving space exploration safety and understanding flame behavior in unique partial gravity environment.",
+  "authors": [
+   "Ankit Sharma",
+   "Arland Zatania Lojo",
+   "Ya-Ting T Liao",
+   "Paul V Ferkul",
+   "Michael C Johnston"
+  ],
+  "date": "2026-04-01",
+  "doc_type": "ACCEPTED_MANUSCRIPT",
+  "url": "https://ntrs.nasa.gov/citations/20260000641",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20260000641/downloads/Centrifuge%20Paper-Comb%20and%20Flame%202025v_Final.pdf",
+   "https://ntrs.nasa.gov/api/citations/20260000641/downloads/0pt3ge%20video.mp4",
+   "https://ntrs.nasa.gov/api/citations/20260000641/downloads/1ge%20video.mp4"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20260000646",
+  "title": "Material Flammability at Lunar and Martian Gravity",
+  "abstract": "",
+  "authors": [
+   "Paul Ferkul",
+   "Nathan Kralik",
+   "Ya-Ting Liao"
+  ],
+  "date": "",
+  "doc_type": "EXTENDED_ABSTRACT",
+  "url": "https://ntrs.nasa.gov/citations/20260000646",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20260000646/downloads/Ferkul-Lunar%20and%20Planetary%20Science%20Conference%202026.pdf"
+  ],
+  "queries": [
+   "lunar martian gravity flammability"
+  ]
+ },
+ {
+  "ntrs_id": "20260001966",
+  "title": "Material Flammability at Lunar and Martian Gravity",
+  "abstract": "",
+  "authors": [
+   "Paul Ferkul",
+   "Nathan Kralik",
+   "Ya-Ting Liao",
+   "Michael Johnston"
+  ],
+  "date": "",
+  "doc_type": "PRESENTATION",
+  "url": "https://ntrs.nasa.gov/citations/20260001966",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20260001966/downloads/Ferkul-Lunar%20and%20Planetary%20Science%20Conf%202026%20v2.pdf"
+  ],
+  "queries": [
+   "lunar martian gravity flammability"
+  ]
+ },
+ {
   "ntrs_id": "20260001992",
   "title": "Heat and Smoke Emission from Tests on the Saffire VI Experiment",
   "abstract": "The hazardous product release results from seven long-duration low-gravity fire tests are presented. These tests were conducted in low-earth orbit aboard a Cygnus spacecraft where the atmosphere pressure and oxygen concentration were varied to examine the effect of exploration atmosphere conditions. All of the samples were 40 cm wide. Four samples were PMMA and were 18 cm long. Two of these samples burned on both sides and the other two sample were attached to a plate that prevented fire on one side. The other three samples were cotton or a composite cotton/fiberglass blend that were 50 cm long. The cabin concentration of CO and CO2 were measured continuously in addition to the aerosol concentration. The aerosol concentration was determined using a light scattering device. The heat release from some of the tests was estimated using oxygen consumption calorimetry by measuring the oxygen consumption and the production of CO and CO2. These data were correlated with distributed temperature measurements in the spacecraft and the pressure rise. Overall, the pressure rise and temperature change were small but the smoke particulate rose to substantial levels and the gaseous products also achieved hazardous levels. ",
@@ -4284,6 +5578,47 @@
   ],
   "queries": [
    "Saffire spacecraft fire experiment"
+  ]
+ },
+ {
+  "ntrs_id": "20260003508",
+  "title": "Flammability Test Method for Materials Intended for Use as Fire Barriers in Crewed Habitats",
+  "abstract": "In some crewed-spacecraft applications, onboard materials are intentionally selected to function as hazard control barriers to prevent powered hardware and/or ignited flammable items from igniting nearby flammable materials by acting as non-breaching, non-flammable containment (e.g., cargo transfer bags, zero gravity stowage racks, and jettison stowage bags on the International Space Station). Historically, flammability self-extinguishment testing of broad acreage or outermost layer materials alone was believed to be sufficient to verify overall flammability compliance. Though required, testing on design features such as threaded seams and zippers was not performed due to the incorrect assumption that flammability performance would not be impacted. However, recent coupon level testing of layups and configurations consisting of multiple materials have revealed that these features may be more susceptible to ignition and fire propagation than the bulk material. Additionally, configurational coupon ignition and propagation testing does not explicitly determine a material\u2019s ability to provide protection to vulnerable flammable hardware. The need to evaluate this gap in assessing material or layup effectiveness as fire barriers between ignition sources and flammable materials led to the development of a new configuration-based fire barrier test. Test setup, relevant configurations, and test validation are discussed. The new barrier test method establishes a configuration for the test apparatus, identifies a conservative ignitor configuration, and defines pass/fail criteria. Test setup, relevant configurations, and test validation are discussed.",
+  "authors": [
+   "Susana Harper",
+   "Stephen Peralta",
+   "Patrick Simpkins",
+   "Morgan B Abney",
+   "Sara Wilson",
+   "Alfredo Juarez",
+   "Emily Hacopian",
+   "Stephen Herald"
+  ],
+  "date": "",
+  "doc_type": "CONFERENCE_PAPER",
+  "url": "https://ntrs.nasa.gov/citations/20260003508",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20260003508/downloads/ICES-2026-155%20Barrier%20Test_FINAL.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
+  ]
+ },
+ {
+  "ntrs_id": "20260008853",
+  "title": "NASA Marshall Space Flight Center Manufacturing and Processes Laboratory",
+  "abstract": "",
+  "authors": [
+   "Lauren B Sipple"
+  ],
+  "date": "",
+  "doc_type": "PRESENTATION",
+  "url": "https://ntrs.nasa.gov/citations/20260008853",
+  "pdf": [
+   "https://ntrs.nasa.gov/api/citations/20260008853/downloads/20260916%20NASA%20Meeting%20with%20University%20of%20Miami%202.pdf"
+  ],
+  "queries": [
+   "exploration spacecraft fire safety design"
   ]
  },
  {

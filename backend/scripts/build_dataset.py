@@ -23,6 +23,12 @@ OUT_CSV = ROOT / "data" / "experiments.csv"
 ATM = 101.3  # kPa per 1 atm (14.7 psia)
 
 SRC = {
+    "20130010991": ("Olson, S.L.; Ferkul, P.V. (2012) Evaluating Material Flammability in Microgravity and Martian Gravity Compared to the NASA Standard Normal Gravity Test. AIAA/ICES",
+                    "https://ntrs.nasa.gov/citations/20130010991"),
+    "20260001966": ("Ferkul, P.; Kralik, N.; Liao, Y.-T.; Johnston, M. (2026) Material Flammability at Lunar and Martian Gravity. Lunar and Planetary Science Conference (presentation)",
+                    "https://ntrs.nasa.gov/citations/20260001966"),
+    "20250010653": ("Ferkul, P.V.; Johnston, M.C.; Kralik, N.; Liao, Y.-T. (2025) Lunar Combustion Investigation (LUCI): Flammability Results from a Rotating Sounding Rocket. ASGSR 2025 (presentation)",
+                    "https://ntrs.nasa.gov/citations/20250010653"),
     "19880006471": ("Olson, S.L. (1987) The Effect of Microgravity on Flame Spread over a Thin Fuel. NASA TM-100195",
                     "https://ntrs.nasa.gov/citations/19880006471"),
     "19890014267": ("Olson, S.L.; Ferkul, P.V.; T'ien, J.S. (1989) An experimental study of opposed flow diffusion flame extinction over a thin fuel in microgravity. NASA TM-101479",
@@ -54,10 +60,10 @@ SRC = {
 rows: list[dict] = []
 
 def add(o2, p_kpa, flow, direction, material, detail, geometry, facility, outcome, outcome_detail,
-        rid, location, quote, notes="", extra_sources=""):
+        rid, location, quote, notes="", extra_sources="", gravity_g=0.0):
     title, url = SRC[rid]
     rows.append(dict(
-        oxygen_pct=o2, pressure_kpa=p_kpa, flow_cm_s=flow, flow_direction=direction,
+        oxygen_pct=o2, pressure_kpa=p_kpa, flow_cm_s=flow, flow_direction=direction, gravity_g=gravity_g,
         material=material, material_detail=detail, geometry=geometry, facility=facility,
         outcome=outcome, outcome_detail=outcome_detail,
         report_id=f"NTRS {rid}", source_url=url, source_title=title,
@@ -182,10 +188,12 @@ for mat, det, geo, o2b, o2e, psia in [
     p = round(psia * 6.89476, 1)
     add(float(o2b), p, 30.0, "concurrent", mat, det, geo, fac, "spread", "0g ULOI: burned for the full test",
         R, "Table 1, p.3 (0g ULOI column)", f"{det.split(',')[0]}: 0g ULOI (burns) {o2b}% O2, {psia} psia, 30 cm/s",
-        notes=f"pressure converted from {psia} psia")
+        notes=f"pressure converted from {psia} psia; same 0g* value re-tabulated in NTRS 20130010991 Table I",
+        extra_sources="https://ntrs.nasa.gov/citations/20130010991")
     add(float(o2e), p, 30.0, "concurrent", mat, det, geo, fac, "no_spread", "0g MOC: flame extinguished",
         R, "Table 1, p.3 (0g MOC column)", f"{det.split(',')[0]}: 0g MOC (extinguishes) {o2e}% O2, {psia} psia, 30 cm/s",
-        notes=f"pressure converted from {psia} psia")
+        notes=f"pressure converted from {psia} psia; same 0g* value re-tabulated in NTRS 20130010991 Table I",
+        extra_sources="https://ntrs.nasa.gov/citations/20130010991")
 
 # ---------------------------------------------------------------------------------------------
 # 5) Saffire large-scale tests in Cygnus. Conditions: ICES-2021-266 (NTRS 20210011521) Table 1
@@ -267,7 +275,143 @@ for o2, atm, sts in [(70, 1.0, "STS-54"), (50, 1.0, "STS-63"), (50, 2.0, "STS-64
         notes="NTRS 19990053971 abstract: 'for thick, flat fuels, the ultimate fate of the flame is extinction rather than steady spread.'",
         extra_sources="https://ntrs.nasa.gov/citations/19990053971")
 
-FIELDS = ["row_id", "oxygen_pct", "pressure_kpa", "flow_cm_s", "flow_direction", "material", "material_detail", "geometry",
+
+# ---------------------------------------------------------------------------------------------
+# 6) PARTIAL GRAVITY AND 1 g (added for the IGNITE-AI Moon / Mars / Earth tabs).
+#    Olson & Ferkul 2012 (NTRS 20130010991) Table I "Limiting Oxygen Molar Concentrations and Oxygen
+#    Margin of Safety for Different Gravity Levels", p.6. Upward (concurrent, buoyant) flame spread,
+#    NO imposed forced flow. Mylar G and Ultem 1000 at 10.2 psia, Nomex HT90-40 at 14.7 psia.
+#    Definitions (p.2, p.4): 1g ULOI = O2 at which the material passes the NASA-STD-6001 Test 1 burn-
+#    length criterion ~half the time -> marginal_spread; 1g MOC = consistently self-extinguishes ->
+#    no_spread; low-g ULOI* = "minimum oxygen concentration where the flame survived the full drop time";
+#    low-g MOC* = "maximum oxygen concentration at which the flame was observed to self-extinguish during
+#    the drop time" -> no_spread. Martian ULOI*: Mylar flame "appeared stable" (p.4) -> spread; Nomex and
+#    Ultem flames "were becoming quite dim and shrinking at the end of the drop" (p.4) -> marginal_spread.
+#    Lunar ULOI* values come from the paper's ref. 8 (Ferkul & Olson 2011) as re-tabulated in Table I
+#    -> spread (survived the full drop time). Gravity levels: Mars 0.380 g and Moon 0.165 g as stated in
+#    NTRS 20000120278 (NASA/TM-2000-210337, p.9) and the paper itself ("Martian gravity (0.38 g Earth)").
+#    Drop-tower low-g tests last only ~5.2 s; the paper warns that low-g and 1g limit criteria differ.
+# ---------------------------------------------------------------------------------------------
+R = "20130010991"
+fac_mars = "NASA GRC 5.18 s Zero Gravity Research Facility + zero-gravity centrifuge (30.8 RPM for Martian g)"
+fac_moon = "Zero-gravity centrifuge in the NASA GRC drop tower (lunar-g data from ref. 8, Ferkul & Olson 2011, as tabulated)"
+fac_1g = "NASA White Sands Test Facility, NASA-STD-6001 Test 1 protocol (hot-wire igniter), upward burning"
+MATS = {
+    "Mylar_G": ("Mylar G PET film, 5 mil (1g tests used Melinex 515, a very similar film)", 10.2),
+    "Ultem_1000": ("Ultem 1000 polyetherimide film, 10 mil", 10.2),
+    "Nomex_HT90-40": ("Nomex HT90-40 fabric, 12 mil, fire-retarded aramid", 14.7),
+}
+T1 = {  # material: (1g ULOI, 1g MOC, Mars ULOI*, Mars MOC*, Lunar ULOI*, Lunar MOC*)  -- Table I, p.6
+    "Mylar_G": (21.2, 20.0, 18.0, 17.0, 15.6, 14.1),
+    "Ultem_1000": (23.5, 23.0, 22.0, 21.1, 21.0, 19.9),
+    "Nomex_HT90-40": (23.5, 22.1, 19.9, 19.0, 21.0, 19.9),
+}
+geo_up = "flat 5 x 15 cm sample, upward (concurrent) buoyant flow, no forced flow"
+for mat, (u1, m1, uM, mM, uL, mL) in T1.items():
+    det, psia = MATS[mat]
+    p = round(psia * 6.89476, 1)
+    name = det.split(",")[0]
+    nt = f"pressure converted from {psia} psia"
+    add(u1, p, 0.0, "concurrent", mat, det, geo_up, fac_1g, "marginal_spread",
+        "1g ULOI: passes the Test 1 burn-length criterion about half the time", R, "Table I, p.6 (1g ULOI row)",
+        f"{name}: 1g ULOI {u1}% O2 at {psia} psia", notes=nt, gravity_g=1.0)
+    add(m1, p, 0.0, "concurrent", mat, det, geo_up, fac_1g, "no_spread",
+        "1g MOC: consistently self-extinguishes (>=5 samples passed)", R, "Table I, p.6 (1g MOC row)",
+        f"{name}: 1g MOC {m1}% O2 at {psia} psia", notes=nt, gravity_g=1.0)
+    mars_ok = "spread" if mat == "Mylar_G" else "marginal_spread"
+    mars_det = ("Martian ULOI*: flame survived the full drop and 'appeared to stabilize'" if mat == "Mylar_G" else
+                "Martian ULOI*: survived the full drop but 'becoming quite dim and shrinking at the end of the drop'")
+    add(uM, p, 0.0, "concurrent", mat, det, geo_up, fac_mars, mars_ok, mars_det, R,
+        "Table I, p.6 (Martian ULOI* row); flame description p.4",
+        f"{name}: Martian ULOI* {uM}% O2 at {psia} psia", notes=nt + "; 5.18 s drop test", gravity_g=0.38)
+    add(mM, p, 0.0, "concurrent", mat, det, geo_up, fac_mars, "no_spread",
+        "Martian MOC*: flame self-extinguished during the drop", R, "Table I, p.6 (Martian MOC* row)",
+        f"{name}: Martian MOC* {mM}% O2 at {psia} psia", notes=nt + "; 5.18 s drop test", gravity_g=0.38)
+    add(uL, p, 0.0, "concurrent", mat, det, geo_up, fac_moon, "spread",
+        "Lunar ULOI*: flame survived the full drop time", R, "Table I, p.6 (Lunar ULOI* row, from ref. 8)",
+        f"{name}: Lunar ULOI* {uL}% O2 at {psia} psia", notes=nt + "; ~5 s drop test; lunar g = 0.165 per NTRS 20000120278",
+        extra_sources="https://ntrs.nasa.gov/citations/20000120278", gravity_g=0.165)
+    add(mL, p, 0.0, "concurrent", mat, det, geo_up, fac_moon, "no_spread",
+        "Lunar MOC*: flame self-extinguished during the drop", R, "Table I, p.6 (Lunar MOC* row, from ref. 8)",
+        f"{name}: Lunar MOC* {mL}% O2 at {psia} psia", notes=nt + "; ~5 s drop test; lunar g = 0.165 per NTRS 20000120278",
+        extra_sources="https://ntrs.nasa.gov/citations/20000120278", gravity_g=0.165)
+
+# SIBAL fabric, downward (opposed buoyant flow) spread at lunar gravity
+add(21.0, ATM, 0.0, "opposed", "SIBAL_fabric", "SIBAL cotton-fiberglass fabric, 5 cm wide",
+    "flat fabric, downward spread in buoyant flow (no forced flow)",
+    "Parabolic-flight aircraft at lunar g (0.165 g)", "spread",
+    "steady downward spread for the entire 20 s test (flame base spread rate 0.086 cm/s)",
+    "20260001966", "Pages 20-21 ('Parabolic Flight Aircraft Testing at Lunar-g')",
+    "SIBAL, 5 cm wide, Lunar g, 21% O2, 1 atm ... Lunar gravity: Steady, downward spread occurs for the entire 20-sec test time.",
+    notes="0.165 gEarth printed on the slide", gravity_g=0.165)
+add(20.0, ATM, 0.0, "opposed", "SIBAL_fabric", "SIBAL cotton-fiberglass fabric sheet",
+    "flat fabric, downward spread in buoyant flow (centrifugal lunar g, no forced flow)",
+    "LUCI: spinning Blue Origin New Shepard sounding rocket (11 RPM at 1.22 m radius)", "spread",
+    "steady-state spread, flame base spread rate 0.92 mm/s; burned for over a minute",
+    "20250010653", "Abstract; slides 'LUCI: SIBAL fabric' and 'LUCI: SIBAL fabric' (O2 plot)",
+    "Two samples are burned simultaneously in air at normal pressure ... SIBAL fabric (cotton-fiberglass blend) burning downward in Lunar-g ... Spread rates for char front, flame base, and flame tip are all linear (steady state spread) ... O2 concentration decreases from ~20% to ~18%.",
+    notes=("O2 taken as the stated starting value (~20%); 'normal pressure' taken as 101.3 kPa; "
+           "g = (11 RPM)^2 x 1.22 m = 1.62 m/s^2 = 0.165 g (computed from the stated rotation). "
+           "The burn ended in extinction but the O2 at extinction is only given approximately, so no extinction row was added."),
+    gravity_g=0.165)
+
+# ---------------------------------------------------------------------------------------------
+# 7) NASA Physical Sciences Informatics (PSI) corroboration. PSI experimental tables (CC0) are
+#    stored in data/psi/tables/ (downloaded by scripts/fetch_psi.py). They list test conditions
+#    but mostly not outcomes, so they are used to CROSS-CHECK the NTRS rows above, not as new rows.
+# ---------------------------------------------------------------------------------------------
+import re as _re
+PSI_URL = "https://psi.nasa.gov/physci/repo/data/investigations/{}"
+PSI_DIR = ROOT / "data" / "psi" / "tables"
+
+
+def _read_psi(acc):
+    f = PSI_DIR / f"{acc}_experimental_table.csv"
+    if not f.exists():
+        return []
+    b = f.read_bytes()
+    try:
+        txt = b.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        txt = b.decode("cp1252", errors="replace").lstrip("\ufeff").replace("ï»¿", "")
+    return list(csv.DictReader(txt.splitlines()))
+
+
+def _link(r, acc, note):
+    url = PSI_URL.format(acc)
+    r["extra_sources"] = "; ".join([x for x in [r["extra_sources"], url] if x])
+    r["notes"] = "; ".join([x for x in [r["notes"], note] if x])
+
+
+bass2 = {row.get("Test #", "").strip(): row for row in _read_psi("PSI-25") if row.get("PI", "").startswith("T")}
+for r in rows:
+    if r["report_id"] == "NTRS 20150008962":
+        m = _re.search(r"-T(\d+)", r["quote"])
+        pr = bass2.get(f"T{m.group(1)}") if m else None
+        if pr:
+            try:
+                o2 = float(pr["Calibrated  initial O2 % by vol "])
+            except (KeyError, ValueError):
+                continue
+            if abs(o2 - r["oxygen_pct"]) <= 0.05:
+                _link(r, "PSI-25", f"PSI-25 BASS-II experimental table lists test T{m.group(1)} (PI T'ien, {pr['Fuel Sample Material'].strip()}) "
+                                   f"with calibrated initial O2 {o2}% - matches")
+    q = r["quote"]
+    if r["report_id"] == "NTRS 20170008805" and q.startswith("Sample 2-"):
+        note = "PSI-99 SAFFIRE-II experimental table lists the same sample, material, 20 cm/s flow and direction"
+        if q.startswith("Sample 2-1:"):
+            note += " (PSI lists O2 '~ 21.5' for 2-1; the NTRS report table gives ~22.1, which is used here)"
+        _link(r, "PSI-99", note)
+    if q.startswith("Saffire I-1:"):
+        _link(r, "PSI-98", "PSI-98 SAFFIRE-I table: S1 SIBAL, 20 cm/s concurrent, O2 21.5-21.7%, burn time 420 s")
+    if q.startswith("Saffire II-5:"):
+        _link(r, "PSI-99", "PSI-99 SAFFIRE-II table: 2-5 cotton-fiberglass (SIBAL), 20 cm/s concurrent, micro-g spread length 29 cm, 2.1 mm/s")
+    if q.startswith("Saffire II-6:"):
+        _link(r, "PSI-99", "PSI-99 SAFFIRE-II table: 2-6 lists 20 cm/s and spread 2.6 mm/s over 29 cm (NTRS 20210011521/20170008805 give 25 cm/s, used here)")
+    if q.startswith("Saffire III-1:"):
+        _link(r, "PSI-100", "PSI-100 SAFFIRE-III table: S1 SIBAL, concurrent, lists 30 cm/s (NTRS 20210011521 gives 25 cm/s, used here)")
+
+FIELDS = ["row_id", "oxygen_pct", "pressure_kpa", "flow_cm_s", "flow_direction", "gravity_g", "material", "material_detail", "geometry",
           "facility", "outcome", "outcome_detail", "report_id", "source_url", "source_title", "source_location", "quote",
           "notes", "extra_sources"]
 for i, r in enumerate(rows, 1):

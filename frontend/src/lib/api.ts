@@ -31,6 +31,7 @@ export interface Experiment {
   notes?: string
   extra_sources?: string
   distance?: number
+  gravity_g?: number
 }
 
 export interface MaterialEnv {
@@ -43,7 +44,7 @@ export interface MaterialEnv {
 }
 
 export interface ModelCard {
-  model: { type: string; estimator: string; features: string[]; classes: string[]; n_train: number; n_sources: number; cv_accuracy: number; sklearn_version: string }
+  model: { type: string; estimator: string; features: string[]; classes: string[]; n_train: number; n_sources: number; cv_accuracy: number; sklearn_version: string; n_by_gravity?: Record<string, number>; oof_accuracy_by_gravity?: Record<string, { n: number; accuracy: number }> }
   metrics: {
     cv_scheme: string
     cv_accuracy: number
@@ -56,14 +57,15 @@ export interface ModelCard {
     majority_baseline_accuracy: number
     confusion_matrix: { labels: Outcome[]; matrix: number[][]; note: string }
     per_class: Record<string, Record<string, number>>
+    oof_accuracy_by_gravity: Record<string, { n: number; accuracy: number }>
   }
   class_counts: Record<string, number>
-  training_range: { global: Record<string, [number, number]>; materials: Record<string, MaterialEnv> }
+  training_range: { global: Record<string, [number, number]>; gravity_levels: string[]; materials: Record<string, MaterialEnv & { by_gravity: Record<string, MaterialEnv> }> }
   trained_at: string
 }
 
 export interface Prediction {
-  inputs: { oxygen_pct: number; pressure_kpa: number; flow_cm_s: number; material: string; flow_direction: string }
+  inputs: { oxygen_pct: number; pressure_kpa: number; flow_cm_s: number; material: string; flow_direction: string; gravity_g: number; gas_mix: string }
   in_training_range: boolean
   prediction: Outcome | null
   probabilities: Record<Outcome, number> | null
@@ -76,6 +78,39 @@ export interface Prediction {
   related_reports: { report_id: string; title: string; date: string; source_url: string; score: number; abstract_snippet: string }[]
   cited_abstracts: { ntrs_id: string; title: string; abstract: string }[]
   explanation: { source: string; text: string }
+}
+
+export interface Fact { label: string; value: string; kind: 'sourced' | 'estimate' | 'definition'; quote: string; note: string; source: { label: string; url: string } | null }
+export interface Inputs { oxygen_pct: number; pressure_kpa: number; flow_cm_s: number; material: string; flow_direction: string }
+export interface EnvData {
+  id: 'earth' | 'moon' | 'mars' | 'iss' | 'transit'; name: string; short: string; gravity_g: number; tagline: string; facts: Fact[]; data_note: string; default: Inputs
+  dataset: { n: number; outcomes: Record<string, number>; reports: string[]; materials: Record<string, MaterialEnv>; oof_accuracy: { n: number; accuracy: number } | null }
+}
+export interface GasMix { id: string; label: string; modelled: boolean; note: string; source?: { label: string; url: string } }
+export interface SafetySection { id: string; title: string; icon: string; applies: string[]; items: Fact[] }
+export interface AskAnswer {
+  question: string; answered: boolean; answer: string; mode: string; generator: string; top_score?: number; coverage?: number
+  bullets?: { text: string; n: number; verbatim: boolean }[]
+  citations: { n: number; label: string; url: string; kind: string; score: number }[]
+  comparison?: { name: string; title: string; platform: string; hardware: string; dates: string; area: string; objective: string; tables: string[]; n_publications: number | null; url: string }[] | null
+  passages: { n: number | null; title: string; text: string; url: string; source: string; kind: string; score: number }[]
+}
+export interface PsiInfo {
+  investigations: { acronym: string; psi: string; title: string; url: string; platform: string; hardware: string; start: string; end: string; objective: string; doi: string; license: string; n_files: number; file_types: Record<string, number>; n_publications: number; tables: string[] }[]
+  links: { label: string; url: string }[]
+  tables: { psi: string; acronym: string; file_name: string; n_rows: number; columns: string[]; url: string }[]
+  sources: Record<string, { label: string; url: string }>
+}
+export interface FlexSummary {
+  available: boolean; source: { label: string; url: string }; n_tests: number; fuels: Record<string, number>; test_end_counts: Record<string, number>
+  n_with_co2: number; co2_max_mole_fraction: number; n_with_helium: number; o2_range: [number, number]; pressure_kpa_range: [number, number]
+  by_co2: { fuel: string; co2_bin: string; n: number; mean_extinction_diameter_mm: number; mean_burn_time_s: number; extinctions: number }[]
+  notes: string[]
+}
+export async function postJSON<T>(path: string, body: object): Promise<T> {
+  const r = await fetch(BASE + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  if (!r.ok) throw new Error(`${r.status} ${path}`)
+  return r.json()
 }
 
 export interface Boundary {
@@ -109,6 +144,8 @@ export const MATERIAL_LABEL: Record<string, string> = {
   Mylar_G: 'Mylar G film',
   silicone: 'Silicone sheet',
 }
+export const GRAVITY_LABEL: Record<string, string> = { '0': 'µg (~0 g)', '0.165': 'Moon 0.165 g', '0.38': 'Mars 0.38 g', '1': 'Earth 1 g' }
+export const gkey = (g: number) => String(+g.toFixed(3))
 export const DIRECTION_LABEL: Record<string, string> = {
   concurrent: 'Concurrent (flow with the flame)',
   opposed: 'Opposed (flow against the flame)',
