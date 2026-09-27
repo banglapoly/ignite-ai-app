@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, PAGES } from '../lib/router'
+import { onBackendWaking } from '../lib/api'
 
 export function Nav({ path }: { path: string }) {
   const [open, setOpen] = useState(false)
@@ -50,4 +51,12 @@ export function NextLinks({ path }: { path: string }) {
       {next && <Link to={next.path} className="btn">{next.label} →</Link>}
     </div>
   )
+}
+
+/** Shown only while API calls are slow or being retried (e.g. the free backend waking up). */
+export function WakeBanner() {
+  const [waking, setWaking] = useState(false)
+  useEffect(() => onBackendWaking(setWaking), [])
+  if (!waking) return null
+  return <div className="wake-banner" role="status">Waking up the data server… the free backend sleeps when idle and can take up to a minute to start. Results will appear automatically.</div>
 }

@@ -17,7 +17,7 @@ Challenge: *Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity
 | ![](docs/screenshots/03-predict.png) | ![](docs/screenshots/04-ask.png) | ![](docs/screenshots/05-safety.png) | ![](docs/screenshots/06-data-model.png) | ![](docs/screenshots/07-sources.png) | ![](docs/screenshots/09b-mobile-nav-open.png) |
 
 ## Contents
-[Run it](#run-it-locally-windows) · [Site structure](#site-structure) · [Data sources](#data-sources) · [Moon & Mars](#moon--mars-how-partial-gravity-is-handled) · [Ask IGNITE-AI (RAG)](#ask-ignite-ai-local-rag) · [Model card](#model-card-honest-metrics) · [Crawlable content](#crawlable-content-for-search-engines-and-ai-tools) · [API](#api) · [Limitations](#limitations) · [Layout](#repository-layout) · [AI use](docs/AI_USE.md)
+[Run it](#run-it-locally-windows) · [Site structure](#site-structure) · [Data sources](#data-sources) · [Moon & Mars](#moon--mars-how-partial-gravity-is-handled) · [Ask IGNITE-AI (RAG)](#ask-ignite-ai-local-rag) · [Model card](#model-card-honest-metrics) · [Deploy](#deploy-netlify-frontend--render-backend) · [Crawlable content](#crawlable-content-for-search-engines-and-ai-tools) · [API](#api) · [Limitations](#limitations) · [Layout](#repository-layout) · [AI use](docs/AI_USE.md)
 
 ## Run it locally (Windows)
 Requirements: **Python 3.11** and **Node.js 18+**. No cloud service, no API key.
@@ -147,8 +147,30 @@ Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13
 
 **Explanation:** a deterministic template (`explain.py`). An optional Ollama path is guarded by a number check.
 
+## Deploy (Netlify frontend + Render backend)
+Netlify hosts only static files, so the site is split:
+
+- **Frontend on Netlify.** `netlify.toml` sets everything:
+  - Base directory `frontend`
+  - Build command `npm ci && npm run build`
+  - Publish directory `dist` (that is, `frontend/dist`)
+  - `NODE_VERSION=22`
+
+  The build runs `tsc`, then `vite build`, then `scripts/prerender.mjs`. The prerender step writes one HTML file per page route (`dist/simulator/index.html` and so on), each with that page's title, description and readable text, so deep links and AI/SEO readers work without the server. It also writes `dist/404.html`, `dist/app-shell.html` and `dist/_redirects`.
+- **Backend on Render (free).** `render.yaml` is a Blueprint (New → Blueprint → pick this repo):
+  - Web service `ignite-ai-api`, Python 3.11.9, root directory `backend`
+  - Build: `pip install -r requirements.txt`, then retrain the model from the committed CSV, then run the tests
+  - Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+  - Health check: `/health`
+- **Proxy.** Netlify proxies `/api/*`, `/health`, `/docs` and `/openapi.json` to Render (status 200 rewrites), so the browser only ever talks to the Netlify domain.
+
+  The backend URL lives in **one place**: `IGNITE_API_URL` in `netlify.toml` (default `https://ignite-ai-api.onrender.com`). If Render assigns a different name, change it there and redeploy.
+- **CORS.** The API also accepts direct calls from any origin by default (`IGNITE_CORS_ORIGINS="*"`, public read-only API). Any `*.netlify.app` origin is always allowed. To narrow it, set `IGNITE_CORS_ORIGINS` to a comma-separated list.
+- **Cold starts.** Free Render services sleep after about 15 minutes idle, and the first request then takes up to about a minute. The frontend retries 502/503/504 and network errors with backoff and shows a "waking up the prediction server" banner. The page text itself is static on Netlify and loads instantly.
+- **Keeping static text in sync.** After changing data, facts or page text, run `python -m scripts.export_static` in `backend/`. It regenerates `frontend/prerender/pages.json` and `frontend/public/llms.txt`. Commit the result. `setup.bat` does this for you, and a test fails if the files are stale.
+
 ## Crawlable content for search engines and AI tools
-The server injects **page-specific static HTML** into `#root` of `index.html` for every page route, and sets that page's `<title>` and meta description. Each block starts with a plain nav list of all pages. React replaces it on load, so a plain `curl` shows the real content:
+The server (and, on Netlify, the build-time prerender) injects **page-specific static HTML** into `#root` of `index.html` for every page route, and sets that page's `<title>` and meta description. Each block starts with a plain nav list of all pages. React replaces it on load, so a plain `curl` shows the real content:
 
 | Page | Static text |
 |---|---|
@@ -185,13 +207,15 @@ backend/
   src/compute/explain.py      deterministic explanation (+ optional guarded Ollama)
   src/content/facts.py        cited environment facts, gas mixes, safety measures, PSI list
   src/content/static_html.py  page list + crawlable per-page HTML + llms.txt
-  scripts/                    fetch_psi.py, fetch_ntrs_corpus.py, fetch_nasa_pages.py, build_dataset.py
+  scripts/                    export_static.py (prerender data for Netlify), fetch_psi.py, fetch_ntrs_corpus.py, fetch_nasa_pages.py, build_dataset.py
   data/                       experiments.csv, psi/, corpus/, artifacts/
   tests/test_core.py          refusals (range, gravity, gas), demo crossings, RAG decline/cite
 frontend/                     Vite + React + TypeScript + three.js (@react-three/fiber, drei, postprocessing)
   src/pages/  Landing, Simulator, Predict, AskPage, SafetyPage, DataPage, SourcesPage, NotFound
   src/lib/sim.tsx (shared simulator state) · src/lib/router.tsx (routes) · src/components/Layout.tsx (nav, footer)
   src/three/Flame.tsx, Module.tsx · src/components/*
+  scripts/prerender.mjs (per-route HTML + _redirects at build time) · prerender/pages.json (generated)
+render.yaml · netlify.toml     deploy config (Render API, Netlify static site)
 docs/                         AI_USE.md, research-past-winners.md, screenshots/
 ```
 

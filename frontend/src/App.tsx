@@ -3,7 +3,7 @@ import type { ModelCard } from './lib/api'
 import { getJSON } from './lib/api'
 import { PAGES, usePath } from './lib/router'
 import { SimProvider } from './lib/sim'
-import { Footer, Nav } from './components/Layout'
+import { Footer, Nav, WakeBanner } from './components/Layout'
 import Landing from './pages/Landing'
 import Simulator from './pages/Simulator'
 import Predict from './pages/Predict'
@@ -33,6 +33,7 @@ export default function App() {
   return (
     <SimProvider path={path}>
       <Nav path={path} />
+      <WakeBanner />
       <main key={path}>{body}</main>
       <Footer />
     </SimProvider>

@@ -81,6 +81,21 @@ def test_every_page_has_static_text():
     assert all(p in txt for p, *_ in static_html.PAGES) and "[Team" not in txt
 
 
+def test_prerendered_pages_are_current():
+    """frontend/prerender/pages.json (static hosting) must match what the server renders now.
+    If this fails, run `python -m scripts.export_static` in backend/ and commit the result."""
+    import json, pathlib
+    f = pathlib.Path(__file__).resolve().parents[2] / "frontend" / "prerender" / "pages.json"
+    if not f.exists():
+        return
+    from scripts.export_static import build_pages
+    committed = json.loads(f.read_text(encoding="utf-8"))
+    fresh = build_pages()
+    assert committed.keys() == fresh.keys()
+    stale = [r for r in fresh if committed[r] != fresh[r]]
+    assert not stale, f"stale prerendered pages {stale}: run python -m scripts.export_static"
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

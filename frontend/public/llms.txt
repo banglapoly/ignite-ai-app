@@ -1,0 +1,66 @@
+# IGNITE-AI
+
+> Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit
+
+Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials, trained only on published NASA experiments.
+- Dataset: 144 experiments from 13 NASA reports; CSV at /api/experiments.csv
+- CV accuracy 0.729 (balanced 0.646), leave-reports-out 0.688, baseline 0.611
+- Gravity levels with data: 0 g, 0.165 g (Moon), 0.38 g (Mars), 1 g; the range guard refuses untested material/gravity combinations
+- Moon/Mars buoyancy scaling (sqrt g) values are labelled estimates
+
+## Pages
+- / : Home — Open-source tool that predicts flame spread over spacecraft materials from published NASA microgravity and partial-gravity experiments.
+- /simulator : 3D Flame Simulator — Interactive 3D flame for Earth, Moon, Mars, ISS and transit-cabin conditions with sourced environment data and oxygen, pressure and airflow sliders.
+- /predict : Prediction & Experiments — Flame-spread prediction with a range guard, decision boundary over real NASA tests, nearest experiments and FLEX CO2 data.
+- /ask : Ask IGNITE-AI — Local question answering over a NASA combustion knowledge base; answers are verbatim quotes with source links.
+- /safety : Safety Measures — Spacecraft fire detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources.
+- /data : Data & Model — The 144-row NASA flame-spread dataset with quotes and the honest model card: cross-validation, per-gravity accuracy, confusion matrix.
+- /sources : Sources & Citations — NASA PSI investigations, NTRS reports, environment and safety sources, FLEX data, and the AI-use disclosure.
+
+## API
+- GET /health
+- GET /api/environments
+- GET /api/safety?env=iss
+- POST /api/predict
+- POST /api/ask {question}
+- GET /api/flex
+- GET /api/psi
+- GET /api/model
+
+## Sources
+- NASA Physical Sciences Informatics (PSI) repository: https://psi.nasa.gov/physci/repo/
+- NASA Science - ACME mission page: https://science.nasa.gov/mission/acme/
+- NASA Science - SoFIE mission page: https://science.nasa.gov/mission/sofie/
+- NASA (2023) Studying Combustion and Fire Safety - Space Station Research Integration Office: https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/
+- NASA Technical Reports Server (NTRS) API: https://ntrs.nasa.gov/api/citations/search
+- NASA PSI PSI-69 FLEX: https://psi.nasa.gov/physci/repo/data/investigations/PSI-69
+- NASA PSI PSI-68 FLEX-2: https://psi.nasa.gov/physci/repo/data/investigations/PSI-68
+- NASA PSI PSI-26 BASS: https://psi.nasa.gov/physci/repo/data/investigations/PSI-26
+- NASA PSI PSI-25 BASS-II: https://psi.nasa.gov/physci/repo/data/investigations/PSI-25
+- NASA PSI PSI-107 SPICE: https://psi.nasa.gov/physci/repo/data/investigations/PSI-107
+- NASA PSI PSI-106 SLICE: https://psi.nasa.gov/physci/repo/data/investigations/PSI-106
+- NASA PSI PSI-39 CFI: https://psi.nasa.gov/physci/repo/data/investigations/PSI-39
+- NASA PSI PSI-20 ACME BRE: https://psi.nasa.gov/physci/repo/data/investigations/PSI-20
+- NASA PSI PSI-159 ACME CFI-G: https://psi.nasa.gov/physci/repo/data/investigations/PSI-159
+- NASA PSI PSI-102 SAME: https://psi.nasa.gov/physci/repo/data/investigations/PSI-102
+- NASA PSI PSI-101 SAME-R: https://psi.nasa.gov/physci/repo/data/investigations/PSI-101
+- NASA PSI PSI-47 DAFT / DAFT-2: https://psi.nasa.gov/physci/repo/data/investigations/PSI-47
+- NASA PSI PSI-98 SAFFIRE-I: https://psi.nasa.gov/physci/repo/data/investigations/PSI-98
+- NASA PSI PSI-99 SAFFIRE-II: https://psi.nasa.gov/physci/repo/data/investigations/PSI-99
+- NASA PSI PSI-100 SAFFIRE-III: https://psi.nasa.gov/physci/repo/data/investigations/PSI-100
+- Friedman, R. (2000) Progress in Fire Detection and Suppression Technology for Future Space Missions, NASA/TM-2000-210337 (NTRS 20000120278): https://ntrs.nasa.gov/citations/20000120278
+- Olson & Ferkul (2012) Evaluating Material Flammability in Microgravity and Martian Gravity Compared to the NASA Standard Normal Gravity Test (NTRS 20130010991): https://ntrs.nasa.gov/citations/20130010991
+- Ferkul et al. (2026) Material Flammability at Lunar and Martian Gravity, LPSC presentation (NTRS 20260001966): https://ntrs.nasa.gov/citations/20260001966
+- Ferkul et al. (2025) Lunar Combustion Investigation (LUCI): Flammability Results from a Rotating Sounding Rocket (NTRS 20250010653): https://ntrs.nasa.gov/citations/20250010653
+- Development of the ISS Fine Water Mist Portable Fire Extinguisher (2011, NTRS 20110012300): https://ntrs.nasa.gov/citations/20110012300
+- Orion Portable Fire Extinguisher Performance Testing ... (2018, NTRS 20180005251): https://ntrs.nasa.gov/citations/20180005251
+- Smoke Detection for the Orion Crew Exploration Vehicle (2009, NTRS 20090020655): https://ntrs.nasa.gov/citations/20090020655
+- Spacecraft Fire Safety Technology Development Plan for Exploration Missions (NTRS 20205000063): https://ntrs.nasa.gov/citations/20205000063
+- Urban et al. (2021) Fire Safety Implications of Preliminary Results from Saffire IV and V, ICES-2021-266 (NTRS 20210011521): https://ntrs.nasa.gov/citations/20210011521
+- NASA (2023) Studying Combustion and Fire Safety - Space Station Research Integration Office: https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/
+- NASA Science - ACME mission page: https://science.nasa.gov/mission/acme/
+- NASA Science - SoFIE mission page: https://science.nasa.gov/mission/sofie/
+- NASA PSI-20 ACME Burning Rate Emulator (BRE) investigation metadata: https://psi.nasa.gov/physci/repo/data/investigations/PSI-20
+- NASA PSI-25 BASS-II investigation metadata: https://psi.nasa.gov/physci/repo/data/investigations/PSI-25
+- NASA PSI-69 FLEX investigation metadata + experimental table: https://psi.nasa.gov/physci/repo/data/investigations/PSI-69
+- Zhao, T'ien, Ferkul, Olson (2015) BASS/BASS-II concurrent flame spread over SIBAL (NTRS 20150008962): https://ntrs.nasa.gov/citations/20150008962

@@ -17,3 +17,32 @@ backend/data/pdfs/
 .DS_Store
 Thumbs.db
 *.tsbuildinfo
+# secrets / local env (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# logs
+logs/
+*.log.*
+npm-debug.log*
+# large raw downloads (PSI videos/archives, PDFs); the small derived tables in backend/data are committed
+backend/data/raw/
+backend/data/downloads/
+*.mp4
+*.mov
+*.avi
+*.zip
+*.tar
+*.tar.gz
+*.7z
+# deploy tool state
+.netlify/
+.render/
+# cloudflared tunnel binary / logs / credentials (local dev only)
+cloudflared
+cloudflared.exe
+cloudflared*.log
+.cloudflared/
+*.cloudflared.json

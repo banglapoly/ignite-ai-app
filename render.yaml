@@ -1,0 +1,28 @@
+# Render Blueprint for the IGNITE-AI API (FastAPI backend).
+# The frontend is hosted separately on Netlify (see netlify.toml), which proxies /api/* here.
+# If Render assigns a different URL than https://ignite-ai-api.onrender.com, update
+# IGNITE_API_URL in netlify.toml (the only place the backend URL is written down).
+services:
+  - type: web
+    name: ignite-ai-api
+    runtime: python
+    plan: free
+    region: oregon
+    rootDir: backend
+    # Install pinned deps, then retrain the model from the committed dataset so the
+    # artifacts always match the installed scikit-learn (deterministic; takes seconds),
+    # and run the test suite so a broken build never goes live.
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && python -m src.compute.model && python -m tests.test_core
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      # Public, read-only API: any origin may call it. Narrow this (comma-separated
+      # origins, e.g. https://your-site.netlify.app) if you prefer.
+      - key: IGNITE_CORS_ORIGINS
+        value: "*"
+      # Optional local-LLM generation stays off in the cloud (there is no Ollama on Render).
+      - key: IGNITE_LLM
+        value: "off"

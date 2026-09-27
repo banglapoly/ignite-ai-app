@@ -6,7 +6,7 @@ API:   /health /api/model /api/experiments(.csv) /api/predict /api/boundary /api
        /api/environments /api/safety /api/flex /api/psi /api/ask /api/kb  /llms.txt
 """
 from __future__ import annotations
-import mimetypes, pathlib, re
+import mimetypes, os, pathlib, re
 mimetypes.add_type("application/manifest+json", ".webmanifest")
 from functools import lru_cache
 from typing import Literal
@@ -29,7 +29,11 @@ DIST = ROOT.parent / "frontend" / "dist"
 
 app = FastAPI(title="IGNITE-AI API", version="2.0.0",
               description="Predictive fire safety analytics for space station orbit & rocket transit. All data from public NASA sources.")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+# Public, read-only API. IGNITE_CORS_ORIGINS: "*" (default) or a comma-separated list of origins;
+# origins matching *.netlify.app are always allowed so the Netlify frontend can call the API directly.
+_origins = [o.strip() for o in os.environ.get("IGNITE_CORS_ORIGINS", "*").split(",") if o.strip()]
+app.add_middleware(CORSMiddleware, allow_origins=_origins or ["*"], allow_origin_regex=r"https://([a-z0-9-]+--)?[a-z0-9-]+\.netlify\.app",
+                   allow_methods=["GET", "POST", "OPTIONS"], allow_headers=["*"])
 
 
 class PredictIn(BaseModel):
@@ -220,7 +224,10 @@ def llms():
 
 def _page(route: str, request: Request | None = None) -> HTMLResponse:
     info = static_html.PAGE_INFO.get(route)
-    html = (DIST / "index.html").read_text(encoding="utf-8")
+    # The production build also prerenders every page into dist/<route>/index.html for static hosting
+    # (Netlify); the untouched app shell is kept as dist/app-shell.html for server-side injection here.
+    shell = DIST / "app-shell.html"
+    html = (shell if shell.exists() else DIST / "index.html").read_text(encoding="utf-8")
     html = re.sub(r'<div id="root">\s*</div>', lambda _: f'<div id="root">{_static_block(route)}</div>', html, count=1)
     if request is not None:  # social previews need an absolute image URL; use the host the page was requested on
         proto = request.headers.get("x-forwarded-proto", request.url.scheme).split(",")[0].strip()
@@ -250,3 +257,9 @@ if DIST.exists():
         if path and f.is_file() and f.resolve().is_relative_to(DIST.resolve()):
             return FileResponse(f)
         return _page("/" + path.strip("/"), request)
+else:
+    # API-only deployment (e.g. Render): the website itself is hosted elsewhere (Netlify).
+    @app.get("/", include_in_schema=False)
+    def api_root():
+        return {"app": "IGNITE-AI API", "status": "ok", "health": "/health", "docs": "/docs",
+                "note": "The website is served separately; this host only answers /api/* requests."}

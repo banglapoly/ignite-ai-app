@@ -108,7 +108,7 @@ export interface FlexSummary {
   notes: string[]
 }
 export async function postJSON<T>(path: string, body: object): Promise<T> {
-  const r = await fetch(BASE + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  const r = await apiFetch(BASE + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
   if (!r.ok) throw new Error(`${r.status} ${path}`)
   return r.json()
 }
@@ -121,13 +121,48 @@ export interface Boundary {
 }
 
 const BASE = '/api'
+
+/* When the site is hosted statically (Netlify) the API runs on a free Render instance that
+   sleeps when idle and takes up to about a minute to wake. apiFetch retries gateway errors
+   and network failures with backoff, and reports "waking" so the UI can say what's happening. */
+type WakeListener = (waking: boolean) => void
+const wakeListeners = new Set<WakeListener>()
+let slowCount = 0
+function setSlow(delta: number) {
+  const before = slowCount > 0
+  slowCount = Math.max(0, slowCount + delta)
+  if (before !== slowCount > 0) wakeListeners.forEach(f => f(slowCount > 0))
+}
+export function onBackendWaking(f: WakeListener) { wakeListeners.add(f); return () => { wakeListeners.delete(f) } }
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
+export async function apiFetch(url: string, init?: RequestInit): Promise<Response> {
+  const delays = [2000, 4000, 8000, 12000, 16000]
+  let slow = false
+  const timer = setTimeout(() => { slow = true; setSlow(1) }, 4000)
+  try {
+    for (let i = 0; ; i++) {
+      try {
+        const r = await fetch(url, init)
+        if (![502, 503, 504].includes(r.status) || i >= delays.length) return r
+      } catch (e) {
+        if (i >= delays.length) throw e
+      }
+      if (!slow) { slow = true; setSlow(1) }
+      await sleep(delays[i])
+    }
+  } finally {
+    clearTimeout(timer)
+    if (slow) setSlow(-1)
+  }
+}
+
 export async function getJSON<T>(path: string): Promise<T> {
-  const r = await fetch(BASE + path)
+  const r = await apiFetch(BASE + path)
   if (!r.ok) throw new Error(`${r.status} ${path}`)
   return r.json()
 }
 export async function postPredict(body: object): Promise<Prediction> {
-  const r = await fetch(BASE + '/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  const r = await apiFetch(BASE + '/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
   if (!r.ok) throw new Error(`${r.status} predict`)
   return r.json()
 }

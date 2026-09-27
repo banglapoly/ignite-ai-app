@@ -1,0 +1,75 @@
+# Netlify: static frontend. The FastAPI backend runs on Render (see render.yaml);
+# Netlify proxies /api/*, /health and /docs to it, so the browser only talks to Netlify.
+[build]
+  base    = "frontend"
+  command = "npm ci && npm run build"
+  publish = "dist"            # relative to base -> frontend/dist
+
+[build.environment]
+  NODE_VERSION  = "22"   # camera-controls (drei dependency) declares node >= 22
+  # The ONLY place the backend URL is set. If Render gives the service a different
+  # address, change it here and redeploy. The build writes dist/_redirects from it.
+  IGNITE_API_URL = "https://ignite-ai-api.onrender.com"
+
+# Page routes. Each page is prerendered to its own dist/<route>/index.html (with its
+# readable text), so these are served directly and deep links work on refresh.
+# The API proxy rules (/api/*, /health, /docs, /openapi.json) are generated into
+# dist/_redirects from IGNITE_API_URL above; _redirects rules are applied before these.
+# Explicit page routes (same set the FastAPI server renders). "/" is dist/index.html.
+[[redirects]]
+  from   = "/simulator"
+  to     = "/simulator/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/predict"
+  to     = "/predict/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/ask"
+  to     = "/ask/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/safety"
+  to     = "/safety/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/data"
+  to     = "/data/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/sources"
+  to     = "/sources/index.html"
+  status = 200
+
+# /llms.txt, /favicon.ico, /og-image.png etc. are real files in dist (no rule needed).
+
+[[redirects]]
+  from   = "/demo"
+  to     = "/simulator"
+  status = 301
+
+[[redirects]]
+  from   = "/demo/*"
+  to     = "/simulator"
+  status = 301
+
+# Unknown paths: serve the app's 404 page (prerendered, with a real 404 status).
+[[redirects]]
+  from   = "/*"
+  to     = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"

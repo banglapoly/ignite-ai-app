@@ -13,9 +13,10 @@ echo [2/4] Installing Python packages ...
 ".venv\Scripts\python.exe" -m pip install --upgrade pip --quiet
 ".venv\Scripts\python.exe" -m pip install -r backend\requirements.txt || exit /b 1
 
-echo [3/4] Training + cross-validating the model (writes backend\data\artifacts) ...
+echo [3/4] Training + cross-validating the model, exporting prerendered page text, running tests ...
 pushd backend
 "..\.venv\Scripts\python.exe" -m src.compute.model || (popd & exit /b 1)
+"..\.venv\Scripts\python.exe" -m scripts.export_static || (popd & exit /b 1)
 "..\.venv\Scripts\python.exe" -m tests.test_core || (popd & exit /b 1)
 popd
 
