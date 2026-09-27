@@ -6,7 +6,7 @@ export function Nav({ path }: { path: string }) {
   useEffect(() => setOpen(false), [path])
   return (
     <header className="nav">
-      <Link to="/" className="brand"><span className="brand-dot" />IGNITE-AI</Link>
+      <Link to="/" className="brand"><img src="/logo.svg" className="brand-logo" alt="" width={32} height={32} />IGNITE-AI</Link>
       <button className="nav-toggle" aria-label="Menu" aria-expanded={open} aria-controls="site-nav" onClick={() => setOpen(o => !o)}>
         <span /><span /><span />
       </button>

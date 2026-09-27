@@ -159,7 +159,7 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
           df=None, ask_examples=None) -> str:
     info = PAGE_INFO.get(route)
     out = ['<div id="static-summary" style="max-width:960px;margin:0 auto;padding:24px;font-family:system-ui,sans-serif;color:#dfe6f3;background:#05070d;line-height:1.5">',
-           f"<header><p><strong>{TITLE}</strong> \u2014 {e(TAGLINE)}</p>{_nav(route)}</header>"]
+           f'<header><p><img src="/logo.svg" alt="IGNITE-AI logo" width="40" height="40" class="static-logo"> <strong>{TITLE}</strong> \u2014 {e(TAGLINE)}</p>{_nav(route)}</header>']
     if info is None:
         out.append("<main><h1>Page not found</h1><p>Try one of the pages listed above.</p></main>")
     else:

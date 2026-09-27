@@ -6,7 +6,8 @@ API:   /health /api/model /api/experiments(.csv) /api/predict /api/boundary /api
        /api/environments /api/safety /api/flex /api/psi /api/ask /api/kb  /llms.txt
 """
 from __future__ import annotations
-import pathlib, re
+import mimetypes, pathlib, re
+mimetypes.add_type("application/manifest+json", ".webmanifest")
 from functools import lru_cache
 from typing import Literal
 import numpy as np
@@ -217,10 +218,15 @@ def llms():
     return PlainTextResponse(static_html.llms_txt(card, len(df), df["report_id"].nunique()))
 
 
-def _page(route: str) -> HTMLResponse:
+def _page(route: str, request: Request | None = None) -> HTMLResponse:
     info = static_html.PAGE_INFO.get(route)
     html = (DIST / "index.html").read_text(encoding="utf-8")
     html = re.sub(r'<div id="root">\s*</div>', lambda _: f'<div id="root">{_static_block(route)}</div>', html, count=1)
+    if request is not None:  # social previews need an absolute image URL; use the host the page was requested on
+        proto = request.headers.get("x-forwarded-proto", request.url.scheme).split(",")[0].strip()
+        host = request.headers.get("x-forwarded-host") or request.headers.get("host") or request.url.netloc
+        if re.fullmatch(r"[A-Za-z0-9.\-:\[\]]+", host or "") and proto in ("http", "https"):
+            html = html.replace('content="/og-image.png"', f'content="{proto}://{host}/og-image.png"')
     if info:
         html = re.sub(r"<title>.*?</title>", lambda _: f"<title>{escape(info[2])}</title>", html, count=1, flags=re.S)
         html = re.sub(r'<meta name="description" content="[^"]*"', lambda _: f'<meta name="description" content="{escape(info[3])}"', html, count=1)
@@ -239,8 +245,8 @@ if DIST.exists():
         return RedirectResponse("/simulator" + (f"?{q}" if q else ""), status_code=308)
 
     @app.get("/{path:path}", include_in_schema=False)
-    def spa(path: str):
+    def spa(path: str, request: Request):
         f = DIST / path
         if path and f.is_file() and f.resolve().is_relative_to(DIST.resolve()):
             return FileResponse(f)
-        return _page("/" + path.strip("/"))
+        return _page("/" + path.strip("/"), request)

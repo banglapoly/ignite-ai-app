@@ -18,7 +18,10 @@ export default function Landing({ card }: { card: ModelCard | null }) {
       <section className="land-hero">
         <div className="land-hero-bg" />
         <div className="land-hero-inner">
-              <h1>IGNITE-AI</h1>
+              <div className="hero-brand">
+            <img src="/logo.svg" className="hero-logo" alt="IGNITE-AI flame logo" width={112} height={112} />
+            <h1>IGNITE-AI</h1>
+          </div>
           <p className="tagline">Predictive Fire Safety Analytics for Space Station Orbit &amp; Rocket Transit</p>
           <p className="lead">Pick an environment (Earth, Moon, Mars, the ISS or a transit cabin), then set the oxygen, pressure, ventilation and material. IGNITE-AI predicts whether a fire could <b>spread</b>, shows the <b>real NASA experiments</b> behind that answer, and <b>refuses to guess</b> where no one has tested.</p>
           <Link to="/simulator" className="btn big cta-main">[ Explore Space Fire Safety Tool ]</Link>
