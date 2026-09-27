@@ -46,3 +46,5 @@ cloudflared.exe
 cloudflared*.log
 .cloudflared/
 *.cloudflared.json
+
+space-apps-2026-build-guide.html
