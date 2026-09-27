@@ -34,4 +34,4 @@ The spaceappschallenge.org project pages render client-side, so I read them with
 7. **Impact framing with a path forward.** Winners describe future filters, users and scale ("in future, users will be able to…").
    *Applied:* safety framing for Artemis-style exploration atmospheres (Saffire VI, FM²), plus a README roadmap (more NTRS extraction, SoFIE data once published).
 8. **Team and credits visible.** Every page has a Members tab.
-   *Applied:* a team section with clearly marked placeholders for the team to fill in (no invented names).
+   *Applied:* not used; the project does not show a team section.

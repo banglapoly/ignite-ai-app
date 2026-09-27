@@ -1,20 +1,20 @@
-﻿# IGNITE-AI 🔥🛰️
+# IGNITE-AI 🔥🛰️
 **Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit**
 
-NASA Space Apps Challenge 2026, Challenge 08: *Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data* · Team: `[Team name]` · Local event: Bangladesh · License: **Apache-2.0**
+Challenge: *Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data* · License: **Apache-2.0**
 
 > **Problem.** Fire behaves differently without gravity: flames become rounded, can be nearly invisible, and some materials burn at lower oxygen in low gravity than in the Earth screening test. The evidence is spread across decades of NASA reports and data archives.
 > **Solution.** IGNITE-AI runs locally. You pick an environment (Earth 1 g, Moon 0.165 g, Mars 0.38 g, ISS ~0 g, or a rocket-transit cabin) and set oxygen, pressure, ventilation fan speed, material and gas mix. A 3D flame reacts live. A classifier trained **only on 144 published NASA experiments** predicts `spread` / `marginal_spread` / `no_spread`, **refuses to predict outside the tested envelope** (including untested gravity levels and gas mixes), and shows the real experiments behind each answer. An offline assistant, **Ask IGNITE-AI**, answers questions from a NASA combustion knowledge base with verbatim, linked quotes.
 
-![landing](docs/screenshots/01-landing.png)
+![Home](docs/screenshots/01-home.png)
 
-| ISS µg | Earth 1 g | Moon 0.165 g | Mars refusal |
+| 3D Simulator · ISS µg | Earth 1 g | Moon 0.165 g | Mars 0.38 g |
 |---|---|---|---|
-| ![](docs/screenshots/04-demo-iss.png) | ![](docs/screenshots/05-demo-earth.png) | ![](docs/screenshots/06-demo-moon.png) | ![](docs/screenshots/10b-demo-mars-refusal.png) |
+| ![](docs/screenshots/02-simulator-iss.png) | ![](docs/screenshots/02-simulator-earth.png) | ![](docs/screenshots/02-simulator-moon.png) | ![](docs/screenshots/02-simulator-mars.png) |
 
-| Ask IGNITE-AI | Compare | Declines | Safety | Model card |
-|---|---|---|---|---|
-| ![](docs/screenshots/13-rag-answer-lunar.png) | ![](docs/screenshots/14-rag-compare-flex-bass2.png) | ![](docs/screenshots/15-rag-declines.png) | ![](docs/screenshots/12-safety-iss.png) | ![](docs/screenshots/17-model-card.png) |
+| Prediction | Ask IGNITE-AI | Safety | Data & Model | Sources | Mobile nav |
+|---|---|---|---|---|---|
+| ![](docs/screenshots/03-predict.png) | ![](docs/screenshots/04-ask.png) | ![](docs/screenshots/05-safety.png) | ![](docs/screenshots/06-data-model.png) | ![](docs/screenshots/07-sources.png) | ![](docs/screenshots/09b-mobile-nav-open.png) |
 
 ## Contents
 [Run it](#run-it-locally-windows) · [Site structure](#site-structure) · [Data sources](#data-sources) · [Moon & Mars](#moon--mars-how-partial-gravity-is-handled) · [Ask IGNITE-AI (RAG)](#ask-ignite-ai-local-rag) · [Model card](#model-card-honest-metrics) · [Crawlable content](#crawlable-content-for-search-engines-and-ai-tools) · [API](#api) · [Limitations](#limitations) · [Layout](#repository-layout) · [AI use](docs/AI_USE.md)
@@ -23,7 +23,7 @@ NASA Space Apps Challenge 2026, Challenge 08: *Flame in Freefall: AI-Powered Fir
 Requirements: **Python 3.11** and **Node.js 18+**. No cloud service, no API key.
 ```bat
 setup.bat      :: one time: .venv, pip install, train + test the model, npm install, build the site
-start.bat      :: serves the site + API on http://localhost:8000 (landing) and http://localhost:8000/demo (tool)
+start.bat      :: serves the site + API on http://localhost:8000 (landing) and http://localhost:8000/simulator (tool)
 stop.bat       :: stops whatever is listening on port 8000
 dev.bat        :: hot-reload dev mode (backend :8000, Vite :5173)
 ```
@@ -40,9 +40,21 @@ python -m src.compute.model           # retrain + cross-validate
 ```
 
 ## Site structure
-**Landing page `/`** (a 30-second read): title and tagline, the **[ Explore Space Fire Safety Tool ]** button, four key-number cards, **The Microgravity Fire Crisis** (cited, with a live 1 g vs ~0 g flame comparison), "why it matters", "how it works" and the data sources.
+Every sector is its own page. A persistent top nav bar (a hamburger menu on phones) links them all and highlights the current page. Every page path is a real server route, so deep links and refreshes work, and each one comes with its own server-rendered text (see [Crawlable content](#crawlable-content-for-search-engines-and-ai-tools)). The environment, sliders and prediction are shared state, so they carry over between the Simulator, Prediction and Safety pages. `?env=earth|moon|mars|iss|transit` selects the environment in a link.
 
-**Tool `/demo`**, from top to bottom:
+| Page | URL | What's on it |
+|---|---|---|
+| Home | `/` | Title and tagline, the **[ Explore Space Fire Safety Tool ]** button (goes to `/simulator`), key-number cards, **The Microgravity Fire Crisis** (cited, with a live 1 g vs ~0 g flame comparison), why it matters, how it works, and cards for every page |
+| 3D Flame Simulator | `/simulator` | See below |
+| Prediction & Experiments | `/predict` | Environment tabs and the same controls; the prediction, probabilities, range guard and O₂-slide demo; the decision-boundary plot over the real tests; the nearest real experiments with quotes; the FLEX CO₂ panel when the CO₂ gas chip is picked |
+| Ask IGNITE-AI | `/ask` | The local question-answering assistant (verbatim, cited quotes; declines when nothing relevant is found) and how it works |
+| Safety Measures | `/safety` | Environment tabs, then detection, ventilation shutdown and isolation, suppression, material selection, crew procedures, and Moon/Mars or transit specifics. Every item quotes a NASA source |
+| Data & Model | `/data` | The model card, per-gravity accuracy, confusion matrix, envelope by material × gravity, and the full searchable dataset |
+| Sources & Citations | `/sources` | The PSI investigation table, the NTRS reports behind the rows, the environment and safety sources, the FLEX CO₂ summary, the AI-use disclosure and an About section |
+
+The old `/demo` link redirects to `/simulator`. Unknown paths return a 404 page.
+
+**3D Flame Simulator (`/simulator`)**, from top to bottom:
 1. **3D viewport.** A procedural flame (layered shader shells with a blue base, a sooty yellow body and a halo, plus embers, smoke and airflow streaks, with bloom) sits in a combustion chamber inside a procedural module or habitat. The window view changes with the environment. The flame reacts to the inputs:
    - **gravity:** teardrop → sphere, using √g buoyancy;
    - **O₂ and pressure:** size, brightness and soot colour;
@@ -51,20 +63,11 @@ python -m src.compute.model           # retrain + cross-validate
 
    HUD readouts show gravity, O₂, pressure, airflow, O₂ partial pressure (*computed*), buoyant flow vs Earth (*estimate √g*), fire-risk status, range guard and gas-mix status. It is an illustration, not a combustion simulation.
 2. **Environment tabs:** Earth (1 g), Moon (0.165 g), Mars (0.38 g), ISS µg (~0 g) and **Transit cabin (µg coast)**. Coasting between planets is free fall, so the transit tab uses the microgravity data, with Saffire (fires inside Cygnus spacecraft) as the closest analogue. Powered-flight thrust phases are not modelled, and the tab says so.
-3. **Environment data and conditions.** Sourced fact cards for the tab (gravity, cabin or habitat atmosphere, relevant experiments), each with a verbatim quote and link. Estimates carry an **ESTIMATE** badge. Below them:
-   - sliders for O₂, pressure and ventilation fan speed, with the tested band shaded in green;
-   - a material selector, a flow-direction selector and gas-mix chips (Normal air / Methane leak / Carbon dioxide build-up);
-   - the prediction, probabilities, confidence, per-gravity accuracy caution and explanation;
-   - an "O₂ slide" demo that walks down the tested range;
-   - the decision-boundary plot with the real tests;
-   - the nearest real experiments with quotes;
-   - the **Ask IGNITE-AI** panel.
-4. **Fire safety measures and insights** for the selected environment: detection, ventilation shutdown and isolation, suppression, material selection, crew procedures, and Moon/Mars or transit specifics. Every item quotes a NASA source.
-5. **Footer:**
-   - citations and resources (the PSI investigation table, the NTRS reports behind the rows, and the environment and safety sources);
-   - a FLEX CO₂ data summary;
-   - the model card, per-gravity accuracy, confusion matrix, envelope by material × gravity, and the full searchable dataset;
-   - the AI-use disclosure and team placeholders.
+3. **Environment data and conditions.**
+   - Sourced fact cards for the tab (gravity, cabin or habitat atmosphere, relevant experiments), each with a verbatim quote and link. Estimates carry an **ESTIMATE** badge.
+   - Sliders for O₂, pressure and ventilation fan speed, with the tested band shaded in green.
+   - Material and flow-direction selectors, and gas-mix chips (Normal air / Methane leak / Carbon dioxide build-up).
+   - The live prediction panel, with links on to the evidence (`/predict`) and to the safety measures (`/safety`).
 
 ## Data sources
 ### Training rows: `backend/data/experiments.csv`, **144 rows from 13 NASA reports**
@@ -145,10 +148,22 @@ Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13
 **Explanation:** a deterministic template (`explain.py`). An optional Ollama path is guarded by a number check.
 
 ## Crawlable content for search engines and AI tools
-The server injects a **static HTML summary** into `#root` of `index.html` for `/` and `/demo`. It covers the crisis text, every environment fact with its source, the safety measures, the model metrics, the data sources, the AI disclosure and the team placeholders. So a plain `curl` of the page shows the real content, and React replaces it on load. Also available: `<meta name="description">`, a `<noscript>` note, `/llms.txt` (a plain-text summary with sources) and `/docs` (OpenAPI).
+The server injects **page-specific static HTML** into `#root` of `index.html` for every page route, and sets that page's `<title>` and meta description. Each block starts with a plain nav list of all pages. React replaces it on load, so a plain `curl` shows the real content:
+
+| Page | Static text |
+|---|---|
+| `/` | intro, the crisis text, the page list, key numbers |
+| `/simulator` | every environment fact with its source |
+| `/predict` | the tested envelope table and the model summary |
+| `/ask` | how retrieval works, plus three example questions answered live with their NASA citations |
+| `/safety` | all safety measures with quotes |
+| `/data` | the model card and all 144 rows |
+| `/sources` | all sources and the AI disclosure |
+
+`/llms.txt` lists every page. Also available: `<meta name="description">`, a `<noscript>` note, `/llms.txt` (a plain-text summary with sources) and `/docs` (OpenAPI).
 
 ## API
-`GET /health` · `GET /api/model` · `GET /api/experiments[?material=&gravity_g=]` · `GET /api/experiments.csv` · `POST /api/predict` `{"oxygen_pct":21,"pressure_kpa":101.3,"flow_cm_s":3,"material":"SIBAL_fabric","flow_direction":"concurrent","gravity_g":0,"gas_mix":"air"}` · `GET /api/boundary?...&gravity_g=` · `GET /api/environments` · `GET /api/safety?env=iss` · `GET /api/flex[?rows=true&co2_only=true]` · `GET /api/psi` · `POST /api/ask {"question": "..."}` · `GET /api/kb` · `GET /llms.txt`
+Pages: `/` · `/simulator` · `/predict` · `/ask` · `/safety` · `/data` · `/sources`. API (JSON under `/api`): `GET /health` · `GET /api/model` · `GET /api/experiments[?material=&gravity_g=]` · `GET /api/experiments.csv` · `POST /api/predict` `{"oxygen_pct":21,"pressure_kpa":101.3,"flow_cm_s":3,"material":"SIBAL_fabric","flow_direction":"concurrent","gravity_g":0,"gas_mix":"air"}` · `GET /api/boundary?...&gravity_g=` · `GET /api/environments` · `GET /api/safety?env=iss` · `GET /api/flex[?rows=true&co2_only=true]` · `GET /api/psi` · `POST /api/ask {"question": "..."}` · `GET /api/kb` · `GET /llms.txt`
 
 ## Limitations
 - The dataset is small: 144 rows. Partial-gravity and 1 g data have 6–8 rows per level and cover only 3–4 materials, and the low-g drop tests last about 5 s.
@@ -161,7 +176,7 @@ The server injects a **static HTML summary** into `#root` of `index.html` for `/
 ## Repository layout
 ```
 backend/
-  app/main.py                 FastAPI: API, static-HTML injection, /llms.txt, serves frontend/dist
+  app/main.py                 FastAPI: API, per-page static-HTML injection, /llms.txt, serves frontend/dist
   src/compute/model.py        train + CV + per-(material, gravity) envelope
   src/compute/predict.py      range guard, prediction, nearest/contrast experiments
   src/compute/kb.py           Ask IGNITE-AI knowledge base + retrieval + extractive answers
@@ -169,14 +184,16 @@ backend/
   src/compute/retrieval.py    TF-IDF over NTRS (related reports for predictions)
   src/compute/explain.py      deterministic explanation (+ optional guarded Ollama)
   src/content/facts.py        cited environment facts, gas mixes, safety measures, PSI list
-  src/content/static_html.py  crawlable HTML summary + llms.txt
+  src/content/static_html.py  page list + crawlable per-page HTML + llms.txt
   scripts/                    fetch_psi.py, fetch_ntrs_corpus.py, fetch_nasa_pages.py, build_dataset.py
   data/                       experiments.csv, psi/, corpus/, artifacts/
   tests/test_core.py          refusals (range, gravity, gas), demo crossings, RAG decline/cite
 frontend/                     Vite + React + TypeScript + three.js (@react-three/fiber, drei, postprocessing)
-  src/pages/Landing.tsx, Demo.tsx · src/three/Flame.tsx, Module.tsx · src/components/*
+  src/pages/  Landing, Simulator, Predict, AskPage, SafetyPage, DataPage, SourcesPage, NotFound
+  src/lib/sim.tsx (shared simulator state) · src/lib/router.tsx (routes) · src/components/Layout.tsx (nav, footer)
+  src/three/Flame.tsx, Module.tsx · src/components/*
 docs/                         AI_USE.md, research-past-winners.md, screenshots/
 ```
 
 ## Credits and license
-Data: NASA PSI and the NASA Technical Reports Server (public NASA works; PSI data CC0-1.0 where stated). Libraries (all open source): FastAPI, scikit-learn, pandas, React, Vite, three.js, @react-three/fiber, @react-three/drei, @react-three/postprocessing, postprocessing. The GLSL simplex noise is by Ashima Arts / Stefan Gustavson (MIT). The 3D scene is procedural, not a NASA model. NASA does not endorse this project. Code © `[Team name]` 2026, **Apache License 2.0** (see `LICENSE`).
+Data: NASA PSI and the NASA Technical Reports Server (public NASA works; PSI data CC0-1.0 where stated). Libraries (all open source): FastAPI, scikit-learn, pandas, React, Vite, three.js, @react-three/fiber, @react-three/drei, @react-three/postprocessing, postprocessing. The GLSL simplex noise is by Ashima Arts / Stefan Gustavson (MIT). The 3D scene is procedural, not a NASA model. NASA does not endorse this project. Code licensed under the **Apache License 2.0** (see `LICENSE`).

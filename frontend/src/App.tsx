@@ -1,14 +1,40 @@
 import { useEffect, useState } from 'react'
 import type { ModelCard } from './lib/api'
 import { getJSON } from './lib/api'
-import { usePath } from './lib/router'
+import { PAGES, usePath } from './lib/router'
+import { SimProvider } from './lib/sim'
+import { Footer, Nav } from './components/Layout'
 import Landing from './pages/Landing'
-import Demo from './pages/Demo'
+import Simulator from './pages/Simulator'
+import Predict from './pages/Predict'
+import AskPage from './pages/AskPage'
+import SafetyPage from './pages/SafetyPage'
+import DataPage from './pages/DataPage'
+import SourcesPage from './pages/SourcesPage'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   const path = usePath()
   const [card, setCard] = useState<ModelCard | null>(null)
   useEffect(() => { getJSON<ModelCard>('/model').then(setCard).catch(() => {}) }, [])
-  useEffect(() => { document.title = path.startsWith('/demo') ? 'IGNITE-AI · Space Fire Safety Tool' : 'IGNITE-AI · Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit' }, [path])
-  return path.startsWith('/demo') ? <Demo card={card} /> : <Landing card={card} />
+  const page = PAGES.find(p => p.path === path)
+  useEffect(() => { document.title = page?.title ?? 'IGNITE-AI · Page not found' }, [path])
+  let body: React.ReactNode
+  switch (path) {
+    case '/': body = <Landing card={card} />; break
+    case '/simulator': body = <Simulator card={card} />; break
+    case '/predict': body = <Predict card={card} />; break
+    case '/ask': body = <AskPage />; break
+    case '/safety': body = <SafetyPage />; break
+    case '/data': body = <DataPage card={card} />; break
+    case '/sources': body = <SourcesPage card={card} />; break
+    default: body = <NotFound />
+  }
+  return (
+    <SimProvider path={path}>
+      <Nav path={path} />
+      <main key={path}>{body}</main>
+      <Footer />
+    </SimProvider>
+  )
 }

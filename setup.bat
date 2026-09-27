@@ -26,5 +26,5 @@ call npm run build || (popd & exit /b 1)
 popd
 
 echo.
-echo Setup complete. Run start.bat to launch http://localhost:8000 (landing) and http://localhost:8000/demo (tool)
+echo Setup complete. Run start.bat to launch http://localhost:8000 (landing) and http://localhost:8000/simulator (tool)
 endlocal

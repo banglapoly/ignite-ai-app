@@ -64,6 +64,23 @@ def test_rag_cites_nasa_sources():
     assert "[1]" in r["answer"]
 
 
+def test_every_page_has_static_text():
+    """Each page route gets its own crawlable HTML (no JavaScript needed); no team/event placeholders anywhere."""
+    from src.content import static_html
+    from src.compute import psi_data
+    from src.compute.predict import artifacts
+    _, card, df = artifacts()
+    envc = {k: {"n": 0} for k in ("earth", "moon", "mars", "iss", "transit")}
+    for route, label, _title, _desc in static_html.PAGES:
+        ex = [("Is lunar gravity more flammable than Earth?", kb.ask("Is lunar gravity more flammable than Earth?"))] if route == "/ask" else None
+        html = static_html.build(card, len(df), df["report_id"].nunique(), envc, psi_data.flex_summary(), kb.stats(), route=route, df=df, ask_examples=ex)
+        assert "<h1>" in html and all(f'href="{p}"' in html for p, *_ in static_html.PAGES), route
+        assert "[Team" not in html and "Space Apps" not in html, route
+        assert len(html) > 1500, (route, len(html))
+    txt = static_html.llms_txt(card, len(df), df["report_id"].nunique())
+    assert all(p in txt for p, *_ in static_html.PAGES) and "[Team" not in txt
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

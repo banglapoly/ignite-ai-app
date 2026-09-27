@@ -10,45 +10,18 @@ const FERKUL26 = 'https://ntrs.nasa.gov/citations/20260001966'
 const OLSON08 = 'https://ntrs.nasa.gov/citations/20080034883'
 const C = ({ href, children }: { href: string; children: React.ReactNode }) => <a className="cite" href={href} target="_blank" rel="noreferrer">{children}</a>
 
-export function Nav({ demo }: { demo?: boolean }) {
-  return (
-    <header className="nav">
-      <Link to="/" className="brand"><span className="brand-dot" />IGNITE-AI</Link>
-      <nav>
-        {demo ? <>
-          <a href="#environment">Environment</a><a href="#ask">Ask</a><a href="#safety">Safety</a><a href="#sources">Sources</a><a href="#model">Model</a><a href="#team">Team</a>
-        </> : <>
-          <a href="#crisis">The crisis</a><a href="#how">How it works</a><a href="#data">Data</a>
-        </>}
-        {!demo && <Link to="/demo" className="btn small">Open tool</Link>}
-      </nav>
-    </header>
-  )
-}
-
-export function Footer() {
-  return (
-    <footer className="footer">
-      <span><b>IGNITE-AI</b> · Apache-2.0 · NASA Space Apps Challenge 2026 (Bangladesh) · runs locally, open-source only</span>
-      <span>Data: NASA PSI (psi.nasa.gov) and NASA Technical Reports Server. NASA does not endorse this project. <a href="/llms.txt">llms.txt</a> · <a href="/docs">API</a></span>
-    </footer>
-  )
-}
-
 export default function Landing({ card }: { card: ModelCard | null }) {
   const m = card?.metrics
   const nG = card?.model.n_by_gravity
   return (
     <>
-      <Nav />
       <section className="land-hero">
         <div className="land-hero-bg" />
         <div className="land-hero-inner">
-          <div className="eyebrow">NASA Space Apps Challenge 2026 · Challenge 08 · Bangladesh</div>
-          <h1>IGNITE-AI</h1>
+              <h1>IGNITE-AI</h1>
           <p className="tagline">Predictive Fire Safety Analytics for Space Station Orbit &amp; Rocket Transit</p>
           <p className="lead">Pick an environment (Earth, Moon, Mars, the ISS or a transit cabin), then set the oxygen, pressure, ventilation and material. IGNITE-AI predicts whether a fire could <b>spread</b>, shows the <b>real NASA experiments</b> behind that answer, and <b>refuses to guess</b> where no one has tested.</p>
-          <Link to="/demo" className="btn big cta-main">[ Explore Space Fire Safety Tool ]</Link>
+          <Link to="/simulator" className="btn big cta-main">[ Explore Space Fire Safety Tool ]</Link>
           <div className="stat-cards">
             <div className="stat"><b>{card?.model.n_train ?? '…'}</b><span>real NASA flame-spread experiments, each quoted from its report</span></div>
             <div className="stat"><b>4</b><span>gravity levels with data: 0 g{nG ? ` (${nG['0']})` : ''}, Moon{nG ? ` (${nG['0.165']})` : ''}, Mars{nG ? ` (${nG['0.38']})` : ''}, Earth{nG ? ` (${nG['1']})` : ''}</span></div>
@@ -97,15 +70,26 @@ export default function Landing({ card }: { card: ModelCard | null }) {
         </div>
       </section>
 
+      <section id="pages" className="section wide">
+        <h2>Explore IGNITE-AI</h2>
+        <div className="cards pagecards">
+          <Link to="/simulator" className="card pagecard"><span className="pc-ico">🔥</span><h3>3D Flame Simulator</h3><p>Switch between Earth, Moon, Mars, the ISS and a transit cabin, move the oxygen, pressure and fan-speed sliders, and watch the flame respond.</p></Link>
+          <Link to="/predict" className="card pagecard"><span className="pc-ico">📈</span><h3>Prediction &amp; Experiments</h3><p>Spread / marginal / no-spread prediction with the range guard, the decision boundary over real tests and the nearest NASA experiments.</p></Link>
+          <Link to="/ask" className="card pagecard"><span className="pc-ico">💬</span><h3>Ask IGNITE-AI</h3><p>Ask about NASA combustion experiments or compare them. Answers are verbatim quotes with source links.</p></Link>
+          <Link to="/safety" className="card pagecard"><span className="pc-ico">🧯</span><h3>Safety Measures</h3><p>Detection, ventilation shutdown, suppression, materials and crew procedures for each environment, from NASA sources.</p></Link>
+          <Link to="/data" className="card pagecard"><span className="pc-ico">🧮</span><h3>Data &amp; Model</h3><p>All {card?.model.n_train ?? 144} training rows with their quotes, the model card, per-gravity accuracy and the confusion matrix.</p></Link>
+          <Link to="/sources" className="card pagecard"><span className="pc-ico">📚</span><h3>Sources &amp; Citations</h3><p>NASA PSI investigations, the NTRS reports, the FLEX CO₂ data and the AI-use disclosure.</p></Link>
+        </div>
+      </section>
+
       <section id="data" className="section wide">
         <h2>Built only on NASA open data</h2>
         <div className="chips big">
           {['NASA PSI repository', 'NTRS reports', 'FLEX · PSI-69', 'FLEX-2', 'BASS · BASS-II', 'SPICE', 'SLICE', 'CFI', 'ACME / BRE', 'SAME · SAME-R', 'DAFT', 'Saffire I–VI', 'SoFIE', 'LUCI'].map(t => <span key={t} className="chip static">{t}</span>)}
         </div>
         <p className="narrow-p">Every training row cites its NASA report and page. Estimates, such as buoyancy scaling with √g on the Moon and Mars, are labelled as estimates. The accuracy is reported against a majority-class baseline and broken down by gravity level. Everything runs locally under Apache-2.0.</p>
-        <div className="center"><Link to="/demo" className="btn big">[ Explore Space Fire Safety Tool ]</Link></div>
+        <div className="center"><Link to="/simulator" className="btn big">[ Explore Space Fire Safety Tool ]</Link></div>
       </section>
-      <Footer />
     </>
   )
 }

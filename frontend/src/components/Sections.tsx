@@ -23,7 +23,7 @@ export function SafetyBlock({ env }: { env: EnvData }) {
   useEffect(() => { getJSON<{ sections: SafetySection[] }>(`/safety?env=${env.id}`).then(d => setSecs(d.sections)).catch(() => {}) }, [env.id])
   return (
     <section id="safety" className="section wide">
-      <h2>Fire safety measures & insights · {env.short}</h2>
+      <h2>Measures for {env.short}</h2>
       <p className="narrow-p">What NASA sources say about detecting, isolating and suppressing a fire, choosing materials and crew procedures, filtered for this environment. Every line quotes its source. This is a summary of published material, not an operational procedure.</p>
       <div className="safety-grid">
         {secs.map(s => (
@@ -157,25 +157,16 @@ export function ModelSection({ card }: { card: ModelCard | null }) {
   )
 }
 
-export function DisclosureTeam() {
+export function Disclosure() {
   return (
     <>
       <section id="ai-use" className="section narrow">
         <h2>AI-use disclosure</h2>
-        <p>AI coding assistants helped draft parts of this code and text; the team reviewed them. <b>No AI system produced any training value.</b> Every experiment row was transcribed from a cited NASA report, and every environment or safety statement quotes its source. At runtime there is <b>no paid or cloud AI</b>. Predictions come from a scikit-learn model. Explanations are deterministic templates. Ask IGNITE-AI uses local TF-IDF retrieval and quotes passages verbatim. Optional local generation through Ollama is <b>off by default</b>, and its output is rejected if it contains any number not found in the retrieved passages. Details: docs/AI_USE.md.</p>
-      </section>
-      <section id="team" className="section narrow">
-        <h2>Team</h2>
-        <div className="team">
-          {[1, 2, 3, 4, 5, 6].map(i => (
-            <div key={i} className="member"><div className="avatar">?</div><b>[Team member name]</b><span className="muted">[Role]</span><span className="muted small">[University / city, Bangladesh]</span></div>
-          ))}
-        </div>
-        <p className="small muted">Placeholders: the team fills in names and roles before submission.</p>
+        <p>AI coding assistants helped draft parts of this code and text; the developers reviewed them. <b>No AI system produced any training value.</b> Every experiment row was transcribed from a cited NASA report, and every environment or safety statement quotes its source. At runtime there is <b>no paid or cloud AI</b>. Predictions come from a scikit-learn model. Explanations are deterministic templates. Ask IGNITE-AI uses local TF-IDF retrieval and quotes passages verbatim. Optional local generation through Ollama is <b>off by default</b>, and its output is rejected if it contains any number not found in the retrieved passages. Details: docs/AI_USE.md.</p>
       </section>
       <section id="about" className="section narrow">
         <h2>About</h2>
-        <p><b>NASA Space Apps Challenge 2026, Challenge 08: Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data.</b> IGNITE-AI runs fully on a local machine (FastAPI + React + scikit-learn), is licensed Apache-2.0, and uses only public NASA data. NASA does not endorse this project.</p>
+        <p>IGNITE-AI addresses the challenge <b>Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data</b>. It runs fully on a local machine (FastAPI + React + scikit-learn), is licensed Apache-2.0, and uses only public NASA data. NASA does not endorse this project.</p>
       </section>
     </>
   )

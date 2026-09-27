@@ -1,6 +1,7 @@
 """IGNITE-AI FastAPI service + static frontend.
 
-Pages: /  (landing)   /demo (tool). Both are served with a crawlable static HTML summary inside #root.
+Pages: / /simulator /predict /ask /safety /data /sources (each served with its own crawlable static HTML inside #root;
+       /demo redirects to /simulator for old links).
 API:   /health /api/model /api/experiments(.csv) /api/predict /api/boundary /api/corpus
        /api/environments /api/safety /api/flex /api/psi /api/ask /api/kb  /llms.txt
 """
@@ -10,9 +11,10 @@ from functools import lru_cache
 from typing import Literal
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
+from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse, RedirectResponse
+from html import escape
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -52,13 +54,11 @@ def health():
 
 
 @app.get("/api/model")
-@app.get("/model")
 def model():
     return artifacts()[1]
 
 
 @app.get("/api/experiments")
-@app.get("/experiments")
 def experiments(material: str | None = None, gravity_g: float | None = None):
     df = artifacts()[2]
     if material:
@@ -69,7 +69,6 @@ def experiments(material: str | None = None, gravity_g: float | None = None):
 
 
 @app.post("/api/predict")
-@app.post("/predict")
 def do_predict(body: PredictIn):
     p = predict(body.model_dump())
     related = retrieval.search(retrieval.query_for(p["inputs"], p.get("prediction")), k=3)
@@ -87,7 +86,6 @@ def do_predict(body: PredictIn):
 
 
 @app.get("/api/boundary")
-@app.get("/boundary")
 def boundary(material: str, flow_direction: str, x: str = "oxygen_pct", y: str = "flow_cm_s", gravity_g: float = 0.0,
              oxygen_pct: float | None = None, pressure_kpa: float | None = None, flow_cm_s: float | None = None,
              nx: int = Query(60, le=120), ny: int = Query(50, le=120)):
@@ -131,7 +129,6 @@ def experiments_csv():
 
 
 @app.get("/api/corpus")
-@app.get("/corpus")
 def corpus():
     docs, _, _ = retrieval.index()
     used = set(artifacts()[2]["report_id"].str.replace("NTRS ", "").tolist())
@@ -203,10 +200,15 @@ def kb_stats():
     return kb.stats()
 
 
-@lru_cache(maxsize=1)
-def _static_block() -> str:
+ASK_EXAMPLES = ["Is lunar gravity more flammable than Earth?", "How do flames look in microgravity?", "What does the crew do when a fire alarm goes off on the ISS?"]
+
+
+@lru_cache(maxsize=16)
+def _static_block(route: str) -> str:
     pipe, card, df = artifacts()
-    return static_html.build(card, len(df), df["report_id"].nunique(), _env_counts(), psi_data.flex_summary(), kb.stats())
+    ex = [(q, kb.ask(q)) for q in ASK_EXAMPLES] if route == "/ask" else None
+    return static_html.build(card, len(df), df["report_id"].nunique(), _env_counts(), psi_data.flex_summary(), kb.stats(),
+                             route=route, df=df, ask_examples=ex)
 
 
 @app.get("/llms.txt", include_in_schema=False)
@@ -216,21 +218,29 @@ def llms():
 
 
 def _page(route: str) -> HTMLResponse:
+    info = static_html.PAGE_INFO.get(route)
     html = (DIST / "index.html").read_text(encoding="utf-8")
-    html = re.sub(r'<div id="root">\s*</div>', lambda _: f'<div id="root">{_static_block()}</div>', html, count=1)
-    return HTMLResponse(html)
+    html = re.sub(r'<div id="root">\s*</div>', lambda _: f'<div id="root">{_static_block(route)}</div>', html, count=1)
+    if info:
+        html = re.sub(r"<title>.*?</title>", lambda _: f"<title>{escape(info[2])}</title>", html, count=1, flags=re.S)
+        html = re.sub(r'<meta name="description" content="[^"]*"', lambda _: f'<meta name="description" content="{escape(info[3])}"', html, count=1)
+    else:
+        html = re.sub(r"<title>.*?</title>", "<title>IGNITE-AI \u00b7 Page not found</title>", html, count=1, flags=re.S)
+    return HTMLResponse(html, status_code=200 if info else 404)
 
 
 if DIST.exists():
     app.mount("/assets", StaticFiles(directory=DIST / "assets"), name="assets")
 
-    @app.get("/", include_in_schema=False)
-    def index_page():
-        return _page("/")
+    @app.get("/demo", include_in_schema=False)
+    @app.get("/demo/", include_in_schema=False)
+    def demo_redirect(request: Request):
+        q = request.url.query
+        return RedirectResponse("/simulator" + (f"?{q}" if q else ""), status_code=308)
 
     @app.get("/{path:path}", include_in_schema=False)
     def spa(path: str):
         f = DIST / path
-        if path and f.is_file():
+        if path and f.is_file() and f.resolve().is_relative_to(DIST.resolve()):
             return FileResponse(f)
-        return _page("/" + path)
+        return _page("/" + path.strip("/"))

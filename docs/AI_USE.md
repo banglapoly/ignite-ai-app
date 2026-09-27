@@ -10,8 +10,8 @@
   - An AI coding assistant helped write code, harvest the NTRS and PSI public APIs, and draft documentation.
   - Every dataset row was transcribed from the cited report and carries its verbatim quote and table or page location, so reviewers can check it.
   - Environment and safety facts carry verbatim quotes, which were checked against the source text.
-  - The team should re-verify rows against the PDFs before submission (`backend/scripts/build_dataset.py`).
+  - Maintainers should re-verify rows against the PDFs before submission (`backend/scripts/build_dataset.py`).
 - **Imagery.**
   - The 3D flame, module and window views are procedurally generated (shaders and geometry). They illustrate documented trends and are not a simulation.
-  - The team's AI-generated mockups were used only as look-and-feel inspiration. No numbers from them are displayed.
+  - The AI-generated design mockups were used only as look-and-feel inspiration. No numbers from them are displayed.
   - No AI-generated images are shipped.
