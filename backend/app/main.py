@@ -228,6 +228,9 @@ def _page(route: str, request: Request | None = None) -> HTMLResponse:
     # (Netlify); the untouched app shell is kept as dist/app-shell.html for server-side injection here.
     shell = DIST / "app-shell.html"
     html = (shell if shell.exists() else DIST / "index.html").read_text(encoding="utf-8")
+    # this server has the API: tell the app to use it (a static build would otherwise compute locally)
+    html = re.sub(r'\s*<meta name="ignite-api"[^>]*>', "", html)
+    html = re.sub(r"<meta charset[^>]*>" if re.search(r"<meta charset", html, re.I) else r"<head>", lambda m: m.group(0) + '\n    <meta name="ignite-api" content="on">', html, count=1, flags=re.I)
     html = re.sub(r'<div id="root">\s*</div>', lambda _: f'<div id="root">{_static_block(route)}</div>', html, count=1)
     if request is not None:  # social previews need an absolute image URL; use the host the page was requested on
         proto = request.headers.get("x-forwarded-proto", request.url.scheme).split(",")[0].strip()

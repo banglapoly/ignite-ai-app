@@ -106,6 +106,14 @@ for o2, vs in [(30, [0.47, 0.63, 0.54]), (40, [1.42, 1.29, 1.55]), (50, [2.00, 2
     for v in vs:
         add(float(o2), ATM, 0.0, "quiescent", *kim2, geo, fac, "spread", f"steady spread, Vf={v} cm/s",
             R, "Table A-III, p.27", f"{o2} percent O2: flame spread rate {v} cm/sec (no oscillation footnote)")
+# Audit (A. Azmain, re-checked against the NTRS scan): the second 100 % entry of Table A-III
+# (Vf 2.72 cm/s, Lf 4.78 cm, Wf 2.11 cm) repeats all three values of the last 40 % entry of
+# Table A-I (single thickness, p.26; that entry is part of the printed 40 % average 2.73), the
+# 100 % line has no average although every other repeated level has one, and 2.72 cm/s is below
+# both 80 % tests (3.44, 3.55). It is almost certainly a copy error in the report, so the row is
+# retired: it keeps its id (E046) so later ids stay stable, but it is not written to the CSV.
+rows[-1]["retired"] = ("duplicate of the last 40 % entry of Table A-I (2.72 cm/s, 4.78 cm, 2.11 cm) printed a "
+                       "second time under 100 % in Table A-III; removed after audit")
 
 # ---------------------------------------------------------------------------------------------
 # 2) Olson, Ferkul, T'ien 1989, NASA TM-101479 (NTRS 19890014267). Opposed flow produced by
@@ -202,10 +210,24 @@ for mat, det, geo, o2b, o2e, psia in [
 # ---------------------------------------------------------------------------------------------
 fac_s = "Saffire flow unit inside an uncrewed Cygnus spacecraft (low Earth orbit)"
 R = "20210011521"
+# Table 2 prints oxygen rounded to whole percent (21 %). For I-1, II-5 and II-6 the flight-results
+# paper (Ferkul et al., ICES-2017, NTRS 20170008805, Table I p.28-29) gives the measured values:
+# 1-1 "21.7 to 21.5" (midpoint used, like samples 2-8/2-9 below), 2-5 and 2-6 "~ 22.1"; PSI-98 and
+# PSI-99 list the same (21.5 - 21.7; ~ 22.1). Those more precise values are used (audit, A. Azmain).
+O2_PRECISE = {"I-1": (21.6, "Sample 1-1: '21.7 to 21.5' (midpoint 21.6)"), "II-5": (22.1, "Sample 2-5: '~ 22.1'"),
+              "II-6": (22.1, "Sample 2-6: '~ 22.1'")}
 for fs, flow, o2, p in [("I-1", 20, 21, 100), ("II-5", 20, 21, 100), ("II-6", 25, 21, 100), ("III-1", 25, 21, 100), ("IV-1", 20, 22, 100)]:
-    add(float(o2), float(p), float(flow), "concurrent", "SIBAL_fabric", "SIBAL fabric (75% cotton / 25% fiberglass), 0.37 mm",
+    loc, quote = "Table 2, p.8", f"Saffire {fs}: air flow {flow} cm/s, O2 {o2}%, pressure {p} kPa, SIBAL; text: 'the Cotton and SIBAL fuel samples established a steady ... spread rate and flame size'"
+    notes, extra, o2v = "", "", float(o2)
+    if fs in O2_PRECISE:
+        o2v, said = O2_PRECISE[fs]
+        loc = "Table 2, p.8; O2: NTRS 20170008805 Table I, p.28"
+        quote += f"; NTRS 20170008805 Table I: {said}"
+        notes = (f"oxygen_pct {o2v:g} from NTRS 20170008805 Table I ({said}); NTRS 20210011521 Table 2 prints the rounded value {o2}%")
+        extra = SRC["20170008805"][1]
+    add(o2v, float(p), float(flow), "concurrent", "SIBAL_fabric", "SIBAL fabric (75% cotton / 25% fiberglass), 0.37 mm",
         "large flat fabric sample, concurrent flow", fac_s, "spread", "steady spread with a limiting flame size",
-        R, "Table 2, p.8", f"Saffire {fs}: air flow {flow} cm/s, O2 {o2}%, pressure {p} kPa, SIBAL; text: 'the Cotton and SIBAL fuel samples established a steady ... spread rate and flame size'")
+        R, loc, quote, notes=notes, extra_sources=extra)
 add(26.2, 70.7, 20.0, "concurrent", "cotton_jersey", "cotton jersey fabric, 18.1 mg/cm2", "large flat fabric sample 41 x 50 cm, concurrent flow", fac_s,
     "spread", "steady spread with a limiting flame size", R, "Table 2, p.8", "Saffire V-2: air flow 20 cm/s, O2 26.2%, pressure 70.7 kPa, Cotton jersey")
 add(22.0, 100.0, 20.0, "concurrent", "PMMA_thick", "cast PMMA slab, 2-sided, 10 mm thick", "thick slab 40 x 18 cm, concurrent flow", fac_s,
@@ -405,9 +427,9 @@ for r in rows:
     if q.startswith("Saffire I-1:"):
         _link(r, "PSI-98", "PSI-98 SAFFIRE-I table: S1 SIBAL, 20 cm/s concurrent, O2 21.5-21.7%, burn time 420 s")
     if q.startswith("Saffire II-5:"):
-        _link(r, "PSI-99", "PSI-99 SAFFIRE-II table: 2-5 cotton-fiberglass (SIBAL), 20 cm/s concurrent, micro-g spread length 29 cm, 2.1 mm/s")
+        _link(r, "PSI-99", "PSI-99 SAFFIRE-II table: 2-5 cotton-fiberglass (SIBAL), 20 cm/s concurrent, O2 ~ 22.1%, micro-g spread length 29 cm, 2.1 mm/s")
     if q.startswith("Saffire II-6:"):
-        _link(r, "PSI-99", "PSI-99 SAFFIRE-II table: 2-6 lists 20 cm/s and spread 2.6 mm/s over 29 cm (NTRS 20210011521/20170008805 give 25 cm/s, used here)")
+        _link(r, "PSI-99", "PSI-99 SAFFIRE-II table: 2-6 lists O2 ~ 22.1%, 20 cm/s and spread 2.6 mm/s over 29 cm (NTRS 20210011521/20170008805 give 25 cm/s, used here)")
     if q.startswith("Saffire III-1:"):
         _link(r, "PSI-100", "PSI-100 SAFFIRE-III table: S1 SIBAL, concurrent, lists 30 cm/s (NTRS 20210011521 gives 25 cm/s, used here)")
 
@@ -416,6 +438,10 @@ FIELDS = ["row_id", "oxygen_pct", "pressure_kpa", "flow_cm_s", "flow_direction",
           "notes", "extra_sources"]
 for i, r in enumerate(rows, 1):
     r["row_id"] = f"E{i:03d}"
+retired = [r for r in rows if r.get("retired")]
+for r in retired:
+    print(f"retired {r['row_id']} ({r['report_id']}, {r['source_location']}): {r['retired']}")
+rows = [r for r in rows if not r.get("retired")]
 OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
 with OUT_CSV.open("w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=FIELDS)

@@ -30,12 +30,13 @@ export default function BoundaryPlot({ data, current, inRange }: Props) {
   if (!data || !scales) return <div className="plot-empty">Loading decision boundary…</div>
   const { sx, sy } = scales
   const xs = data.xs, ys = data.ys
-  const edges = (arr: number[], s: (v: number) => number) => arr.map((v, i) => {
+  // cell edges; an axis with a single tested value (e.g. all tests at one flow) spans the whole plot
+  const edges = (arr: number[], s: (v: number) => number, full: [number, number]) => arr.length === 1 ? [full] : arr.map((v, i) => {
     const prev = i === 0 ? s(v) - (s(arr[1] ?? v + 1) - s(v)) / 2 : (s(arr[i - 1]) + s(v)) / 2
     const next = i === arr.length - 1 ? s(v) + (s(v) - s(arr[i - 1] ?? v - 1)) / 2 : (s(arr[i + 1]) + s(v)) / 2
     return [Math.min(prev, next), Math.abs(next - prev)]
   })
-  const ex = edges(xs, sx), ey = edges(ys, sy)
+  const ex = edges(xs, sx, [m.l, iw]), ey = edges(ys, sy, [m.t, ih])
   const cells: ReactElement[] = []
   for (let j = 0; j < ys.length; j++) for (let i = 0; i < xs.length; i++) {
     const c = data.z[j][i]

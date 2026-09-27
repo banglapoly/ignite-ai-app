@@ -39,7 +39,8 @@ function render(page) {
   html = html.replace(/<title>[\s\S]*?<\/title>/, () => `<title>${esc(page.title)}</title>`)
   html = html.replace(/<meta name="description" content="[^"]*"/, () => `<meta name="description" content="${esc(page.description)}"`)
   if (siteUrl) html = html.split('content="/og-image.png"').join(`content="${siteUrl}/og-image.png"`)
-  if (!api) html = html.replace('</head>', '  <meta name="ignite-api" content="off">\n  </head>')
+  // placed first in <head>, ahead of the module script, so it is there before any app code runs
+  if (!api) html = html.replace(/<meta charset[^>]*>/i.test(html) ? /<meta charset[^>]*>/i : /<head>/i, m => `${m}\n    <meta name="ignite-api" content="off">`)
   return html
 }
 

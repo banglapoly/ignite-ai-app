@@ -122,20 +122,32 @@ export interface Boundary {
    AND on a static host with no backend at all (e.g. Netlify):
    * Snapshot data (model card, environments, experiments, safety, FLEX, PSI) is read from
      /static-api/*.json, exported from the same API code by backend/scripts/export_static.py.
-   * Predictions, the decision map and Ask IGNITE-AI call the API; if there is no API (pages
-     prerendered for static hosting say so with <meta name="ignite-api" content="off">, or the
-     request fails) they run in the browser on the exported model and knowledge base.
+   * Predictions, the decision map and Ask IGNITE-AI call the API only when there is one; otherwise
+     they run in the browser on the exported model and knowledge base. Mode is decided at call time:
+       - <meta name="ignite-api" content="off">  (every page prerendered for static hosting) -> static
+       - <meta name="ignite-api" content="on">   (pages rendered by the FastAPI server)       -> API
+       - no meta: API in `vite dev` or when the build had IGNITE_API_URL set, static otherwise
+     and any failed API call switches the session to static for good.
    --------------------------------------------------------------------------------------------- */
+declare const __IGNITE_API_BUILD__: boolean
 const BASE = '/api'
 type Mode = 'server' | 'static'
-let mode: Mode = typeof document !== 'undefined' && document.querySelector('meta[name="ignite-api"]')?.getAttribute('content') === 'off' ? 'static' : 'server'
+let apiFailed = false
+function currentMode(): Mode {
+  if (apiFailed) return 'static'
+  const meta = typeof document !== 'undefined' ? document.querySelector('meta[name="ignite-api"]')?.getAttribute('content') : null
+  if (meta === 'off') return 'static'
+  if (meta === 'on') return 'server'
+  return __IGNITE_API_BUILD__ ? 'server' : 'static'
+}
 const modeListeners = new Set<(m: Mode) => void>()
-export const isStaticMode = () => mode === 'static'
+export const isStaticMode = () => currentMode() === 'static'
 export function onModeChange(f: (m: Mode) => void) { modeListeners.add(f); return () => { modeListeners.delete(f) } }
-function goStatic() { if (mode !== 'static') { mode = 'static'; modeListeners.forEach(f => f(mode)) } }
+function goStatic() { if (!apiFailed) { apiFailed = true; modeListeners.forEach(f => f('static')) } }
 
 class HttpError extends Error { constructor(public status: number, msg: string) { super(msg) } }
 async function server<T>(path: string, init?: RequestInit): Promise<T> {
+  if (isStaticMode()) throw new Error(`no API in static mode (${path})`)   // never touch /api on a static host
   const ctl = new AbortController()
   const timer = setTimeout(() => ctl.abort(), 12000)
   try {
@@ -146,7 +158,7 @@ async function server<T>(path: string, init?: RequestInit): Promise<T> {
 }
 /** Use the API when there is one; otherwise (or if it is unreachable) compute the same answer locally. */
 async function withFallback<T>(call: () => Promise<T>, local: () => Promise<T>): Promise<T> {
-  if (mode === 'static') return local()
+  if (isStaticMode()) return local()
   try {
     return await call()
   } catch (e) {
@@ -179,7 +191,7 @@ export async function getJSON<T>(path: string): Promise<T> {
   const [p, qs = ''] = path.split('?')
   const q = new URLSearchParams(qs)
   if (STATIC_GET[p]) {
-    try { return await STATIC_GET[p](q) } catch (e) { if (mode === 'static') throw e }   // no static copy: ask the API
+    try { return await STATIC_GET[p](q) } catch (e) { if (isStaticMode()) throw e }   // no static copy: ask the API
     return server<T>(path)
   }
   if (p === '/boundary') return withFallback(() => server<T>(path), () => localBoundary(q) as Promise<T>)

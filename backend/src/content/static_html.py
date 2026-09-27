@@ -28,7 +28,7 @@ PAGES = [
     ("/safety", "Safety Measures", "IGNITE-AI \u00b7 Fire Safety Measures",
      "Spacecraft fire detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources."),
     ("/data", "Data & Model", "IGNITE-AI \u00b7 Data & Model",
-     "The 144-row NASA flame-spread dataset with quotes and the honest model card: cross-validation, per-gravity accuracy, confusion matrix."),
+     "The 143-row NASA flame-spread dataset with quotes and the honest model card: cross-validation, per-gravity accuracy, confusion matrix."),
     ("/sources", "Sources & Citations", "IGNITE-AI \u00b7 Sources & Citations",
      "NASA PSI investigations, NTRS reports, environment and safety sources, FLEX data, and the AI-use disclosure."),
 ]

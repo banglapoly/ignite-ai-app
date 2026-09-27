@@ -3,8 +3,8 @@
 > Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit
 
 Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials, trained only on published NASA experiments.
-- Dataset: 144 experiments from 13 NASA reports; CSV at /static-api/experiments.csv
-- CV accuracy 0.729 (balanced 0.646), leave-reports-out 0.688, baseline 0.611
+- Dataset: 143 experiments from 13 NASA reports; CSV at /static-api/experiments.csv
+- CV accuracy 0.734 (balanced 0.679), leave-reports-out 0.692, baseline 0.608
 - Gravity levels with data: 0 g, 0.165 g (Moon), 0.38 g (Mars), 1 g; the range guard refuses untested material/gravity combinations
 - Moon/Mars buoyancy scaling (sqrt g) values are labelled estimates
 
@@ -14,7 +14,7 @@ Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials,
 - /predict : Prediction & Experiments — Flame-spread prediction with a range guard, decision boundary over real NASA tests, nearest experiments and FLEX CO2 data.
 - /ask : Ask IGNITE-AI — Local question answering over a NASA combustion knowledge base; answers are verbatim quotes with source links.
 - /safety : Safety Measures — Spacecraft fire detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources.
-- /data : Data & Model — The 144-row NASA flame-spread dataset with quotes and the honest model card: cross-validation, per-gravity accuracy, confusion matrix.
+- /data : Data & Model — The 143-row NASA flame-spread dataset with quotes and the honest model card: cross-validation, per-gravity accuracy, confusion matrix.
 - /sources : Sources & Citations — NASA PSI investigations, NTRS reports, environment and safety sources, FLEX data, and the AI-use disclosure.
 
 ## Data (static JSON, always available)

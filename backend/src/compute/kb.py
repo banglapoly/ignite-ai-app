@@ -4,7 +4,7 @@ Knowledge base (all real, all linked to a NASA source):
   * NTRS report titles/abstracts (data/corpus/ntrs_corpus.json)
   * NASA PSI investigation metadata (objective, approach, hypothesis, hardware, dates, DOI, publications)
   * NASA PSI experimental tables (small tables row by row; large ones summarised; FLEX statistics computed)
-  * the 144 curated flame-spread experiment rows (with verbatim quotes)
+  * the 143 curated flame-spread experiment rows (with verbatim quotes)
   * curated environment/safety facts with verbatim quotes (src/content/facts.py)
   * paragraphs of three NASA web pages (combustion research, ACME, SoFIE)
 

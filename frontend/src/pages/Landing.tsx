@@ -80,7 +80,7 @@ export default function Landing({ card }: { card: ModelCard | null }) {
           <Link to="/predict" className="card pagecard"><span className="pc-ico">📈</span><h3>Prediction &amp; Experiments</h3><p>Spread / marginal / no-spread prediction with the range guard, the decision boundary over real tests and the nearest NASA experiments.</p></Link>
           <Link to="/ask" className="card pagecard"><span className="pc-ico">💬</span><h3>Ask IGNITE-AI</h3><p>Ask about NASA combustion experiments or compare them. Answers are verbatim quotes with source links.</p></Link>
           <Link to="/safety" className="card pagecard"><span className="pc-ico">🧯</span><h3>Safety Measures</h3><p>Detection, ventilation shutdown, suppression, materials and crew procedures for each environment, from NASA sources.</p></Link>
-          <Link to="/data" className="card pagecard"><span className="pc-ico">🧮</span><h3>Data &amp; Model</h3><p>All {card?.model.n_train ?? 144} training rows with their quotes, the model card, per-gravity accuracy and the confusion matrix.</p></Link>
+          <Link to="/data" className="card pagecard"><span className="pc-ico">🧮</span><h3>Data &amp; Model</h3><p>All {card?.model.n_train ?? 143} training rows with their quotes, the model card, per-gravity accuracy and the confusion matrix.</p></Link>
           <Link to="/sources" className="card pagecard"><span className="pc-ico">📚</span><h3>Sources &amp; Citations</h3><p>NASA PSI investigations, the NTRS reports, the FLEX CO₂ data and the AI-use disclosure.</p></Link>
         </div>
       </section>

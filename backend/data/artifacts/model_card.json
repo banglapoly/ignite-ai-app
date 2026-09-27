@@ -16,26 +16,26 @@
       "no_spread",
       "spread"
     ],
-    "n_train": 144,
+    "n_train": 143,
     "n_sources": 13,
     "n_by_gravity": {
-      "0": 124,
+      "0": 123,
       "0.165": 8,
       "0.38": 6,
       "1": 6
     },
-    "cv_accuracy": 0.729
+    "cv_accuracy": 0.734
   },
   "metrics": {
     "cv_scheme": "StratifiedKFold(n_splits=5, shuffle=True, random_state=42); out-of-fold predictions",
-    "cv_accuracy": 0.729,
-    "cv_balanced_accuracy": 0.646,
-    "repeated_cv_accuracy_mean": 0.725,
-    "repeated_cv_accuracy_std": 0.064,
+    "cv_accuracy": 0.734,
+    "cv_balanced_accuracy": 0.679,
+    "repeated_cv_accuracy_mean": 0.718,
+    "repeated_cv_accuracy_std": 0.077,
     "repeated_cv_scheme": "RepeatedStratifiedKFold(5 folds x 10 repeats)",
-    "leave_reports_out_accuracy": 0.688,
+    "leave_reports_out_accuracy": 0.692,
     "leave_reports_out_scheme": "GroupKFold(5) grouped by report_id (whole reports held out)",
-    "majority_baseline_accuracy": 0.611,
+    "majority_baseline_accuracy": 0.608,
     "confusion_matrix": {
       "labels": [
         "no_spread",
@@ -49,14 +49,14 @@
           14
         ],
         [
-          6,
-          16,
-          2
+          4,
+          19,
+          1
         ],
         [
-          10,
+          12,
           2,
-          76
+          73
         ]
       ],
       "note": "rows = true class, columns = predicted class (out-of-fold)"
@@ -69,22 +69,22 @@
         "support": 32.0
       },
       "marginal_spread": {
-        "precision": 0.696,
-        "recall": 0.667,
-        "f1-score": 0.681,
+        "precision": 0.731,
+        "recall": 0.792,
+        "f1-score": 0.76,
         "support": 24.0
       },
       "spread": {
-        "precision": 0.826,
-        "recall": 0.864,
-        "f1-score": 0.844,
-        "support": 88.0
+        "precision": 0.83,
+        "recall": 0.839,
+        "f1-score": 0.834,
+        "support": 87.0
       }
     },
     "oof_accuracy_by_gravity": {
       "0": {
-        "n": 124,
-        "accuracy": 0.798
+        "n": 123,
+        "accuracy": 0.797
       },
       "0.165": {
         "n": 8,
@@ -96,12 +96,12 @@
       },
       "1": {
         "n": 6,
-        "accuracy": 0.167
+        "accuracy": 0.333
       }
     }
   },
   "class_counts": {
-    "spread": 88,
+    "spread": 87,
     "no_spread": 32,
     "marginal_spread": 24
   },
@@ -600,9 +600,9 @@
         "flow_directions": [
           "quiescent"
         ],
-        "n": 18,
+        "n": 17,
         "outcomes": {
-          "spread": 14,
+          "spread": 13,
           "marginal_spread": 3,
           "no_spread": 1
         },
@@ -623,9 +623,9 @@
             "flow_directions": [
               "quiescent"
             ],
-            "n": 18,
+            "n": 17,
             "outcomes": {
-              "spread": 14,
+              "spread": 13,
               "marginal_spread": 3,
               "no_spread": 1
             }
@@ -818,5 +818,5 @@
       }
     }
   },
-  "trained_at": "2026-09-27T15:59:57+00:00"
+  "trained_at": "2026-09-27T20:24:49+00:00"
 }

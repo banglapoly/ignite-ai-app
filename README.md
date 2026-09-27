@@ -4,7 +4,7 @@
 Challenge: *Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data* · License: **Apache-2.0**
 
 > **Problem.** Fire behaves differently without gravity: flames become rounded, can be nearly invisible, and some materials burn at lower oxygen in low gravity than in the Earth screening test. The evidence is spread across decades of NASA reports and data archives.
-> **Solution.** IGNITE-AI runs locally. You pick an environment (Earth 1 g, Moon 0.165 g, Mars 0.38 g, ISS ~0 g, or a rocket-transit cabin) and set oxygen, pressure, ventilation fan speed, material and gas mix. A 3D flame reacts live. A classifier trained **only on 144 published NASA experiments** predicts `spread` / `marginal_spread` / `no_spread`, **refuses to predict outside the tested envelope** (including untested gravity levels and gas mixes), and shows the real experiments behind each answer. An offline assistant, **Ask IGNITE-AI**, answers questions from a NASA combustion knowledge base with verbatim, linked quotes.
+> **Solution.** IGNITE-AI runs locally. You pick an environment (Earth 1 g, Moon 0.165 g, Mars 0.38 g, ISS ~0 g, or a rocket-transit cabin) and set oxygen, pressure, ventilation fan speed, material and gas mix. A 3D flame reacts live. A classifier trained **only on 143 published NASA experiments** predicts `spread` / `marginal_spread` / `no_spread`, **refuses to predict outside the tested envelope** (including untested gravity levels and gas mixes), and shows the real experiments behind each answer. An offline assistant, **Ask IGNITE-AI**, answers questions from a NASA combustion knowledge base with verbatim, linked quotes.
 
 ![Home](docs/screenshots/01-home.png)
 
@@ -70,12 +70,12 @@ The old `/demo` link redirects to `/simulator`. Unknown paths return a 404 page.
    - The live prediction panel, with links on to the evidence (`/predict`) and to the safety measures (`/safety`).
 
 ## Data sources
-### Training rows: `backend/data/experiments.csv`, **144 rows from 13 NASA reports**
+### Training rows: `backend/data/experiments.csv`, **143 rows from 13 NASA reports**
 Each row has `gravity_g`, `report_id`, `source_url`, `source_location` (table or page), a verbatim `quote`, and `notes`/`extra_sources`. Rows are transcribed in `backend/scripts/build_dataset.py`. **None are synthetic or interpolated.**
 
 | Rows | Gravity | Source |
 |---:|---|---|
-| 46 | 0 g | [NTRS 19880006471](https://ntrs.nasa.gov/citations/19880006471) Olson 1987, quiescent thin cellulose (drop tower) |
+| 45 | 0 g | [NTRS 19880006471](https://ntrs.nasa.gov/citations/19880006471) Olson 1987, quiescent thin cellulose (drop tower) |
 | 33 | 0 g | [NTRS 20150008962](https://ntrs.nasa.gov/citations/20150008962) BASS/BASS-II SIBAL concurrent spread (ISS MSG) |
 | 13 | 0 g | [NTRS 19890014267](https://ntrs.nasa.gov/citations/19890014267) Olson, Ferkul, T'ien 1989, opposed-flow extinction |
 | 9 / 7 / 3 | 0 g | Saffire IV–V [20210011521](https://ntrs.nasa.gov/citations/20210011521), Saffire I–II [20170008805](https://ntrs.nasa.gov/citations/20170008805), Saffire VI [20240002981](https://ntrs.nasa.gov/citations/20240002981) (Cygnus) |
@@ -85,7 +85,11 @@ Each row has `gravity_g`, `report_id`, `source_url`, `source_location` (table or
 | **1 (new)** | 0.165 g | [NTRS 20260001966](https://ntrs.nasa.gov/citations/20260001966) Ferkul et al. 2026: SIBAL, lunar g, 21% O₂, 1 atm, "Steady, downward spread ... entire 20-sec test" |
 | **1 (new)** | 0.165 g | [NTRS 20250010653](https://ntrs.nasa.gov/citations/20250010653) LUCI (spinning New Shepard rocket): SIBAL downward spread in lunar g, air at normal pressure, steady spread 0.92 mm/s |
 
-Rows by gravity: 0 g 124 · Moon 8 · Mars 6 · Earth 1 g 6. Classes: spread 88 · no_spread 32 · marginal 24.
+Rows by gravity: 0 g 123 · Moon 8 · Mars 6 · Earth 1 g 6. Classes: spread 87 · no_spread 32 · marginal 24.
+
+**Dataset audit (a teammate's review, checked against the NTRS PDFs):**
+- **E046 retired.** In Olson 1987 Table A-III (p.27), the 100% O₂ level lists 4.59 and 2.72 cm/s with no average. The 2.72 cm/s row (V 2.72, L 4.78, W 2.11) exactly repeats the last 40% O₂ entry of Table A-I (p.26), which is part of that table's printed 40% average (2.73). Every other repeated level in Table A-III has an average, and 2.72 is below both 80% values (3.44, 3.55). This is a copy error in the report itself, so the row was removed. Row IDs are kept stable: E046 is simply absent.
+- **Saffire I-1, II-5 and II-6 oxygen.** The ICES-2021 paper (NTRS 20210011521, Table 2) prints these as 21% (rounded). The Saffire I/II results paper (NTRS 20170008805, Table I, p.28) gives 21.7 to 21.5% for I-1 (used: 21.6) and ~22.1% for II-5 and II-6. PSI-98/99 agree. The rows now use the precise values and cite both papers.
 
 ### NASA Physical Sciences Informatics (PSI), the primary official data source
 `scripts/fetch_psi.py` reads PSI's public JSON endpoints anonymously, the same ones the PSI web app uses. It saves metadata for **24 investigations** (objective, approach, hypothesis, hardware, dates, DOI, licence, publication list, file inventory) to `data/psi/psi_investigations.json`, and every public **experimental table** to `data/psi/tables/`. Investigations are CC0-1.0 where PSI states a licence.
@@ -134,14 +138,14 @@ Example: *"Is lunar gravity more flammable than Earth?"*
 |---|---|
 | Model | `GradientBoostingClassifier(n_estimators=150, max_depth=2, learning_rate=0.1)` + one-hot encoding |
 | Features | `oxygen_pct`, `pressure_kpa`, `flow_cm_s`, `gravity_g`, `material`, `flow_direction` |
-| Training data | 144 rows, 13 NTRS reports (0 g 124 · 0.165 g 8 · 0.38 g 6 · 1 g 6) |
-| **Stratified 5-fold CV accuracy** | **0.729** (balanced 0.646) |
-| Repeated CV (5×10) | 0.725 ± 0.064 |
-| Leave-reports-out (GroupKFold) | 0.688 |
-| Majority-class baseline | 0.611 |
-| OOF accuracy by gravity | 0 g 0.798 · Moon 0.375 · Mars 0.333 · 1 g 0.167 |
+| Training data | 143 rows, 13 NTRS reports (0 g 123 · 0.165 g 8 · 0.38 g 6 · 1 g 6) |
+| **Stratified 5-fold CV accuracy** | **0.734** (balanced 0.679) |
+| Repeated CV (5×10) | 0.718 ± 0.077 |
+| Leave-reports-out (GroupKFold) | 0.692 |
+| Majority-class baseline | 0.608 |
+| OOF accuracy by gravity | 0 g 0.797 · Moon 0.375 · Mars 0.333 · 1 g 0.333 |
 
-Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13,5,14],[6,16,2],[10,2,76]]`. The earlier microgravity-only model scored 0.790. The drop comes from the 20 new partial-gravity and 1 g rows: they are paired limit tests (a pass at one O₂, a fail just below), which cross-validation cannot predict well from 6–8 rows. We report this instead of dropping them.
+Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13,5,14],[4,19,1],[12,2,73]]`. The earlier microgravity-only model scored 0.790. The drop comes from the 20 new partial-gravity and 1 g rows: they are paired limit tests (a pass at one O₂, a fail just below), which cross-validation cannot predict well from 6–8 rows. We report this instead of dropping them.
 
 **Range guard:** refuses for an unknown material, a material never tested at the selected gravity, O₂/pressure/flow outside that (material, gravity) min–max, an untested flow direction, µg zero-flow without "quiescent", or any gas mix other than O₂/N₂.
 
@@ -151,13 +155,13 @@ Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13
 Netlify hosts only static files, so the site is split into two parts.
 
 **Static-only mode (no backend needed).** With `IGNITE_API_URL = ""` in `netlify.toml` (the current setting), the whole site runs from static files.
-- Snapshot data (model card, environments, the 144 experiments, safety measures, FLEX, PSI) comes from `frontend/public/static-api/*.json`. `python -m scripts.export_static` exports these from the same API functions, and a test fails if they are stale.
+- Snapshot data (model card, environments, the 143 experiments, safety measures, FLEX, PSI) comes from `frontend/public/static-api/*.json`. `python -m scripts.export_static` exports these from the same API functions, and a test fails if they are stale.
 - Predictions and the decision map run in the browser on `predictor.json`, which holds every tree of the trained model. They use the same range guard, nearest experiments and explanation as the server; a test checks that the trees reproduce scikit-learn's probabilities exactly.
-- Ask IGNITE-AI runs in the browser over `kb.json`, which holds all 1,501 knowledge-base passages. It uses the same TF-IDF settings, decline rules and verbatim-quote answers.
+- Ask IGNITE-AI runs in the browser over `kb.json`, which holds all 1,500 knowledge-base passages. It uses the same TF-IDF settings, decline rules and verbatim-quote answers.
 - Related NTRS reports for each prediction are precomputed with the server's index.
 - A note in the footer says the page is running in static mode.
 
-When the site is served by the FastAPI backend (`start.bat`), the same frontend calls `/api` instead.
+When the site is served by the FastAPI backend (`start.bat`), the same frontend calls `/api` instead. The mode is set by the page: prerendered static pages carry `<meta name="ignite-api" content="off">`, pages rendered by FastAPI carry `content="on"`, and a build made with an empty or unset `IGNITE_API_URL` never calls `/api` from a page without the tag. In static mode the app makes no `/api` requests at all.
 
 - **Frontend on Netlify.** `netlify.toml` sets everything:
   - Base directory `frontend`
@@ -198,7 +202,7 @@ The server (and, on Netlify, the build-time prerender) injects **page-specific s
 | `/predict` | the tested envelope table and the model summary |
 | `/ask` | how retrieval works, plus three example questions answered live with their NASA citations |
 | `/safety` | all safety measures with quotes |
-| `/data` | the model card and all 144 rows |
+| `/data` | the model card and all 143 rows |
 | `/sources` | all sources and the AI disclosure |
 
 `/llms.txt` lists every page. Also available: `<meta name="description">`, a `<noscript>` note, `/llms.txt` (a plain-text summary with sources) and `/docs` (OpenAPI).
@@ -207,7 +211,7 @@ The server (and, on Netlify, the build-time prerender) injects **page-specific s
 Pages: `/` · `/simulator` · `/predict` · `/ask` · `/safety` · `/data` · `/sources`. API (JSON under `/api`): `GET /health` · `GET /api/model` · `GET /api/experiments[?material=&gravity_g=]` · `GET /api/experiments.csv` · `POST /api/predict` `{"oxygen_pct":21,"pressure_kpa":101.3,"flow_cm_s":3,"material":"SIBAL_fabric","flow_direction":"concurrent","gravity_g":0,"gas_mix":"air"}` · `GET /api/boundary?...&gravity_g=` · `GET /api/environments` · `GET /api/safety?env=iss` · `GET /api/flex[?rows=true&co2_only=true]` · `GET /api/psi` · `POST /api/ask {"question": "..."}` · `GET /api/kb` · `GET /llms.txt`
 
 ## Limitations
-- The dataset is small: 144 rows. Partial-gravity and 1 g data have 6–8 rows per level and cover only 3–4 materials, and the low-g drop tests last about 5 s.
+- The dataset is small: 143 rows. Partial-gravity and 1 g data have 6–8 rows per level and cover only 3–4 materials, and the low-g drop tests last about 5 s.
 - `no_spread` recall is weak (0.41), so the model tends to over-predict spread. Treat any sizeable `spread` probability as a warning.
 - The envelope is a per-feature box. A point inside the box can still be far from any test, which shows up as a larger nearest distance and lower confidence.
 - The 3D flame is an illustration of documented trends, not a CFD simulation.

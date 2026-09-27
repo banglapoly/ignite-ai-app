@@ -117,7 +117,7 @@ ENVIRONMENTS = {
             F("Invisible cool flames", "FLEX found fuel still 'burning' after the visible flame went out", "nasa_combustion",
               "FLEX ... led to the discovery of a type of cool flame, where the fuel continued \u201cburning\u201d under certain conditions after extinction of the visible flame."),
         ],
-        "data_note": "124 training rows in microgravity: NASA drop towers, Shuttle SSCE, ISS BASS/BASS-II (corroborated by the PSI-25 experimental table) and Saffire I-VI in Cygnus.",
+        "data_note": "123 training rows in microgravity: NASA drop towers, Shuttle SSCE, ISS BASS/BASS-II (corroborated by the PSI-25 experimental table) and Saffire I-VI in Cygnus.",
         "default": {"material": "SIBAL_fabric", "oxygen_pct": 21, "pressure_kpa": 101.3, "flow_cm_s": 3, "flow_direction": "concurrent"},
     },
     "transit": {
@@ -136,7 +136,7 @@ ENVIRONMENTS = {
               "practical travel to the Moon or Mars must assume flight, for the most part, that is unpowered and without artificial gravity.",
               note="During engine burns the crew feels thrust acceleration instead of free fall; no flame-spread data exist for that, so the tool models the coast phase only."),
         ],
-        "data_note": "Uses the 124 microgravity rows; the Saffire (Cygnus spacecraft) rows are the closest real analogue to a crew-cabin fire in transit.",
+        "data_note": "Uses the 123 microgravity rows; the Saffire (Cygnus spacecraft) rows are the closest real analogue to a crew-cabin fire in transit.",
         "default": {"material": "SIBAL_fabric", "oxygen_pct": 21, "pressure_kpa": 100, "flow_cm_s": 20, "flow_direction": "concurrent"},
     },
 }

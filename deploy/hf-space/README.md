@@ -20,6 +20,6 @@ This is the backend for **IGNITE-AI**, which does predictive fire-safety analyti
 - `POST /api/ask`: answers questions with quotes and citations from NASA reports (extractive retrieval, not generation)
 - `GET /docs`: interactive OpenAPI documentation
 
-**Data.** The model is trained on 144 rows transcribed from 13 NASA technical reports, with further tables from NASA Physical Sciences Informatics. The model is retrained when the image is built. This is not a certification tool: NASA-STD-6001 testing governs material acceptance. NASA does not endorse this project.
+**Data.** The model is trained on 143 rows transcribed from 13 NASA technical reports, with further tables from NASA Physical Sciences Informatics. The model is retrained when the image is built. This is not a certification tool: NASA-STD-6001 testing governs material acceptance. NASA does not endorse this project.
 
 The source code is in the project's GitHub repository. Code is licensed under Apache-2.0.

@@ -7,7 +7,7 @@ export default function AskPage() {
   return (
     <>
       <PageHead kicker="Ask IGNITE-AI" title="Ask the NASA combustion knowledge base">
-        A local question-answering assistant over NASA report abstracts (NTRS), NASA PSI investigation metadata and experimental tables, the 144 experiment rows and NASA mission pages. Answers are <b>verbatim quotes with links</b> to the source. Nothing is sent to a cloud service, and the assistant <b>declines</b> when nothing relevant is retrieved.
+        A local question-answering assistant over NASA report abstracts (NTRS), NASA PSI investigation metadata and experimental tables, the 143 experiment rows and NASA mission pages. Answers are <b>verbatim quotes with links</b> to the source. Nothing is sent to a cloud service, and the assistant <b>declines</b> when nothing relevant is retrieved.
       </PageHead>
       <section className="section wide page-body"><AskPanel envName={env?.name || 'ISS'} /></section>
       <section className="section wide how-rag">
