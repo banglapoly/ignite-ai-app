@@ -17,7 +17,7 @@ Challenge: *Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity
 | ![](docs/screenshots/03-predict.png) | ![](docs/screenshots/04-ask.png) | ![](docs/screenshots/05-safety.png) | ![](docs/screenshots/06-data-model.png) | ![](docs/screenshots/07-sources.png) | ![](docs/screenshots/09b-mobile-nav-open.png) |
 
 ## Contents
-[Run it](#run-it-locally-windows) · [Site structure](#site-structure) · [Data sources](#data-sources) · [Moon & Mars](#moon--mars-how-partial-gravity-is-handled) · [Ask IGNITE-AI (RAG)](#ask-ignite-ai-local-rag) · [Model card](#model-card-honest-metrics) · [Deploy](#deploy-netlify-frontend--render-backend) · [Crawlable content](#crawlable-content-for-search-engines-and-ai-tools) · [API](#api) · [Limitations](#limitations) · [Layout](#repository-layout) · [AI use](docs/AI_USE.md)
+[Run it](#run-it-locally-windows) · [Site structure](#site-structure) · [Data sources](#data-sources) · [Moon & Mars](#moon--mars-how-partial-gravity-is-handled) · [Ask IGNITE-AI (RAG)](#ask-ignite-ai-local-rag) · [Model card](#model-card-honest-metrics) · [Deploy](#deploy-netlify-frontend--hugging-face-space-backend) · [Crawlable content](#crawlable-content-for-search-engines-and-ai-tools) · [API](#api) · [Limitations](#limitations) · [Layout](#repository-layout) · [AI use](docs/AI_USE.md)
 
 ## Run it locally (Windows)
 Requirements: **Python 3.11** and **Node.js 18+**. No cloud service, no API key.
@@ -147,8 +147,8 @@ Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13
 
 **Explanation:** a deterministic template (`explain.py`). An optional Ollama path is guarded by a number check.
 
-## Deploy (Netlify frontend + Render backend)
-Netlify hosts only static files, so the site is split:
+## Deploy (Netlify frontend + Hugging Face Space backend)
+Netlify hosts only static files, so the site is split into two parts.
 
 - **Frontend on Netlify.** `netlify.toml` sets everything:
   - Base directory `frontend`
@@ -156,17 +156,27 @@ Netlify hosts only static files, so the site is split:
   - Publish directory `dist` (that is, `frontend/dist`)
   - `NODE_VERSION=22`
 
-  The build runs `tsc`, then `vite build`, then `scripts/prerender.mjs`. The prerender step writes one HTML file per page route (`dist/simulator/index.html` and so on), each with that page's title, description and readable text, so deep links and AI/SEO readers work without the server. It also writes `dist/404.html`, `dist/app-shell.html` and `dist/_redirects`.
-- **Backend on Render (free).** `render.yaml` is a Blueprint (New → Blueprint → pick this repo):
-  - Web service `ignite-ai-api`, Python 3.11.9, root directory `backend`
-  - Build: `pip install -r requirements.txt`, then retrain the model from the committed CSV, then run the tests
-  - Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-  - Health check: `/health`
-- **Proxy.** Netlify proxies `/api/*`, `/health`, `/docs` and `/openapi.json` to Render (status 200 rewrites), so the browser only ever talks to the Netlify domain.
+  The build runs `tsc`, then `vite build`, then `scripts/prerender.mjs`. The prerender step writes one HTML file per page route (`dist/simulator/index.html` and so on), each with that page's title, description and readable text. Deep links and AI/SEO readers therefore work without the server. It also writes `dist/404.html`, `dist/app-shell.html` and `dist/_redirects`.
 
-  The backend URL lives in **one place**: `IGNITE_API_URL` in `netlify.toml` (default `https://ignite-ai-api.onrender.com`). If Render assigns a different name, change it there and redeploy.
-- **CORS.** The API also accepts direct calls from any origin by default (`IGNITE_CORS_ORIGINS="*"`, public read-only API). Any `*.netlify.app` origin is always allowed. To narrow it, set `IGNITE_CORS_ORIGINS` to a comma-separated list.
-- **Cold starts.** Free Render services sleep after about 15 minutes idle, and the first request then takes up to about a minute. The frontend retries 502/503/504 and network errors with backoff and shows a "waking up the prediction server" banner. The page text itself is static on Netlify and loads instantly.
+- **Backend on a Hugging Face Docker Space (free CPU).** The Space repo is separate from this GitHub repo. Its root must contain `README.md` (YAML front matter with `sdk: docker` and `app_port: 7860`), `Dockerfile` and `backend/`. Templates are in `deploy/hf-space/`.
+  1. Run `powershell -ExecutionPolicy Bypass -File deploy\make_hf_space.ps1`. This builds `%USERPROFILE%\ignite-hf-space\` and `%USERPROFILE%\ignite-hf-space.zip`.
+  2. On huggingface.co, go to New Space, name it `ignite-ai-api`, choose SDK **Docker** (Blank) and hardware **CPU basic (free)**, and make it **Public**.
+  3. Upload the *contents* of the folder (or of the unzipped zip) to the Space root, replacing its README. Alternatively, `git clone` the Space, copy the files in, commit and push.
+  4. HF builds the image. It uses `python:3.11.9-slim`, installs `backend/requirements.txt`, retrains the model from the committed CSV, runs the tests, and starts `uvicorn app.main:app --host 0.0.0.0 --port 7860` as uid 1000.
+  5. Check `https://<hf-username>-ignite-ai-api.hf.space/health`.
+
+  Model artifacts and the parquet file are left out of the Space on purpose. They are rebuilt during the Docker build, and leaving them out keeps binary files (which the HF Hub accepts only via Xet/LFS) out of the Space repo.
+
+- **Proxy.** Netlify proxies `/api/*`, `/health`, `/docs` and `/openapi.json` to the backend (status 200 rewrites, server-side). The browser only ever talks to the Netlify domain.
+
+  The backend URL lives in **one place**: `IGNITE_API_URL` in `netlify.toml`. For the Space, set it to `IGNITE_API_URL = "https://<hf-username>-ignite-ai-api.hf.space"` and redeploy Netlify.
+
+- **Alternative backend: Render.** `render.yaml` is a Blueprint for a free Render web service `ignite-ai-api` (root `backend`, Python 3.11.9, start `uvicorn app.main:app --host 0.0.0.0 --port $PORT`, health check `/health`). Render asks for a card at sign-up.
+
+- **CORS.** The API accepts calls from any origin by default (`IGNITE_CORS_ORIGINS="*"`, since it is a public read-only API). Any `*.netlify.app` origin is always allowed. To narrow it, set `IGNITE_CORS_ORIGINS` to a comma-separated list, as a Space variable or an env var.
+
+- **Cold starts.** Free hosts put idle apps to sleep. A free HF Space sleeps after 48 hours without traffic, and Render sleeps after about 15 minutes. The next request then waits while the app restarts. The frontend retries 502/503/504 and network errors with backoff and shows a "waking up the prediction server" banner. The page text itself is static on Netlify and loads instantly.
+
 - **Keeping static text in sync.** After changing data, facts or page text, run `python -m scripts.export_static` in `backend/`. It regenerates `frontend/prerender/pages.json` and `frontend/public/llms.txt`. Commit the result. `setup.bat` does this for you, and a test fails if the files are stale.
 
 ## Crawlable content for search engines and AI tools
@@ -215,7 +225,10 @@ frontend/                     Vite + React + TypeScript + three.js (@react-three
   src/lib/sim.tsx (shared simulator state) · src/lib/router.tsx (routes) · src/components/Layout.tsx (nav, footer)
   src/three/Flame.tsx, Module.tsx · src/components/*
   scripts/prerender.mjs (per-route HTML + _redirects at build time) · prerender/pages.json (generated)
-render.yaml · netlify.toml     deploy config (Render API, Netlify static site)
+netlify.toml                  Netlify static site (base frontend, proxy to the API)
+deploy/hf-space/              Hugging Face Docker Space template (Dockerfile, README front matter)
+deploy/make_hf_space.ps1      assembles + zips the Space folder
+render.yaml                   alternative: Render Blueprint for the API
 docs/                         AI_USE.md, research-past-winners.md, screenshots/
 ```
 

@@ -1,5 +1,6 @@
-# Netlify: static frontend. The FastAPI backend runs on Render (see render.yaml);
-# Netlify proxies /api/*, /health and /docs to it, so the browser only talks to Netlify.
+# Netlify: static frontend. The FastAPI backend runs separately, on a Hugging Face Docker
+# Space (deploy/hf-space, see README "Deploy") or on Render (render.yaml). Netlify proxies
+# /api/*, /health, /docs and /openapi.json to it server-side, so the browser only talks to Netlify.
 [build]
   base    = "frontend"
   command = "npm ci && npm run build"
@@ -7,8 +8,10 @@
 
 [build.environment]
   NODE_VERSION  = "22"   # camera-controls (drei dependency) declares node >= 22
-  # The ONLY place the backend URL is set. If Render gives the service a different
-  # address, change it here and redeploy. The build writes dist/_redirects from it.
+  # The ONLY place the backend URL is set (no trailing slash). The build writes
+  # dist/_redirects from it. For the Hugging Face Space, replace the line below with
+  #   IGNITE_API_URL = "https://<hf-username>-ignite-ai-api.hf.space"
+  # (username lowercased; the Space must be public), then redeploy Netlify.
   IGNITE_API_URL = "https://ignite-ai-api.onrender.com"
 
 # Page routes. Each page is prerendered to its own dist/<route>/index.html (with its

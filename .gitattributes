@@ -1,0 +1,4 @@
+# Files that run on Linux (Hugging Face Space / Docker) keep LF line endings on every OS
+deploy/hf-space/** text eol=lf
+*.sh text eol=lf
+Dockerfile text eol=lf
