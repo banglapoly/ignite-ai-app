@@ -1,6 +1,7 @@
 """TF-IDF retrieval over the NTRS report corpus (titles + abstracts), fully offline."""
 from __future__ import annotations
 import json, pathlib
+import numpy as np
 from functools import lru_cache
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
@@ -31,7 +32,7 @@ def index():
 def search(query: str, k: int = 3, must_ids: list[str] | None = None) -> list[dict]:
     docs, vec, mat = index()
     sims = linear_kernel(vec.transform([query]), mat).ravel()
-    order = sims.argsort()[::-1]
+    order = np.argsort(-sims, kind="stable")   # stable: identical scores keep corpus order on every platform
     out, seen = [], set()
     for i in order:
         d = docs[i]

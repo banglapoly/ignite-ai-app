@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, PAGES } from '../lib/router'
-import { onBackendWaking } from '../lib/api'
+import { isStaticMode, onModeChange } from '../lib/api'
 
 export function Nav({ path }: { path: string }) {
   const [open, setOpen] = useState(false)
@@ -20,12 +20,20 @@ export function Nav({ path }: { path: string }) {
   )
 }
 
+function useStaticMode() {
+  const [st, setSt] = useState(isStaticMode())
+  useEffect(() => onModeChange(m => setSt(m === 'static')), [])
+  return st
+}
+
 export function Footer() {
+  const st = useStaticMode()
   return (
     <footer className="footer">
       <span><b>IGNITE-AI</b> · Apache-2.0 · runs locally, open-source only</span>
       <nav className="foot-links">{PAGES.map(p => <Link key={p.path} to={p.path}>{p.label}</Link>)}</nav>
-      <span>Data: NASA PSI (psi.nasa.gov) and NASA Technical Reports Server. NASA does not endorse this project. <a href="/llms.txt">llms.txt</a> · <a href="/docs">API</a></span>
+      <span>Data: NASA PSI (psi.nasa.gov) and NASA Technical Reports Server. NASA does not endorse this project. <a href="/llms.txt">llms.txt</a> · <a href="/static-api/experiments.csv">experiments.csv</a>{!st && <> · <a href="/docs">API</a></>}</span>
+      {st && <span className="static-note">Static version: no server is running, so predictions, the decision map and Ask IGNITE-AI are computed in your browser from the same trained model and NASA sources.</span>}
     </footer>
   )
 }
@@ -51,12 +59,4 @@ export function NextLinks({ path }: { path: string }) {
       {next && <Link to={next.path} className="btn">{next.label} →</Link>}
     </div>
   )
-}
-
-/** Shown only while API calls are slow or being retried (e.g. the free backend waking up). */
-export function WakeBanner() {
-  const [waking, setWaking] = useState(false)
-  useEffect(() => onBackendWaking(setWaking), [])
-  if (!waking) return null
-  return <div className="wake-banner" role="status">Waking up the data server… the free backend sleeps when idle and can take up to a minute to start. Results will appear automatically.</div>
 }

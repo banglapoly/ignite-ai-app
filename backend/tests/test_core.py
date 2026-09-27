@@ -96,6 +96,50 @@ def test_prerendered_pages_are_current():
     assert not stale, f"stale prerendered pages {stale}: run python -m scripts.export_static"
 
 
+def test_static_api_is_current():
+    """frontend/public/static-api/*.json (used when the site runs without a backend) must match the API.
+    If this fails, run `python -m scripts.export_static` in backend/ and commit the result."""
+    import json, pathlib
+    d = pathlib.Path(__file__).resolve().parents[2] / "frontend" / "public" / "static-api"
+    if not d.exists():
+        return
+    from scripts.export_static import build_static_api
+    fresh = json.loads(json.dumps(build_static_api(), ensure_ascii=False))
+    stale = [k for k, v in fresh.items() if json.loads((d / f"{k}.json").read_text(encoding="utf-8")) != v]
+    assert not stale, f"stale static API files {stale}: run python -m scripts.export_static"
+
+
+def test_exported_trees_reproduce_the_model():
+    """The browser predictor (plain trees in predictor.json) must give sklearn's probabilities."""
+    import math
+    import numpy as np
+    import pandas as pd
+    from scripts.export_static import build_predictor
+    from src.compute.predict import artifacts
+    from src.compute.model import FEATURES
+    pm = build_predictor()
+    pipe, card, df = artifacts()
+    rng = np.random.default_rng(0)
+    rows = df[FEATURES].sample(40, random_state=1).to_dict("records")
+    for r in list(rows):   # plus jittered points between experiments
+        rows.append({**r, "oxygen_pct": r["oxygen_pct"] + float(rng.normal(0, 2)), "flow_cm_s": max(0.0, r["flow_cm_s"] + float(rng.normal(0, 3)))})
+    want = pipe.predict_proba(pd.DataFrame(rows)[FEATURES])
+    cats = pm["features"]["categorical"]
+    for r, w in zip(rows, want):
+        x = [np.float32(r[c]) for c in pm["features"]["numeric"]]
+        for c, vals in cats.items():
+            x += [np.float32(1.0 if r[c] == v else 0.0) for v in vals]
+        raw = list(pm["init"])
+        for stage in pm["trees"]:
+            for k, t in enumerate(stage):
+                n = 0
+                while t["l"][n] != -1:
+                    n = t["l"][n] if x[t["f"][n]] <= t["t"][n] else t["r"][n]
+                raw[k] += pm["learning_rate"] * t["v"][n]
+        m = max(raw); e = [math.exp(v - m) for v in raw]; p = [v / sum(e) for v in e]
+        assert max(abs(a - b) for a, b in zip(p, w)) < 1e-9, (r, p, w)
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

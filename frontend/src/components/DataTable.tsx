@@ -21,7 +21,7 @@ export default function DataTable() {
         <select value={grav} onChange={e => setGrav(e.target.value)}><option value="">All gravity levels</option>{Object.entries(GRAVITY_LABEL).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select>
         <select value={out} onChange={e => setOut(e.target.value)}><option value="">All outcomes</option>{Object.keys(OUTCOME_LABEL).map(o => <option key={o} value={o}>{OUTCOME_LABEL[o as keyof typeof OUTCOME_LABEL]}</option>)}</select>
         <span className="muted">{shown.length} / {rows.length} rows</span>
-        <a className="btn ghost small" href="/api/experiments.csv">Download CSV</a>
+        <a className="btn ghost small" href="/static-api/experiments.csv" download="experiments.csv">Download CSV</a>
       </div>
       <div className="dt-scroll">
         <table>

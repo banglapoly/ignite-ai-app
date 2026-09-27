@@ -304,4 +304,4 @@ select { max-width: 100%; box-sizing: border-box; }
 @keyframes logoGlow { 0%, 100% { filter: drop-shadow(0 0 16px rgba(255,90,26,.40)) drop-shadow(0 0 38px rgba(255,90,26,.14)); } 50% { filter: drop-shadow(0 0 22px rgba(255,90,26,.55)) drop-shadow(0 0 50px rgba(255,90,26,.22)); } }
 @media (prefers-reduced-motion: reduce) { .hero-logo { animation: none; } }
 .static-logo { vertical-align: middle; margin-right: .5rem; }
-.wake-banner { position: sticky; top: 56px; z-index: 19; margin: 0; padding: .55rem 1rem; text-align: center; font-size: .88rem; color: #ffe2cc; background: rgba(120,50,10,.85); border-bottom: 1px solid rgba(255,140,60,.5); backdrop-filter: blur(6px); }
+.static-note { flex-basis: 100%; font-size: .8rem; color: var(--muted, #9aa4c7); opacity: .9; }

@@ -214,7 +214,7 @@ def retrieve(q: str, k: int = 8) -> list[dict]:
     ps, vec, mat = index()
     sims = linear_kernel(vec.transform([_expand(q)]), mat).ravel()
     sims = sims * np.array([1.25 if p["kind"] == "fact" else (0.8 if p["id"].endswith(("-meta",)) or "-pubs-" in p["id"] else 1.0) for p in ps])
-    order = np.argsort(-sims)[: k * 3]
+    order = np.argsort(-sims, kind="stable")[: k * 3]   # stable: same tie order on every platform (and in the browser port)
     out, per_src = [], {}
     for i in order:
         p = ps[i]

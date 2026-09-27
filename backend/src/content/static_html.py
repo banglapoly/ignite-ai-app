@@ -116,7 +116,7 @@ def _rows_table(df):
     for r in df.itertuples(index=False):
         out.append(f"<tr><td>{e(str(r.row_id))}</td><td>{r.gravity_g:g}</td><td>{r.oxygen_pct:g}</td><td>{r.pressure_kpa:g}</td><td>{r.flow_cm_s:g}</td><td>{e(str(r.flow_direction))}</td>"
                    f"<td>{e(str(r.material))}</td><td>{e(_OUTCOME.get(r.outcome, r.outcome))}</td><td>{_a(r.source_url, 'NTRS ' + str(r.report_id))}</td><td>{e(str(r.source_location))}</td></tr>")
-    out.append("</tbody></table><p>CSV: <a href=\"/api/experiments.csv\">/api/experiments.csv</a></p></section>")
+    out.append("</tbody></table><p>CSV: <a href=\"/static-api/experiments.csv\">/static-api/experiments.csv</a></p></section>")
     return "".join(out)
 
 
@@ -208,12 +208,14 @@ def llms_txt(card: dict, n_rows: int, n_reports: int) -> str:
     m = card["metrics"]
     lines = [f"# {TITLE}", "", f"> {TAGLINE}", "",
              "Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials, trained only on published NASA experiments.",
-             f"- Dataset: {n_rows} experiments from {n_reports} NASA reports; CSV at /api/experiments.csv",
+             f"- Dataset: {n_rows} experiments from {n_reports} NASA reports; CSV at /static-api/experiments.csv",
              f"- CV accuracy {m['cv_accuracy']} (balanced {m['cv_balanced_accuracy']}), leave-reports-out {m['leave_reports_out_accuracy']}, baseline {m['majority_baseline_accuracy']}",
              "- Gravity levels with data: 0 g, 0.165 g (Moon), 0.38 g (Mars), 1 g; the range guard refuses untested material/gravity combinations",
              "- Moon/Mars buoyancy scaling (sqrt g) values are labelled estimates", "",
              "## Pages"] + [f"- {p} : {label} \u2014 {desc}" for p, label, _, desc in PAGES] + ["",
-             "## API", "- GET /health", "- GET /api/environments", "- GET /api/safety?env=iss", "- POST /api/predict", "- POST /api/ask {question}",
+             "## Data (static JSON, always available)"] + [f"- /static-api/{n}.json" for n in ("model", "environments", "experiments", "safety", "flex", "psi")] + ["",
+             "## API (only where the FastAPI backend runs; the static site computes predictions and answers in the browser instead)",
+             "- GET /health", "- GET /api/environments", "- GET /api/safety?env=iss", "- POST /api/predict", "- POST /api/ask {question}",
              "- GET /api/flex", "- GET /api/psi", "- GET /api/model", "", "## Sources"]
     lines += [f"- {l['label']}: {l['url']}" for l in F.EXTRA_LINKS]
     lines += [f"- NASA PSI {i['psi']} {i['acronym']}: https://psi.nasa.gov/physci/repo/data/investigations/{i['psi']}" for i in F.INVESTIGATIONS]

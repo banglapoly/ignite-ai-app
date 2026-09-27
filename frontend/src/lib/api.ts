@@ -1,3 +1,6 @@
+import { isClose, staticJSON } from './offline/data'
+import { localBoundary, localPredict } from './offline/predict'
+
 export type Outcome = 'no_spread' | 'marginal_spread' | 'spread'
 export const OUTCOMES: Outcome[] = ['no_spread', 'marginal_spread', 'spread']
 export const OUTCOME_LABEL: Record<Outcome, string> = {
@@ -107,12 +110,6 @@ export interface FlexSummary {
   by_co2: { fuel: string; co2_bin: string; n: number; mean_extinction_diameter_mm: number; mean_burn_time_s: number; extinctions: number }[]
   notes: string[]
 }
-export async function postJSON<T>(path: string, body: object): Promise<T> {
-  const r = await apiFetch(BASE + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-  if (!r.ok) throw new Error(`${r.status} ${path}`)
-  return r.json()
-}
-
 export interface Boundary {
   x: string; y: string; third: string; third_value: number
   xs: number[]; ys: number[]; z: (Outcome | null)[][]; confidence: number[][]
@@ -120,51 +117,82 @@ export interface Boundary {
   envelope: MaterialEnv
 }
 
+/* ---------------------------------------------------------------------------------------------
+   Data access. Works with the FastAPI backend (local start.bat, or a hosted API behind a proxy)
+   AND on a static host with no backend at all (e.g. Netlify):
+   * Snapshot data (model card, environments, experiments, safety, FLEX, PSI) is read from
+     /static-api/*.json, exported from the same API code by backend/scripts/export_static.py.
+   * Predictions, the decision map and Ask IGNITE-AI call the API; if there is no API (pages
+     prerendered for static hosting say so with <meta name="ignite-api" content="off">, or the
+     request fails) they run in the browser on the exported model and knowledge base.
+   --------------------------------------------------------------------------------------------- */
 const BASE = '/api'
+type Mode = 'server' | 'static'
+let mode: Mode = typeof document !== 'undefined' && document.querySelector('meta[name="ignite-api"]')?.getAttribute('content') === 'off' ? 'static' : 'server'
+const modeListeners = new Set<(m: Mode) => void>()
+export const isStaticMode = () => mode === 'static'
+export function onModeChange(f: (m: Mode) => void) { modeListeners.add(f); return () => { modeListeners.delete(f) } }
+function goStatic() { if (mode !== 'static') { mode = 'static'; modeListeners.forEach(f => f(mode)) } }
 
-/* When the site is hosted statically (Netlify) the API runs on a free Render instance that
-   sleeps when idle and takes up to about a minute to wake. apiFetch retries gateway errors
-   and network failures with backoff, and reports "waking" so the UI can say what's happening. */
-type WakeListener = (waking: boolean) => void
-const wakeListeners = new Set<WakeListener>()
-let slowCount = 0
-function setSlow(delta: number) {
-  const before = slowCount > 0
-  slowCount = Math.max(0, slowCount + delta)
-  if (before !== slowCount > 0) wakeListeners.forEach(f => f(slowCount > 0))
-}
-export function onBackendWaking(f: WakeListener) { wakeListeners.add(f); return () => { wakeListeners.delete(f) } }
-const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
-export async function apiFetch(url: string, init?: RequestInit): Promise<Response> {
-  const delays = [2000, 4000, 8000, 12000, 16000]
-  let slow = false
-  const timer = setTimeout(() => { slow = true; setSlow(1) }, 4000)
+class HttpError extends Error { constructor(public status: number, msg: string) { super(msg) } }
+async function server<T>(path: string, init?: RequestInit): Promise<T> {
+  const ctl = new AbortController()
+  const timer = setTimeout(() => ctl.abort(), 12000)
   try {
-    for (let i = 0; ; i++) {
-      try {
-        const r = await fetch(url, init)
-        if (![502, 503, 504].includes(r.status) || i >= delays.length) return r
-      } catch (e) {
-        if (i >= delays.length) throw e
-      }
-      if (!slow) { slow = true; setSlow(1) }
-      await sleep(delays[i])
-    }
-  } finally {
-    clearTimeout(timer)
-    if (slow) setSlow(-1)
+    const r = await fetch(BASE + path, { ...init, signal: ctl.signal })
+    if (!r.ok) throw new HttpError(r.status, `${r.status} ${path}`)
+    return await r.json()
+  } finally { clearTimeout(timer) }
+}
+/** Use the API when there is one; otherwise (or if it is unreachable) compute the same answer locally. */
+async function withFallback<T>(call: () => Promise<T>, local: () => Promise<T>): Promise<T> {
+  if (mode === 'static') return local()
+  try {
+    return await call()
+  } catch (e) {
+    if (e instanceof HttpError && (e.status === 400 || e.status === 422)) throw e   // a real API rejected the request
+    goStatic()
+    return local()
   }
 }
 
+const STATIC_GET: Record<string, (q: URLSearchParams) => Promise<any>> = {
+  '/model': () => staticJSON('model'),
+  '/environments': () => staticJSON('environments'),
+  '/flex': () => staticJSON('flex'),
+  '/psi': () => staticJSON('psi'),
+  '/experiments': async q => {
+    let rows = (await staticJSON<{ rows: Experiment[] }>('experiments')).rows
+    const m = q.get('material'), g = q.get('gravity_g')
+    if (m) rows = rows.filter(r => r.material === m)
+    if (g !== null) rows = rows.filter(r => isClose(+(r.gravity_g ?? 0), +g))
+    return { n: rows.length, rows }
+  },
+  '/safety': async q => {
+    const secs = (await staticJSON<{ sections: SafetySection[] }>('safety')).sections
+    const env = q.get('env')
+    return { env, sections: env ? secs.filter(s => s.applies.includes(env)) : secs }
+  },
+}
+
 export async function getJSON<T>(path: string): Promise<T> {
-  const r = await apiFetch(BASE + path)
-  if (!r.ok) throw new Error(`${r.status} ${path}`)
-  return r.json()
+  const [p, qs = ''] = path.split('?')
+  const q = new URLSearchParams(qs)
+  if (STATIC_GET[p]) {
+    try { return await STATIC_GET[p](q) } catch (e) { if (mode === 'static') throw e }   // no static copy: ask the API
+    return server<T>(path)
+  }
+  if (p === '/boundary') return withFallback(() => server<T>(path), () => localBoundary(q) as Promise<T>)
+  return server<T>(path)
+}
+const post = (body: object): RequestInit => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+export async function postJSON<T>(path: string, body: object): Promise<T> {
+  if (path === '/ask') return withFallback(() => server<T>(path, post(body)),
+    async () => (await import('./offline/ask')).localAsk((body as { question: string }).question) as Promise<T>)
+  return server<T>(path, post(body))
 }
 export async function postPredict(body: object): Promise<Prediction> {
-  const r = await apiFetch(BASE + '/predict', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-  if (!r.ok) throw new Error(`${r.status} predict`)
-  return r.json()
+  return withFallback(() => server<Prediction>('/predict', post(body)), () => localPredict(body))
 }
 
 export const MATERIAL_LABEL: Record<string, string> = {

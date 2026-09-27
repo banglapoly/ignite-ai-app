@@ -150,6 +150,15 @@ Confusion matrix (out-of-fold; rows = true no_spread / marginal / spread): `[[13
 ## Deploy (Netlify frontend + Hugging Face Space backend)
 Netlify hosts only static files, so the site is split into two parts.
 
+**Static-only mode (no backend needed).** With `IGNITE_API_URL = ""` in `netlify.toml` (the current setting), the whole site runs from static files.
+- Snapshot data (model card, environments, the 144 experiments, safety measures, FLEX, PSI) comes from `frontend/public/static-api/*.json`. `python -m scripts.export_static` exports these from the same API functions, and a test fails if they are stale.
+- Predictions and the decision map run in the browser on `predictor.json`, which holds every tree of the trained model. They use the same range guard, nearest experiments and explanation as the server; a test checks that the trees reproduce scikit-learn's probabilities exactly.
+- Ask IGNITE-AI runs in the browser over `kb.json`, which holds all 1,501 knowledge-base passages. It uses the same TF-IDF settings, decline rules and verbatim-quote answers.
+- Related NTRS reports for each prediction are precomputed with the server's index.
+- A note in the footer says the page is running in static mode.
+
+When the site is served by the FastAPI backend (`start.bat`), the same frontend calls `/api` instead.
+
 - **Frontend on Netlify.** `netlify.toml` sets everything:
   - Base directory `frontend`
   - Build command `npm ci && npm run build`

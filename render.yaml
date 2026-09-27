@@ -9,10 +9,10 @@ services:
     plan: free
     region: oregon
     rootDir: backend
-    # Install pinned deps, then retrain the model from the committed dataset so the
-    # artifacts always match the installed scikit-learn (deterministic; takes seconds),
-    # and run the test suite so a broken build never goes live.
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && python -m src.compute.model && python -m tests.test_core
+    # Install pinned deps (same scikit-learn as the committed model artifacts) and run the
+    # test suite so a broken build never goes live. The committed artifacts are used as-is so
+    # the API matches the static copies in frontend/public/static-api exactly.
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && python -m tests.test_core
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     autoDeployTrigger: commit

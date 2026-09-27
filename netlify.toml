@@ -1,6 +1,6 @@
-# Netlify: static frontend. The FastAPI backend runs separately, on a Hugging Face Docker
-# Space (deploy/hf-space, see README "Deploy") or on Render (render.yaml). Netlify proxies
-# /api/*, /health, /docs and /openapi.json to it server-side, so the browser only talks to Netlify.
+# Netlify: static frontend. It works fully without a backend (IGNITE_API_URL = ""). Optionally the
+# FastAPI backend can run separately, on a Hugging Face Docker Space (deploy/hf-space) or on Render
+# (render.yaml); then Netlify proxies /api/*, /health, /docs and /openapi.json to it server-side.
 [build]
   base    = "frontend"
   command = "npm ci && npm run build"
@@ -8,11 +8,12 @@
 
 [build.environment]
   NODE_VERSION  = "22"   # camera-controls (drei dependency) declares node >= 22
-  # The ONLY place the backend URL is set (no trailing slash). The build writes
-  # dist/_redirects from it. For the Hugging Face Space, replace the line below with
+  # The ONLY place the backend URL is set (no trailing slash). The build writes dist/_redirects from it.
+  # Empty = static-only site (no backend): every page works from public/static-api/ and the
+  # prediction model and Ask IGNITE-AI run in the browser. To use a hosted API instead, set e.g.
   #   IGNITE_API_URL = "https://<hf-username>-ignite-ai-api.hf.space"
-  # (username lowercased; the Space must be public), then redeploy Netlify.
-  IGNITE_API_URL = "https://ignite-ai-api.onrender.com"
+  # (username lowercased; the Space must be public) or "https://ignite-ai-api.onrender.com", then redeploy.
+  IGNITE_API_URL = ""
 
 # Page routes. Each page is prerendered to its own dist/<route>/index.html (with its
 # readable text), so these are served directly and deep links work on refresh.
