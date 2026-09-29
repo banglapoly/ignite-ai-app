@@ -31,21 +31,21 @@ SRC = {
                     "https://ntrs.nasa.gov/citations/20250010653"),
     "19880006471": ("Olson, S.L. (1987) The Effect of Microgravity on Flame Spread over a Thin Fuel. NASA TM-100195",
                     "https://ntrs.nasa.gov/citations/19880006471"),
-    "19890014267": ("Olson, S.L.; Ferkul, P.V.; T'ien, J.S. (1989) An experimental study of opposed flow diffusion flame extinction over a thin fuel in microgravity. NASA TM-101479",
+    "19890014267": ("Ferkul, P.V. (1989) An experimental study of opposed flow diffusion flame extinction over a thin fuel in microgravity. NASA CR-182185 (thesis, Case Western Reserve University)",
                     "https://ntrs.nasa.gov/citations/19890014267"),
     "20150008962": ("Zhao, X.; T'ien, J.S.; Ferkul, P.V.; Olson, S.L. (2015) Concurrent Flame Growth, Spread and Extinction over Composite Fabric Samples in Low Speed Purely Forced Flow in Microgravity (BASS / BASS-II)",
                     "https://ntrs.nasa.gov/citations/20150008962"),
-    "20080034883": ("Olson, S.L.; Hegde, U.; Bhattacharjee, S.; Deering, J.L.; Tang, L.; Altenkirch, R.A. (2008) Microgravity Flame Spread in Exploration Atmospheres: Pressure, Oxygen, and Velocity Effects on Opposed and Concurrent Flame Spread. NASA/TM-2008-215260",
+    "20080034883": ("Olson, S.L.; Ruff, G.A.; Miller, F.J. (2008) Microgravity Flame Spread in Exploration Atmospheres: Pressure, Oxygen, and Velocity Effects on Opposed and Concurrent Flame Spread. NASA/TM-2008-215260",
                     "https://ntrs.nasa.gov/citations/20080034883"),
     "20210011521": ("Urban, D.L. et al. (2021) Fire Safety Implications of Preliminary Results from Saffire IV and V Experiments on Large Scale Spacecraft Fires. ICES-2021-266",
                     "https://ntrs.nasa.gov/citations/20210011521"),
-    "20170008805": ("Urban, D.L. et al. (2017) Results of Large-Scale Spacecraft Flammability Tests (Saffire-I/II)",
+    "20170008805": ("Ferkul, P. et al. (2017) Results of Large-Scale Spacecraft Flammability Tests (Saffire-I/II)",
                     "https://ntrs.nasa.gov/citations/20170008805"),
     "20240002981": ("Urban, D.L. et al. (2024) Preliminary Results from the Saffire VI Experiment",
                     "https://ntrs.nasa.gov/citations/20240002981"),
     "20260001992": ("Heat and Smoke Emission from Tests on the Saffire VI Experiment (2026, ICES)",
                     "https://ntrs.nasa.gov/citations/20260001992"),
-    "19960008387": ("Altenkirch, R.A. et al. (1995) Solid surface combustion experiment flame spread in a quiescent, microgravity environment: implications of spread rate and flame structure",
+    "19960008387": ("Bundy, M. et al. (1995) Solid surface combustion experiment flame spread in a quiescent, microgravity environment: implications of spread rate and flame structure",
                     "https://ntrs.nasa.gov/citations/19960008387"),
     "20050177200": ("NASA Lewis (1996) Solid Surface Combustion Experiment Completes a Series of Eight Successful Flights",
                     "https://ntrs.nasa.gov/citations/20050177200"),
@@ -116,7 +116,7 @@ rows[-1]["retired"] = ("duplicate of the last 40 % entry of Table A-I (2.72 cm/s
                        "second time under 100 % in Table A-III; removed after audit")
 
 # ---------------------------------------------------------------------------------------------
-# 2) Olson, Ferkul, T'ien 1989, NASA TM-101479 (NTRS 19890014267). Opposed flow produced by
+# 2) Ferkul 1989, NASA CR-182185 (NTRS 19890014267; author list and report number checked against the PDF title page). Opposed flow produced by
 #    moving the fuel at constant speed through quiescent O2/N2 at 1 atm, 5.18 s Zero Gravity
 #    Facility. Same Kimwipes fuel as ref. 4 (Olson 1987). Table I p.6 "Extinction observed".
 # ---------------------------------------------------------------------------------------------

@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react'
 import type { ModelCard } from '../lib/api'
 import { MATERIAL_LABEL, OUTCOME_COLOR, OUTCOME_LABEL } from '../lib/api'
 import { ConditionsPanel, PredictionPanel } from '../components/Conditions'
-import { FactCard } from '../components/Sections'
+import { FactCard, KeyFindings } from '../components/Sections'
 import EnvTabs, { TAB_ICON } from '../components/EnvTabs'
 import { Link } from '../lib/router'
 import { useSim } from '../lib/sim'
@@ -59,6 +59,7 @@ export default function Simulator({ card }: { card: ModelCard | null }) {
             <h2>{TAB_ICON[env.id]} {env.name}: {env.tagline}</h2>
             <p className="small">{env.data_note}{env.dataset.oof_accuracy && env.gravity_g > 0 ? ` Out-of-fold accuracy at this gravity: ${(env.dataset.oof_accuracy.accuracy * 100).toFixed(0)}% (n=${env.dataset.oof_accuracy.n}).` : ''}</p>
           </div>
+          <KeyFindings env={env} />
           <div className="facts">{env.facts.map(f => <FactCard key={f.label} f={f} />)}</div>
           <div className="explorer-grid">
             <ConditionsPanel env={env} card={card} inp={inp} setInp={setInpF} gas={gas} setGas={g => setGas(g)} gases={gases} playing={playing} onPlay={play} onStop={stop} />

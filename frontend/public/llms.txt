@@ -39,7 +39,7 @@ Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials,
 - NASA Physical Sciences Informatics (PSI) repository: https://psi.nasa.gov/physci/repo/
 - NASA Science - ACME mission page: https://science.nasa.gov/mission/acme/
 - NASA Science - SoFIE mission page: https://science.nasa.gov/mission/sofie/
-- NASA (2023) Studying Combustion and Fire Safety - Space Station Research Integration Office: https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/
+- NASA (Dec 26, 2023; updated Mar 7, 2024) Studying Combustion and Fire Safety - Space Station Research Integration Office: https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/
 - NASA Technical Reports Server (NTRS) API: https://ntrs.nasa.gov/api/citations/search
 - NASA PSI PSI-69 FLEX: https://psi.nasa.gov/physci/repo/data/investigations/PSI-69
 - NASA PSI PSI-68 FLEX-2: https://psi.nasa.gov/physci/repo/data/investigations/PSI-68
@@ -57,6 +57,7 @@ Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials,
 - NASA PSI PSI-99 SAFFIRE-II: https://psi.nasa.gov/physci/repo/data/investigations/PSI-99
 - NASA PSI PSI-100 SAFFIRE-III: https://psi.nasa.gov/physci/repo/data/investigations/PSI-100
 - Friedman, R. (2000) Progress in Fire Detection and Suppression Technology for Future Space Missions, NASA/TM-2000-210337 (NTRS 20000120278): https://ntrs.nasa.gov/citations/20000120278
+- Olson et al. (2008) Material Flammability as a Function of Pressure and Oxygen Concentration (exploration atmospheres), NTRS 20080034883: https://ntrs.nasa.gov/citations/20080034883
 - Olson & Ferkul (2012) Evaluating Material Flammability in Microgravity and Martian Gravity Compared to the NASA Standard Normal Gravity Test (NTRS 20130010991): https://ntrs.nasa.gov/citations/20130010991
 - Ferkul et al. (2026) Material Flammability at Lunar and Martian Gravity, LPSC presentation (NTRS 20260001966): https://ntrs.nasa.gov/citations/20260001966
 - Ferkul et al. (2025) Lunar Combustion Investigation (LUCI): Flammability Results from a Rotating Sounding Rocket (NTRS 20250010653): https://ntrs.nasa.gov/citations/20250010653
@@ -65,7 +66,7 @@ Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials,
 - Smoke Detection for the Orion Crew Exploration Vehicle (2009, NTRS 20090020655): https://ntrs.nasa.gov/citations/20090020655
 - Spacecraft Fire Safety Technology Development Plan for Exploration Missions (NTRS 20205000063): https://ntrs.nasa.gov/citations/20205000063
 - Urban et al. (2021) Fire Safety Implications of Preliminary Results from Saffire IV and V, ICES-2021-266 (NTRS 20210011521): https://ntrs.nasa.gov/citations/20210011521
-- NASA (2023) Studying Combustion and Fire Safety - Space Station Research Integration Office: https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/
+- NASA (Dec 26, 2023; updated Mar 7, 2024) Studying Combustion and Fire Safety - Space Station Research Integration Office: https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/
 - NASA Science - ACME mission page: https://science.nasa.gov/mission/acme/
 - NASA Science - SoFIE mission page: https://science.nasa.gov/mission/sofie/
 - NASA PSI-20 ACME Burning Rate Emulator (BRE) investigation metadata: https://psi.nasa.gov/physci/repo/data/investigations/PSI-20

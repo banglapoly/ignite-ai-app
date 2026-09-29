@@ -77,7 +77,7 @@ Each row has `gravity_g`, `report_id`, `source_url`, `source_location` (table or
 |---:|---|---|
 | 45 | 0 g | [NTRS 19880006471](https://ntrs.nasa.gov/citations/19880006471) Olson 1987, quiescent thin cellulose (drop tower) |
 | 33 | 0 g | [NTRS 20150008962](https://ntrs.nasa.gov/citations/20150008962) BASS/BASS-II SIBAL concurrent spread (ISS MSG) |
-| 13 | 0 g | [NTRS 19890014267](https://ntrs.nasa.gov/citations/19890014267) Olson, Ferkul, T'ien 1989, opposed-flow extinction |
+| 13 | 0 g | [NTRS 19890014267](https://ntrs.nasa.gov/citations/19890014267) Ferkul 1989 (NASA CR-182185), opposed-flow extinction |
 | 9 / 7 / 3 | 0 g | Saffire IV–V [20210011521](https://ntrs.nasa.gov/citations/20210011521), Saffire I–II [20170008805](https://ntrs.nasa.gov/citations/20170008805), Saffire VI [20240002981](https://ntrs.nasa.gov/citations/20240002981) (Cygnus) |
 | 6 | 0 g | [NTRS 20080034883](https://ntrs.nasa.gov/citations/20080034883) Olson et al. 2008, exploration atmospheres |
 | 3 / 3 / 1 | 0 g | SSCE: [20050177200](https://ntrs.nasa.gov/citations/20050177200), [19970020608](https://ntrs.nasa.gov/citations/19970020608), [19950007798](https://ntrs.nasa.gov/citations/19950007798) |
@@ -122,7 +122,7 @@ Real flame-spread data at partial gravity are scarce. IGNITE-AI uses only what e
 
 ## Ask IGNITE-AI (local RAG)
 `backend/src/compute/kb.py` implements retrieval-augmented question answering with **no paid API and no model download**:
-- **Knowledge base (about 1,500 passages).** NTRS abstracts (chunked), PSI investigation metadata and publication lists, PSI experimental tables (small tables row by row, large ones summarised, FLEX statistics computed from the table), the 144 experiment rows with their quotes, the curated environment and safety facts, and NASA page paragraphs. Every passage keeps its source URL.
+- **Knowledge base (about 1,500 passages).** NTRS abstracts (chunked), PSI investigation metadata and publication lists, PSI experimental tables (small tables row by row, large ones summarised, FLEX statistics computed from the table), the 143 experiment rows with their quotes, the curated environment and safety facts, and NASA page paragraphs. Every passage keeps its source URL.
 - **Retrieval.** scikit-learn TF-IDF (1–2-grams, sublinear tf), with a small deterministic query expansion (for example "look" → shape/spherical, "Moon" ↔ "lunar"), a boost for curated facts, and diversity limits per source.
 - **Answer.** Extractive. The best-matching sentences are shown **verbatim in quotation marks** with `[n]` links. Statements templated from real table rows are marked **DATA**. If two or more investigations are named (for example "Compare FLEX and BASS-II"), a side-by-side table is built from PSI metadata.
 - **Declines** when the best score is below 0.07, when the question has no fire or space term, or when less than 60% of the question's specific (IDF-weighted) words appear in the retrieved passages. Example: "What is the capital of France?" returns a refusal with no citations.

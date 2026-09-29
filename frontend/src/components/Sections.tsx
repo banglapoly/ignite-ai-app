@@ -18,6 +18,31 @@ export function FactCard({ f }: { f: EnvData['facts'][number] }) {
   )
 }
 
+/** Three short findings per environment. Each restates a verbatim quote from a cited NASA source (tap "quote" to read it). */
+export function KeyFindings({ env }: { env: EnvData }) {
+  if (!env.key_findings?.length) return null
+  return (
+    <div className="panel keyfind">
+      <h3>Key findings · {env.short}</h3>
+      <ol>
+        {env.key_findings.map(k => (
+          <li key={k.text}>
+            {k.text} <a className="cite" href={k.source.url} target="_blank" rel="noreferrer">{shortCite(k.source.label)}{k.loc ? `, ${k.loc}` : ''}</a>
+            <details><summary>quote</summary><q className="fact-q">{k.quote}</q><div className="fact-note">{k.source.label}</div></details>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+// "Friedman, R. (2000) Progress in ... (NTRS 20000120278)" -> "NTRS 20000120278"; NASA web pages -> "NASA"
+function shortCite(label: string) {
+  const m = label.match(/NTRS \d+/)
+  if (m) return m[0]
+  if (/^NASA PSI-\d+/.test(label)) return label.match(/^NASA PSI-\d+/)![0]
+  return label.startsWith('NASA') ? 'NASA' : label
+}
+
 export function SafetyBlock({ env }: { env: EnvData }) {
   const [secs, setSecs] = useState<SafetySection[]>([])
   useEffect(() => { getJSON<{ sections: SafetySection[] }>(`/safety?env=${env.id}`).then(d => setSecs(d.sections)).catch(() => {}) }, [env.id])
@@ -157,12 +182,59 @@ export function ModelSection({ card }: { card: ModelCard | null }) {
   )
 }
 
+export const REPO_URL = 'https://github.com/banglapoly/ignite-ai-app'
+// Versions/licences as installed from frontend/package-lock.json and backend/requirements.txt.
+const SOFTWARE: [string, string, string, string][] = [
+  ['React / React DOM', '19.3', 'MIT', 'https://react.dev/'],
+  ['three.js', '0.170', 'MIT', 'https://threejs.org/'],
+  ['@react-three/fiber', '9.8', 'MIT', 'https://github.com/pmndrs/react-three-fiber'],
+  ['@react-three/drei', '10.7', 'MIT', 'https://github.com/pmndrs/drei'],
+  ['postprocessing / @react-three/postprocessing', '6.39 / 3.1', 'Zlib / MIT', 'https://github.com/pmndrs/postprocessing'],
+  ['Vite (+ @vitejs/plugin-react)', '6.4', 'MIT', 'https://vite.dev/'],
+  ['TypeScript', '5.6', 'Apache-2.0', 'https://www.typescriptlang.org/'],
+  ['FastAPI / Starlette / Pydantic / Uvicorn', '0.141 / 1.7 / 2.13 / 0.53', 'MIT / BSD-3 / MIT / BSD-3', 'https://fastapi.tiangolo.com/'],
+  ['scikit-learn', '1.9.1', 'BSD-3', 'https://scikit-learn.org/'],
+  ['NumPy / SciPy / pandas / joblib', '2.4 / 1.17 / 3.0 / 1.6', 'BSD-3', 'https://numpy.org/'],
+  ['pyarrow (optional, dataset build only)', '25.0', 'Apache-2.0', 'https://arrow.apache.org/'],
+]
+
+export function Credits() {
+  return (
+    <section id="credits" className="section wide">
+      <h2>Data, software and assets</h2>
+      <div className="res-grid">
+        <div className="panel">
+          <h3>Data</h3>
+          <ul className="refs">
+            <li><b>NASA Physical Sciences Informatics (PSI)</b>: investigation metadata and public experimental tables (<a href="https://psi.nasa.gov/physci/repo/" target="_blank" rel="noreferrer">psi.nasa.gov</a>).</li>
+            <li><b>NASA Technical Reports Server (NTRS)</b>: the reports behind every training row, plus abstracts for Ask IGNITE-AI (<a href="https://ntrs.nasa.gov/" target="_blank" rel="noreferrer">ntrs.nasa.gov</a>).</li>
+            <li><b>NASA web pages</b> (nasa.gov, science.nasa.gov) for environment facts, cited where used.</li>
+            <li><b>Non-NASA sources:</b> none are used as data. Some PSI publication lists link to journal articles by DOI (doi.org); those links are shown as PSI lists them.</li>
+          </ul>
+          <h3>Assets and AI tools</h3>
+          <ul className="refs">
+            <li>3D scene: procedural geometry and shaders written for this project (no downloaded models, textures or HDR maps). Fonts: your system fonts; icons: Unicode emoji.</li>
+            <li>Logo: created with AI image generation, then vectorized.</li>
+            <li>AI coding assistants helped write code and documentation (see the disclosure below). No AI system produced any data value.</li>
+          </ul>
+          <p className="small">Source code: <a href={REPO_URL} target="_blank" rel="noreferrer">github.com/banglapoly/ignite-ai-app</a> (Apache-2.0).</p>
+        </div>
+        <div className="panel">
+          <h3>Open-source software</h3>
+          <div className="dt-scroll"><table className="env"><thead><tr><th>Library</th><th>Version</th><th>Licence</th></tr></thead>
+            <tbody>{SOFTWARE.map(([n, v, l, u]) => <tr key={n}><td><a href={u} target="_blank" rel="noreferrer">{n}</a></td><td>{v}</td><td>{l}</td></tr>)}</tbody></table></div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function Disclosure() {
   return (
     <>
       <section id="ai-use" className="section narrow">
         <h2>AI-use disclosure</h2>
-        <p>AI coding assistants helped draft parts of this code and text; the developers reviewed them. <b>No AI system produced any training value.</b> Every experiment row was transcribed from a cited NASA report, and every environment or safety statement quotes its source. At runtime there is <b>no paid or cloud AI</b>. Predictions come from a scikit-learn model. Explanations are deterministic templates. Ask IGNITE-AI uses local TF-IDF retrieval and quotes passages verbatim. Optional local generation through Ollama is <b>off by default</b>, and its output is rejected if it contains any number not found in the retrieved passages. Details: docs/AI_USE.md.</p>
+        <p>AI coding assistants helped draft parts of this code and text; the developers reviewed them. The logo was created with AI image generation, then vectorized. <b>No AI system produced any training value.</b> Every experiment row was transcribed from a cited NASA report, and every environment or safety statement quotes its source. At runtime there is <b>no paid or cloud AI</b>. Predictions come from a scikit-learn model. Explanations are deterministic templates. Ask IGNITE-AI uses local TF-IDF retrieval and quotes passages verbatim. Optional local generation through Ollama is <b>off by default</b>, and its output is rejected if it contains any number not found in the retrieved passages. Details: docs/AI_USE.md.</p>
       </section>
       <section id="about" className="section narrow">
         <h2>About</h2>

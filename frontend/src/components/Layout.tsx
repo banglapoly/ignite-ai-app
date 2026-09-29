@@ -32,7 +32,7 @@ export function Footer() {
     <footer className="footer">
       <span><b>IGNITE-AI</b> · Apache-2.0 · runs locally, open-source only</span>
       <nav className="foot-links">{PAGES.map(p => <Link key={p.path} to={p.path}>{p.label}</Link>)}</nav>
-      <span>Data: NASA PSI (psi.nasa.gov) and NASA Technical Reports Server. NASA does not endorse this project. <a href="/llms.txt">llms.txt</a> · <a href="/static-api/experiments.csv">experiments.csv</a>{!st && <> · <a href="/docs">API</a></>}</span>
+      <span>Data: NASA PSI (psi.nasa.gov) and NASA Technical Reports Server. NASA does not endorse this project. <a href="/llms.txt">llms.txt</a> · <a href="/static-api/experiments.csv">experiments.csv</a> · <a href="https://github.com/banglapoly/ignite-ai-app" target="_blank" rel="noreferrer">GitHub</a>{!st && <> · <a href="/docs">API</a></>}</span>
       {st && <span className="static-note">Static version: no server is running, so predictions, the decision map and Ask IGNITE-AI are computed in your browser from the same trained model and NASA sources.</span>}
     </footer>
   )

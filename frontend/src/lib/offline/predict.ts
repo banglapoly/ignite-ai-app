@@ -3,6 +3,7 @@
    exported to predictor.json) with the same range guard, nearest-experiment search, uncertainty
    rules and deterministic explanation as backend/src/compute/predict.py and explain.py. */
 import type { Boundary, Experiment, ModelCard, Outcome, Prediction } from '../api'
+import { MATERIAL_LABEL } from '../labels'
 import { fmtG, isClose, round, staticJSON } from './data'
 
 interface Tree { f: number[]; t: number[]; l: number[]; r: number[]; v: number[] }
@@ -47,27 +48,35 @@ function proba(pm: Predictor, r: Record<string, any>): number[] {
 const gkey = (g: number) => fmtG(+g)
 const GRAVITY_NAMES: Record<string, string> = { '0': 'microgravity (~0 g)', '0.165': 'lunar gravity (0.165 g)', '0.38': 'Martian gravity (0.38 g)', '1': 'Earth gravity (1 g)' }
 
+// Human-readable names for refusal messages and explanations (same text as backend/src/compute/predict.py).
+const GAS_LABEL: Record<string, string> = { air: 'Normal air (O\u2082/N\u2082)', co2: 'Carbon dioxide build-up', methane: 'Methane leak' }
+const QUANTITY: Record<Num, [string, string]> = { oxygen_pct: ['Oxygen', '%'], pressure_kpa: ['Pressure', ' kPa'], flow_cm_s: ['Airflow', ' cm/s'] }
+const matLabel = (m: string) => MATERIAL_LABEL[m] ?? m
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
 export function checkRange(inp: any, card: ModelCard): [boolean, string[]] {
   const reasons: string[] = []
   const gas = inp.gas_mix ?? 'air'
-  if (gas !== 'air') reasons.push(`gas mix '${gas}' is not represented in the training data: every training experiment burned in O2/N2 atmospheres only, so the classifier cannot say anything about it`)
+  const mat = matLabel(inp.material)
+  if (gas !== 'air') reasons.push(`Gas mix \u201c${GAS_LABEL[gas] ?? gas}\u201d is not in the training data: every training experiment burned in oxygen/nitrogen atmospheres only, so the model cannot say anything about it.`)
   const menv = card.training_range.materials[inp.material]
-  if (!menv) return [false, [...reasons, `material '${inp.material}' is not in the training data`]]
+  if (!menv) return [false, [...reasons, `Material \u201c${mat}\u201d is not in the training data.`]]
   const gk = gkey(inp.gravity_g ?? 0)
   const env = menv.by_gravity[gk]
   if (!env) {
     const tested = Object.keys(menv.by_gravity).map(k => GRAVITY_NAMES[k] ?? k + ' g').join(', ')
-    return [false, [...reasons, `no real ${inp.material} experiment at ${GRAVITY_NAMES[gk] ?? gk + ' g'} exists in the dataset (tested for this material: ${tested}); the model will not guess across gravity levels`]]
+    return [false, [...reasons, `No real experiment with ${mat} exists at ${GRAVITY_NAMES[gk] ?? gk + ' g'}. This material was tested at: ${tested}. The model will not guess across gravity levels.`]]
   }
   for (const c of NUMERIC) {
     const [lo, hi] = env[c]
     const v = +inp[c]
-    if (v < lo - 1e-9 || v > hi + 1e-9) reasons.push(`${c}=${fmtG(v)} is outside the tested range ${fmtG(lo)}-${fmtG(hi)} for ${inp.material}`)
+    const [name, u] = QUANTITY[c]
+    if (v < lo - 1e-9 || v > hi + 1e-9) reasons.push(`${name} ${fmtG(v)}${u} is outside the tested range of ${fmtG(lo)}${u} to ${fmtG(hi)}${u} for ${mat}.`)
   }
-  if (!env.flow_directions.includes(inp.flow_direction)) reasons.push(`flow_direction '${inp.flow_direction}' was never tested for ${inp.material} (tested: ${env.flow_directions.join(', ')})`)
+  if (!env.flow_directions.includes(inp.flow_direction)) reasons.push(`${cap(inp.flow_direction)} flow was never tested for ${mat} (tested: ${env.flow_directions.join(', ')}).`)
   const g0 = +(inp.gravity_g ?? 0) === 0
-  if (g0 && +inp.flow_cm_s === 0 && inp.flow_direction !== 'quiescent') reasons.push("in microgravity flow_cm_s=0 must use flow_direction 'quiescent'")
-  if (+inp.flow_cm_s > 0 && inp.flow_direction === 'quiescent') reasons.push('quiescent conditions require flow_cm_s=0')
+  if (g0 && +inp.flow_cm_s === 0 && inp.flow_direction !== 'quiescent') reasons.push('In microgravity, zero airflow means quiescent conditions: choose the quiescent (no flow) direction.')
+  if (+inp.flow_cm_s > 0 && inp.flow_direction === 'quiescent') reasons.push('Quiescent (no flow) conditions need an airflow of 0 cm/s.')
   return [reasons.length === 0, reasons]
 }
 
@@ -97,22 +106,23 @@ function expRecord(r: Row, dist: number): Experiment {
 /* ---- deterministic explanation (backend/src/compute/explain.py: template) ---- */
 const NICE: Record<Outcome, string> = { no_spread: 'no spread', marginal_spread: 'marginal (near-limit) spread', spread: 'sustained spread' }
 const GNAME: Record<string, string> = { '0': 'microgravity (~0 g)', '0.165': 'lunar gravity (0.165 g)', '0.38': 'Martian gravity (0.38 g)', '1': 'Earth gravity (1 g)' }
-const expText = (e: Experiment) => `${e.report_id} (${fmtG(e.oxygen_pct)}% O2, ${fmtG(e.pressure_kpa)} kPa, ${fmtG(e.flow_cm_s)} cm/s ${e.flow_direction}, ${e.material}): observed ${NICE[e.outcome]} - ${e.outcome_detail}`
+const expText = (e: Experiment) => `${e.report_id} (${fmtG(e.oxygen_pct)}% O\u2082, ${fmtG(e.pressure_kpa)} kPa, ${fmtG(e.flow_cm_s)} cm/s ${e.flow_direction}, ${matLabel(e.material)}): observed ${NICE[e.outcome]} - ${e.outcome_detail}`
 
 function template(p: any): { source: string; text: string } {
   const i = p.inputs
   const g = +(i.gravity_g ?? 0)
-  const cond = `${GNAME[fmtG(round(g, 3))] ?? `${fmtG(g)} g`}, ${fmtG(i.oxygen_pct)}% O2, ${fmtG(i.pressure_kpa)} kPa, ${fmtG(i.flow_cm_s)} cm/s ${i.flow_direction} flow, material ${i.material}` + ((i.gas_mix ?? 'air') === 'air' ? '' : `, gas mix ${i.gas_mix}`)
+  const gas = i.gas_mix ?? 'air'
+  const cond = `${GNAME[fmtG(round(g, 3))] ?? `${fmtG(g)} g`}, oxygen ${fmtG(i.oxygen_pct)}%, pressure ${fmtG(i.pressure_kpa)} kPa, airflow ${fmtG(i.flow_cm_s)} cm/s ${i.flow_direction}, ${matLabel(i.material)}` + (gas === 'air' ? '' : `, gas mix ${GAS_LABEL[gas] ?? gas}`)
   const m = p.model
   if (!p.in_training_range) {
     const lines = [`No prediction. The requested conditions (${cond}) are outside the published experimental envelope used to train this model.`,
-      ...(p.range_violations ?? []).map((r: string) => `- ${r}`),
+      ...(p.range_violations ?? []).map((r: string) => `\u2022 ${r}`),
       'A fire-safety tool must not guess outside its evidence. The closest real experiments are listed for reference only.']
     return { source: 'template', text: lines.join('\n') }
   }
   const pr = p.probabilities[p.prediction]
   const lines = [`At ${cond}, the model predicts ${NICE[p.prediction as Outcome]} (probability ${fmtG(pr)}).`,
-    `Model: ${m.type} trained on ${m.n_train} published tests across gravity levels (0, 0.165, 0.38 and 1 g); stratified cross-validated accuracy ${fmtG(m.cv_accuracy)}.`]
+    `Model: ${String(m.type).replace(/_/g, '-')} classifier trained on ${m.n_train} published tests across gravity levels (0, 0.165, 0.38 and 1 g); stratified cross-validated accuracy ${fmtG(m.cv_accuracy)}.`]
   if (p.supporting_experiment) lines.push('Evidence on the predicted side: ' + expText(p.supporting_experiment) + '.')
   if (p.contrast_experiment) lines.push('Nearest evidence on the other side of the boundary: ' + expText(p.contrast_experiment) + '.')
   const u = p.uncertainty

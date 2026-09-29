@@ -31,36 +31,58 @@ def _scale(card) -> dict:
 
 GRAVITY_NAMES = {"0": "microgravity (~0 g)", "0.165": "lunar gravity (0.165 g)", "0.38": "Martian gravity (0.38 g)", "1": "Earth gravity (1 g)"}
 GAS_MIXES = {"air": "O2/N2 (normal air or N2-diluted/enriched O2)"}
+# Human-readable names used in refusal messages and explanations. MATERIAL_LABEL must match
+# frontend/src/lib/api.ts (a test checks this); the in-browser copy is frontend/src/lib/offline/predict.ts.
+MATERIAL_LABEL = {
+    "SIBAL_fabric": "SIBAL cotton-fiberglass fabric",
+    "cellulose_thin": "Thin cellulose (Kimwipes, 0.0076 cm)",
+    "cellulose_double": "Thin cellulose, double (0.0152 cm)",
+    "filter_paper": "Ashless filter paper (SSCE)",
+    "PMMA_thick": "Thick PMMA (acrylic) slab",
+    "cotton_jersey": "Cotton jersey fabric",
+    "Nomex_HT90-40": "Nomex HT90-40 fabric",
+    "Ultem_1000": "Ultem 1000 film",
+    "Mylar_G": "Mylar G film",
+    "silicone": "Silicone sheet",
+}
+GAS_LABEL = {"air": "Normal air (O\u2082/N\u2082)", "co2": "Carbon dioxide build-up", "methane": "Methane leak"}
+QUANTITY = {"oxygen_pct": ("Oxygen", "%"), "pressure_kpa": ("Pressure", " kPa"), "flow_cm_s": ("Airflow", " cm/s")}
+
+
+def mat_label(m: str) -> str:
+    return MATERIAL_LABEL.get(m, m)
 
 
 def check_range(inp: dict, card: dict) -> tuple[bool, list[str]]:
     reasons = []
     gas = inp.get("gas_mix", "air")
+    mat = mat_label(inp["material"])
     if gas != "air":
-        reasons.append(f"gas mix '{gas}' is not represented in the training data: every training experiment burned in "
-                       "O2/N2 atmospheres only, so the classifier cannot say anything about it")
+        reasons.append(f"Gas mix \u201c{GAS_LABEL.get(gas, gas)}\u201d is not in the training data: every training experiment burned in "
+                       "oxygen/nitrogen atmospheres only, so the model cannot say anything about it.")
     menv = card["training_range"]["materials"].get(inp["material"])
     if menv is None:
-        return False, reasons + [f"material '{inp['material']}' is not in the training data"]
+        return False, reasons + [f"Material \u201c{mat}\u201d is not in the training data."]
     gk = gkey(inp.get(GRAVITY, 0.0))
     env = menv["by_gravity"].get(gk)
     if env is None:
         tested = ", ".join(GRAVITY_NAMES.get(k, k + " g") for k in menv["by_gravity"])
-        return False, reasons + [f"no real {inp['material']} experiment at {GRAVITY_NAMES.get(gk, gk + ' g')} exists in the dataset "
-                                 f"(tested for this material: {tested}); the model will not guess across gravity levels"]
+        return False, reasons + [f"No real experiment with {mat} exists at {GRAVITY_NAMES.get(gk, gk + ' g')}. "
+                                 f"This material was tested at: {tested}. The model will not guess across gravity levels."]
     for c in NUMERIC:
         lo, hi = env[c]
         v = float(inp[c])
         if v < lo - 1e-9 or v > hi + 1e-9:
-            reasons.append(f"{c}={v:g} is outside the tested range {lo:g}-{hi:g} for {inp['material']}")
+            name, u = QUANTITY[c]
+            reasons.append(f"{name} {v:g}{u} is outside the tested range of {lo:g}{u} to {hi:g}{u} for {mat}.")
     if inp["flow_direction"] not in env["flow_directions"]:
-        reasons.append(f"flow_direction '{inp['flow_direction']}' was never tested for {inp['material']} "
-                       f"(tested: {', '.join(env['flow_directions'])})")
+        reasons.append(f"{inp['flow_direction'].capitalize()} flow was never tested for {mat} "
+                       f"(tested: {', '.join(env['flow_directions'])}).")
     g0 = float(inp.get(GRAVITY, 0.0)) == 0.0
     if g0 and float(inp["flow_cm_s"]) == 0 and inp["flow_direction"] != "quiescent":
-        reasons.append("in microgravity flow_cm_s=0 must use flow_direction 'quiescent'")
+        reasons.append("In microgravity, zero airflow means quiescent conditions: choose the quiescent (no flow) direction.")
     if float(inp["flow_cm_s"]) > 0 and inp["flow_direction"] == "quiescent":
-        reasons.append("quiescent conditions require flow_cm_s=0")
+        reasons.append("Quiescent (no flow) conditions need an airflow of 0 cm/s.")
     return (len(reasons) == 0), reasons
 
 

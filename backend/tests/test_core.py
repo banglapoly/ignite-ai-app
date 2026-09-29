@@ -140,6 +140,25 @@ def test_exported_trees_reproduce_the_model():
         assert max(abs(a - b) for a, b in zip(p, w)) < 1e-9, (r, p, w)
 
 
+def test_refusals_are_human_readable():
+    """Refusal reasons name quantities and materials in words (no raw ids like oxygen_pct=... or SIBAL_fabric)."""
+    r = predict({**SIBAL, "oxygen_pct": 32.3})
+    assert r["range_violations"] == ["Oxygen 32.3% is outside the tested range of 16.4% to 31% for SIBAL cotton-fiberglass fabric."], r["range_violations"]
+    r = predict({**SIBAL, "oxygen_pct": 21, "gas_mix": "methane"})
+    assert r["range_violations"][0].startswith("Gas mix \u201cMethane leak\u201d is not in the training data")
+    for v in r["range_violations"] + predict({**SIBAL, "oxygen_pct": 12, "pressure_kpa": 20, "flow_cm_s": 90})["range_violations"]:
+        assert "_" not in v and "=" not in v, v
+    assert "\u2022 " in r["explanation"]["text"] if "explanation" in r else True
+
+
+def test_material_labels_match_frontend():
+    import re, pathlib
+    from src.compute.predict import MATERIAL_LABEL
+    ts = (pathlib.Path(__file__).resolve().parents[2] / "frontend/src/lib/labels.ts").read_text(encoding="utf-8")
+    pairs = dict(re.findall(r"^\s*'?([\w\-]+)'?: '([^']*)',", ts, flags=re.M))
+    assert pairs == MATERIAL_LABEL, (pairs, MATERIAL_LABEL)
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

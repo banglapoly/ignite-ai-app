@@ -55,7 +55,14 @@ def _crisis():
 def _environments(env_counts):
     out = ["<section><h2>Environments</h2>"]
     for env in F.ENVIRONMENTS.values():
-        out.append(f"<h3>{e(env['short'])}</h3><p>{e(env['tagline'])}</p><ul>")
+        out.append(f"<h3>{e(env['short'])}</h3><p>{e(env['tagline'])}</p>")
+        if env.get("key_findings"):
+            out.append("<p><strong>Key findings:</strong></p><ol>")
+            for k in env["key_findings"]:
+                loc = f", {e(k['loc'])}" if k.get("loc") else ""
+                out.append(f"<li>{e(k['text'])} \u201c{e(k['quote'])}\u201d \u2014 source: {_a(k['source']['url'], k['source']['label'])}{loc}</li>")
+            out.append("</ol>")
+        out.append("<ul>")
         for f in env["facts"]:
             src = f" \u2014 source: {_a(f['source']['url'], f['source']['label'])}" if f["source"] else ""
             tag = " (ESTIMATE, not a measurement)" if f["kind"] == "estimate" else ""
@@ -130,7 +137,12 @@ def _sources(df):
     out += [f"<li>{_a(r.source_url, 'NTRS ' + str(r.report_id))} \u2014 {e(str(r.source_title))}</li>" for r in reps.itertuples(index=False)]
     out.append("</ul><h2>Environment and safety sources</h2><ul>")
     out += [f"<li>{_a(v[1], v[0])}</li>" for v in F.S.values()]
-    out.append("</ul></section>")
+    out.append("</ul><h2>Data, software and assets</h2><ul>"
+               "<li>Data: NASA PSI, NASA NTRS and NASA web pages only; no non-NASA data sources (some PSI publication lists link to journal articles by DOI).</li>"
+               "<li>Software: React, three.js, @react-three/fiber, drei, postprocessing, Vite, TypeScript, FastAPI, scikit-learn, NumPy, SciPy, pandas, joblib (all open source).</li>"
+               "<li>3D scene: procedural geometry and shaders; no downloaded models or textures. Logo: created with AI image generation, then vectorized.</li>"
+               f"<li>Source code: {_a('https://github.com/banglapoly/ignite-ai-app', 'github.com/banglapoly/ignite-ai-app')} (Apache-2.0).</li>"
+               "</ul></section>")
     return "".join(out)
 
 
@@ -200,7 +212,7 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
                 out.append(_ai_use())
         out.append("</main>")
     out.append('<footer><p>License: Apache-2.0. Data: NASA PSI and NASA Technical Reports Server; NASA does not endorse this project. '
-               'Machine-readable summary: <a href="/llms.txt">/llms.txt</a>; API: <a href="/docs">/docs</a>.</p></footer></div>')
+               'Machine-readable summary: <a href="/llms.txt">/llms.txt</a>; API: <a href="/docs">/docs</a>; source code: <a href="https://github.com/banglapoly/ignite-ai-app">GitHub</a>.</p></footer></div>')
     return "\n".join(out)
 
 

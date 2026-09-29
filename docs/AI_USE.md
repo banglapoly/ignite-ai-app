@@ -14,4 +14,4 @@
 - **Imagery.**
   - The 3D flame, module and window views are procedurally generated (shaders and geometry). They illustrate documented trends and are not a simulation.
   - The AI-generated design mockups were used only as look-and-feel inspiration. No numbers from them are displayed.
-  - No AI-generated images are shipped.
+  - The logo was created with AI image generation, then vectorized (`frontend/public/logo.svg`). No other AI-generated images are shipped.

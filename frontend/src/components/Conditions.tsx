@@ -60,8 +60,9 @@ export function ConditionsPanel({ env, card, inp, setInp, gas, setGas, gases, pl
       <label className="field">
         <span>Material</span>
         <select value={inp.material} onChange={e => { onStop(); chooseMaterial(e.target.value) }}>
-          {mats.map(m => <option key={m} value={m}>{MATERIAL_LABEL[m] || m} — {env.dataset.materials[m] ? `${env.dataset.materials[m].n} tests here` : 'no tests at this gravity'}</option>)}
+          {mats.map(m => <option key={m} value={m}>{MATERIAL_LABEL[m] || m} ({env.dataset.materials[m] ? env.dataset.materials[m].n : 'no tests here'})</option>)}
         </select>
+        <small className="muted field-hint">{env.dataset.materials[inp.material] ? `${env.dataset.materials[inp.material].n} real tests of this material at ${env.short}. The number after each material is its test count here.` : `No real tests of this material at ${env.short}.`}</small>
       </label>
       <div className="field">
         <span>Gas mix</span>
@@ -134,9 +135,21 @@ export function PredictionPanel({ pred, err, crossing, demoLog, env }: {
       {pred && (
         <div className="explain">
           <div className="explain-head">Explanation <span className="tag">{pred.explanation.source === 'template' ? 'deterministic template · numbers only from the prediction object' : 'local LLM (validated)'}</span></div>
-          <pre>{pred.explanation.text}</pre>
+          <ExplanationText text={pred.explanation.text} />
         </div>
       )}
     </div>
   )
+}
+
+/** Explanation text: lines starting with "• " are shown as a real bullet list, other lines as paragraphs. */
+function ExplanationText({ text }: { text: string }) {
+  const blocks: (string | string[])[] = []
+  for (const line of text.split('\n')) {
+    if (line.startsWith('\u2022 ')) {
+      const last = blocks[blocks.length - 1]
+      if (Array.isArray(last)) last.push(line.slice(2)); else blocks.push([line.slice(2)])
+    } else if (line.trim()) blocks.push(line)
+  }
+  return <div className="explain-text">{blocks.map((b, i) => Array.isArray(b) ? <ul key={i}>{b.map(li => <li key={li}>{li}</li>)}</ul> : <p key={i}>{b}</p>)}</div>
 }

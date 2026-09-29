@@ -9,6 +9,8 @@ from __future__ import annotations
 S = {
     "friedman2000": ("Friedman, R. (2000) Progress in Fire Detection and Suppression Technology for Future Space Missions, NASA/TM-2000-210337 (NTRS 20000120278)",
                      "https://ntrs.nasa.gov/citations/20000120278"),
+    "olson2008": ("Olson et al. (2008) Material Flammability as a Function of Pressure and Oxygen Concentration (exploration atmospheres), NTRS 20080034883",
+                  "https://ntrs.nasa.gov/citations/20080034883"),
     "olson2012": ("Olson & Ferkul (2012) Evaluating Material Flammability in Microgravity and Martian Gravity Compared to the NASA Standard Normal Gravity Test (NTRS 20130010991)",
                   "https://ntrs.nasa.gov/citations/20130010991"),
     "ferkul2026": ("Ferkul et al. (2026) Material Flammability at Lunar and Martian Gravity, LPSC presentation (NTRS 20260001966)",
@@ -25,7 +27,7 @@ S = {
                 "https://ntrs.nasa.gov/citations/20205000063"),
     "saffire45": ("Urban et al. (2021) Fire Safety Implications of Preliminary Results from Saffire IV and V, ICES-2021-266 (NTRS 20210011521)",
                   "https://ntrs.nasa.gov/citations/20210011521"),
-    "nasa_combustion": ("NASA (2023) Studying Combustion and Fire Safety - Space Station Research Integration Office",
+    "nasa_combustion": ("NASA (Dec 26, 2023; updated Mar 7, 2024) Studying Combustion and Fire Safety - Space Station Research Integration Office",
                         "https://www.nasa.gov/missions/station/iss-research/studying-combustion-and-fire-safety/"),
     "acme": ("NASA Science - ACME mission page", "https://science.nasa.gov/mission/acme/"),
     "sofie": ("NASA Science - SoFIE mission page", "https://science.nasa.gov/mission/sofie/"),
@@ -43,6 +45,11 @@ def src(key: str) -> dict:
     return {"label": label, "url": url}
 
 
+def KF(text, key, quote, loc=""):
+    """A key finding: one short sentence, restating a verbatim quote from a cited NASA source (shown with it)."""
+    return {"text": text, "quote": quote, "loc": loc, "source": src(key)}
+
+
 def F(label, value, key, quote="", kind="sourced", note=""):
     return {"label": label, "value": value, "kind": kind, "quote": quote, "note": note, "source": src(key) if key else None}
 
@@ -51,6 +58,14 @@ ENVIRONMENTS = {
     "earth": {
         "id": "earth", "name": "Earth", "short": "Earth (1 g)", "gravity_g": 1.0,
         "tagline": "Buoyancy drives the classic flickering teardrop flame.",
+        "key_findings": [
+            KF("NASA screens spacecraft materials with an upward-burning test in normal gravity (NASA-STD-6001 Test 1).", "olson2012",
+               "NASA STD 6001 Test 1 is the major method used to assess flammability of materials"),
+            KF("That 1 g test is not always conservative: in drop-tower tests some fuels burned at up to 4% lower oxygen in 0 g.", "olson2008",
+               "The 1g Upward Limiting Oxygen Index (ULOI) and 1g Maximum Oxygen Concentration (MOC) are found to be greater than those in 0g, by up to 4% oxygen mole fraction, meaning that the fuels burned in 0g at lower oxygen concentrations than they did using the NASA Standard 6001 Test 1", "abstract, p.1"),
+            KF("On Earth, buoyancy shapes the flame: hot gas rises and cooler air is pulled in at the base.", "nasa_combustion",
+               "on Earth, hot gases from a flame rise and gravity pulls cooler, denser air to the bottom of a flame, creating the classic shape and flickering effect."),
+        ],
         "facts": [
             F("Gravity", "1 g (reference)", None, kind="definition"),
             F("Reference atmosphere", "Air: 21% O₂ / 79% N₂ at 14.7 psia (101.3 kPa)", "olson2012",
@@ -66,6 +81,14 @@ ENVIRONMENTS = {
     "moon": {
         "id": "moon", "name": "Moon", "short": "Moon (0.165 g)", "gravity_g": 0.165,
         "tagline": "Weak buoyancy: lunar gravity may be close to the MOST flammable condition.",
+        "key_findings": [
+            KF("Lunar gravity may be close to the most flammable condition.", "ferkul2026",
+               "Numerical and experimental evidence suggests that Lunar gravity is nearly the most flammable condition."),
+            KF("Partial-gravity fire maxima fall roughly between 0.15 and 0.4 g, the range of the Moon and Mars.", "friedman2000",
+               "the partial-gravity fire maxima occur roughly over the range bracketing the levels of concern for missions beyond Earth orbit, namely, 0.15 to 0.4 of normal gravity."),
+            KF("Planned lunar habitats will run at lower pressure and higher oxygen than the ISS (8.2 psia, 34% O₂).", "ferkul2026",
+               "HLS, Lunar habitat and pressurized rover will nominally use 8.2 psia / 34% O2, 66% N2"),
+        ],
         "facts": [
             F("Gravity", "0.165 g (1.62 m/s²)", "friedman2000", "For the Moon, the gravitational level is 1.62 m/s2, or 0.165 that of normal gravity."),
             F("Planned habitat atmosphere", "8.2 psia (56.5 kPa), 34% O₂ / 66% N₂; control bands up to 37% O₂", "ferkul2026",
@@ -85,6 +108,14 @@ ENVIRONMENTS = {
     "mars": {
         "id": "mars", "name": "Mars", "short": "Mars (0.38 g)", "gravity_g": 0.38,
         "tagline": "Martian gravity: limits measured up to 5.75 points of O₂ below Earth's.",
+        "key_findings": [
+            KF("At Martian gravity, limiting oxygen levels were up to 5.75% O₂ lower than at 1 g.", "olson2012",
+               "The limiting oxygen levels at Martian gravity were significantly lower than normal gravity (up to 5.75% O2 lower), and typically between the normal gravity and Lunar gravity values."),
+            KF("So a material that passes the 1 g screening test may still burn on Mars.", "olson2012",
+               "normal gravity material flammability screening tests may not be conservative and some materials tested to be safe for use in space may actually be flammable."),
+            KF("Exploration atmospheres NASA is considering have higher oxygen at lower pressure (10.2 psia / 26.5% and 8.2 psia / 34%).", "psi20",
+               "NASA - considered atmosphere for human space missions will be examined: 14.7 psia, 21 % oxygen: 10.2 psia, 26.5 %; and 8.2 psia, 34 % oxygen."),
+        ],
         "facts": [
             F("Gravity", "0.380 g (3.72 m/s²)", "friedman2000", 'For Mars, this "partial gravity" level is 3.72 m/s2, or 0.380 that of normal gravity.'),
             F("Habitat atmosphere", "Not yet baselined in our sources; NASA-considered exploration atmospheres include 10.2 psia / 26.5% O₂ and 8.2 psia / 34% O₂", "psi20",
@@ -102,6 +133,14 @@ ENVIRONMENTS = {
     "iss": {
         "id": "iss", "name": "ISS", "short": "ISS µg (~0 g)", "gravity_g": 0.0,
         "tagline": "No buoyancy: only ventilation and diffusion feed the flame.",
+        "key_findings": [
+            KF("Without buoyancy, ventilation decides: flames spread poorly in still air but vigorously in low flows up to about 20 cm/s.", "friedman2000",
+               "Flames propagate poorly in truly quiescent conditions, but they are enhanced vigorously by low-rate atmospheric flows (velocities up to about 20 cm/s).", "p.5"),
+            KF("Near the flow limit a flame can be almost invisible (pale violet at 1.0 cm/s).", "friedman2000",
+               "At 1.0 cm/s, the entire flame is pale violet and nearly invisible", "p.5-6"),
+            KF("FLEX found cool flames: fuel kept burning after the visible flame went out.", "nasa_combustion",
+               "FLEX ... led to the discovery of a type of cool flame, where the fuel continued \u201cburning\u201d under certain conditions after extinction of the visible flame."),
+        ],
         "facts": [
             F("Gravity", "~0 g (continuous free fall)", "nasa_combustion", kind="definition"),
             F("Cabin atmosphere", "Air, 21% O₂ at 14.7 psia (101.3 kPa)", "olson2012",
@@ -123,6 +162,14 @@ ENVIRONMENTS = {
     "transit": {
         "id": "transit", "name": "Rocket transit", "short": "Transit cabin (µg coast)", "gravity_g": 0.0,
         "tagline": "Coasting to the Moon or Mars is free fall: the same physics as the ISS.",
+        "key_findings": [
+            KF("Coasting to the Moon or Mars is microgravity, the same environment as Earth orbit.", "friedman2000",
+               "the environment in the transit phases of these journeys is microgravity, identical to the environment of Earth-orbiting spacecraft."),
+            KF("A transit crew has less suppressant and slower help from Earth.", "friedman2000",
+               "Stores of suppressant and atmospheric diluents are more limited ... and consultation and emergency communications with Earth controllers may be of poor quality and delayed."),
+            KF("Saffire burned large samples inside uncrewed Cygnus spacecraft, the closest real test of a cabin fire.", "nasa_combustion",
+               "Saffire is a series of experiments conducted aboard uncrewed Cygnus cargo spacecraft after they depart the station"),
+        ],
         "facts": [
             F("Gravity while coasting", "~0 g, identical to orbit", "friedman2000",
               "the environment in the transit phases of these journeys is microgravity, identical to the environment of Earth-orbiting spacecraft."),

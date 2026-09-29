@@ -17,8 +17,9 @@ def _fmt(x: float) -> str:
 
 
 def _exp(e: dict) -> str:
-    return (f"{e['report_id']} ({_fmt(e['oxygen_pct'])}% O2, {_fmt(e['pressure_kpa'])} kPa, "
-            f"{_fmt(e['flow_cm_s'])} cm/s {e['flow_direction']}, {e['material']}): observed {NICE[e['outcome']]}"
+    from .predict import mat_label
+    return (f"{e['report_id']} ({_fmt(e['oxygen_pct'])}% O\u2082, {_fmt(e['pressure_kpa'])} kPa, "
+            f"{_fmt(e['flow_cm_s'])} cm/s {e['flow_direction']}, {mat_label(e['material'])}): observed {NICE[e['outcome']]}"
             f" - {e['outcome_detail']}")
 
 
@@ -28,18 +29,21 @@ GNAME = {0.0: "microgravity (~0 g)", 0.165: "lunar gravity (0.165 g)", 0.38: "Ma
 def template(p: dict) -> dict:
     i = p["inputs"]
     g = float(i.get("gravity_g", 0.0))
-    cond = (f"{GNAME.get(round(g, 3), f'{g:g} g')}, {_fmt(i['oxygen_pct'])}% O2, {_fmt(i['pressure_kpa'])} kPa, {_fmt(i['flow_cm_s'])} cm/s "
-            f"{i['flow_direction']} flow, material {i['material']}" + ("" if i.get("gas_mix", "air") == "air" else f", gas mix {i['gas_mix']}"))
+    from .predict import GAS_LABEL, mat_label
+    gas = i.get("gas_mix", "air")
+    cond = (f"{GNAME.get(round(g, 3), f'{g:g} g')}, oxygen {_fmt(i['oxygen_pct'])}%, pressure {_fmt(i['pressure_kpa'])} kPa, "
+            f"airflow {_fmt(i['flow_cm_s'])} cm/s {i['flow_direction']}, {mat_label(i['material'])}"
+            + ("" if gas == "air" else f", gas mix {GAS_LABEL.get(gas, gas)}"))
     m = p["model"]
     if not p["in_training_range"]:
         lines = [f"No prediction. The requested conditions ({cond}) are outside the published experimental envelope "
                  f"used to train this model.",
-                 *[f"- {r}" for r in p.get("range_violations", [])],
+                 *[f"\u2022 {r}" for r in p.get("range_violations", [])],
                  "A fire-safety tool must not guess outside its evidence. The closest real experiments are listed for reference only."]
         return {"source": "template", "text": "\n".join(lines)}
     pr = p["probabilities"][p["prediction"]]
     lines = [f"At {cond}, the model predicts {NICE[p['prediction']]} (probability {pr:g}).",
-             f"Model: {m['type']} trained on {m['n_train']} published tests across gravity levels (0, 0.165, 0.38 and 1 g); stratified cross-validated accuracy {m['cv_accuracy']:g}."]
+             f"Model: {m['type'].replace('_', '-')} classifier trained on {m['n_train']} published tests across gravity levels (0, 0.165, 0.38 and 1 g); stratified cross-validated accuracy {m['cv_accuracy']:g}."]
     if p.get("supporting_experiment"):
         lines.append("Evidence on the predicted side: " + _exp(p["supporting_experiment"]) + ".")
     if p.get("contrast_experiment"):

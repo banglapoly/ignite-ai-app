@@ -84,9 +84,10 @@ export interface Prediction {
 }
 
 export interface Fact { label: string; value: string; kind: 'sourced' | 'estimate' | 'definition'; quote: string; note: string; source: { label: string; url: string } | null }
+export interface KeyFinding { text: string; quote: string; loc: string; source: { label: string; url: string } }
 export interface Inputs { oxygen_pct: number; pressure_kpa: number; flow_cm_s: number; material: string; flow_direction: string }
 export interface EnvData {
-  id: 'earth' | 'moon' | 'mars' | 'iss' | 'transit'; name: string; short: string; gravity_g: number; tagline: string; facts: Fact[]; data_note: string; default: Inputs
+  id: 'earth' | 'moon' | 'mars' | 'iss' | 'transit'; name: string; short: string; gravity_g: number; tagline: string; key_findings?: KeyFinding[]; facts: Fact[]; data_note: string; default: Inputs
   dataset: { n: number; outcomes: Record<string, number>; reports: string[]; materials: Record<string, MaterialEnv>; oof_accuracy: { n: number; accuracy: number } | null }
 }
 export interface GasMix { id: string; label: string; modelled: boolean; note: string; source?: { label: string; url: string } }
@@ -207,18 +208,7 @@ export async function postPredict(body: object): Promise<Prediction> {
   return withFallback(() => server<Prediction>('/predict', post(body)), () => localPredict(body))
 }
 
-export const MATERIAL_LABEL: Record<string, string> = {
-  SIBAL_fabric: 'SIBAL cotton-fiberglass fabric',
-  cellulose_thin: 'Thin cellulose (Kimwipes, 0.0076 cm)',
-  cellulose_double: 'Thin cellulose, double (0.0152 cm)',
-  filter_paper: 'Ashless filter paper (SSCE)',
-  PMMA_thick: 'Thick PMMA (acrylic) slab',
-  cotton_jersey: 'Cotton jersey fabric',
-  'Nomex_HT90-40': 'Nomex HT90-40 fabric',
-  Ultem_1000: 'Ultem 1000 film',
-  Mylar_G: 'Mylar G film',
-  silicone: 'Silicone sheet',
-}
+export { MATERIAL_LABEL } from './labels'
 export const GRAVITY_LABEL: Record<string, string> = { '0': 'µg (~0 g)', '0.165': 'Moon 0.165 g', '0.38': 'Mars 0.38 g', '1': 'Earth 1 g' }
 export const gkey = (g: number) => String(+g.toFixed(3))
 export const DIRECTION_LABEL: Record<string, string> = {
