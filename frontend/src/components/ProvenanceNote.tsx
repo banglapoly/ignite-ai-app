@@ -26,7 +26,7 @@ export default function ProvenanceNote({ gravity, preset }: { gravity: number; p
           {groups.map(g => (
             <li key={g.report_id + g.facility}>
               <b>{g.n}</b> {g.n === 1 ? 'row' : 'rows'} · {g.source_url ? <a href={g.source_url} target="_blank" rel="noreferrer">{g.report_id}</a> : g.report_id}
-              {g.source_title ? ` — ${g.source_title}` : ''}. Facility: {g.facility}.
+              {g.source_title ? `. ${g.source_title}` : ''}. Facility: {g.facility}.
             </li>
           ))}
         </ul>

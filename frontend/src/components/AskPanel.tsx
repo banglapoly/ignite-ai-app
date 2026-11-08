@@ -55,12 +55,12 @@ export default function AskPanel({ envName, initialQuestion = '', contextNote }:
                 <div className="dt-scroll"><table className="cmp"><thead><tr><th></th>{a.comparison.map(c => <th key={c.name}><a href={c.url} target="_blank" rel="noreferrer">{c.name}</a></th>)}</tr></thead>
                   <tbody>
                     <tr><td>Title</td>{a.comparison.map(c => <td key={c.name}>{c.title}</td>)}</tr>
-                    <tr><td>Platform</td>{a.comparison.map(c => <td key={c.name}>{c.platform || '—'}</td>)}</tr>
-                    <tr><td>Hardware</td>{a.comparison.map(c => <td key={c.name}>{c.hardware || '—'}</td>)}</tr>
-                    <tr><td>Dates (PSI)</td>{a.comparison.map(c => <td key={c.name}>{c.dates || '—'}</td>)}</tr>
+                    <tr><td>Platform</td>{a.comparison.map(c => <td key={c.name}>{c.platform || 'none'}</td>)}</tr>
+                    <tr><td>Hardware</td>{a.comparison.map(c => <td key={c.name}>{c.hardware || 'none'}</td>)}</tr>
+                    <tr><td>Dates (PSI)</td>{a.comparison.map(c => <td key={c.name}>{c.dates || 'none'}</td>)}</tr>
                     <tr><td>Objective (verbatim, first sentence)</td>{a.comparison.map(c => <td key={c.name}><q>{c.objective}</q></td>)}</tr>
-                    <tr><td>PSI experimental tables</td>{a.comparison.map(c => <td key={c.name}>{c.tables.length ? c.tables.join('; ') : '—'}</td>)}</tr>
-                    <tr><td>Publications listed</td>{a.comparison.map(c => <td key={c.name}>{c.n_publications ?? '—'}</td>)}</tr>
+                    <tr><td>PSI experimental tables</td>{a.comparison.map(c => <td key={c.name}>{c.tables.length ? c.tables.join('; ') : 'none'}</td>)}</tr>
+                    <tr><td>Publications listed</td>{a.comparison.map(c => <td key={c.name}>{c.n_publications ?? 'none'}</td>)}</tr>
                   </tbody></table></div>
               )}
               <ol className="cites-list">{a.citations.map(c => <li key={c.n} value={c.n}><a href={c.url} target="_blank" rel="noreferrer">{c.label}</a> <span className="muted small">({c.kind}, score {c.score})</span></li>)}</ol>

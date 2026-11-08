@@ -184,7 +184,7 @@ export default function Workspace({ card }: { card: import('../lib/api').ModelCa
             )}
 
             {inv && (
-              <ol className="stepper" aria-label="Investigation steps">
+              <ol className="path-rail path-rail--steps" aria-label="Investigation steps">
                 {STEPS.map(name => (
                   <li key={name}>
                     <button type="button" aria-current={inv.step === name ? 'step' : undefined} className={inv.step === name ? 'on' : ''} onClick={() => ws.updateInvestigation(inv.id, { step: name })}>

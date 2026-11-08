@@ -22,7 +22,6 @@ export default function App() {
   const [card, setCard] = useState<ModelCard | null>(null)
   useEffect(() => { getJSON<ModelCard>('/model').then(setCard).catch(() => {}) }, [])
   const page = PAGES.find(p => p.path === path)
-  const desk = path === '/dashboard'
   useEffect(() => { document.title = page?.title ?? 'IGNITE-AI · Page not found' }, [path])
   let body: React.ReactNode
   switch (path) {
@@ -41,10 +40,10 @@ export default function App() {
   return (
     <WorkspaceProvider>
       <SimProvider path={path}>
-        {!desk && <Nav path={path} />}
-        {!desk && <StorageBanner />}
-        <main key={path} className={desk ? 'desk-root' : undefined}>{body}</main>
-        {!desk && <Footer />}
+        <Nav path={path} />
+        <StorageBanner />
+        <main key={path}>{body}</main>
+        <Footer />
       </SimProvider>
     </WorkspaceProvider>
   )

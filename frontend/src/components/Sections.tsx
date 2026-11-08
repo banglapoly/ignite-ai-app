@@ -99,12 +99,12 @@ export function Resources({ card }: { card: ModelCard | null }) {
           <h3>NASA Physical Sciences Informatics (PSI): primary official source</h3>
           <p className="small">Investigation metadata (objectives, hardware, dates, DOIs, publication lists) and every public experimental table were harvested anonymously from the <a href="https://psi.nasa.gov/physci/repo/" target="_blank" rel="noreferrer">PSI repository</a> (data licence CC0-1.0 where stated). They feed Ask IGNITE-AI and corroborate the training rows. The raw PSI data files are mostly very large video and image archives. Some legacy files (for example the BASS-II test-matrix spreadsheet) returned "NoSuchKey" from PSI storage, so we cite them instead of using them.</p>
           <div className="dt-scroll"><table className="env"><thead><tr><th>Investigation</th><th>Title</th><th>Platform</th><th>Dates</th><th>Tables</th></tr></thead>
-            <tbody>{psi?.investigations.map(i => <tr key={i.psi}><td><a href={i.url} target="_blank" rel="noreferrer">{i.acronym} · {i.psi}</a></td><td>{i.title}</td><td>{i.platform || '—'}</td><td>{i.start ? `${i.start} → ${i.end}` : 'not listed'}</td><td>{i.tables.length}</td></tr>)}</tbody></table></div>
+            <tbody>{psi?.investigations.map(i => <tr key={i.psi}><td><a href={i.url} target="_blank" rel="noreferrer">{i.acronym} · {i.psi}</a></td><td>{i.title}</td><td>{i.platform || 'none'}</td><td>{i.start ? `${i.start} → ${i.end}` : 'not listed'}</td><td>{i.tables.length}</td></tr>)}</tbody></table></div>
           <p className="small">Also: {psi?.links.map((l, i) => <span key={l.url}>{i ? ' · ' : ''}<a href={l.url} target="_blank" rel="noreferrer">{l.label}</a></span>)}</p>
         </div>
         <div className="panel">
           <h3>Reports behind the training rows (NTRS)</h3>
-          <ol className="refs">{reports.map(r => <li key={r.report_id}><a href={r.source_url} target="_blank" rel="noreferrer">{r.report_id}</a> — {r.source_title}</li>)}</ol>
+          <ol className="refs">{reports.map(r => <li key={r.report_id}><a href={r.source_url} target="_blank" rel="noreferrer">{r.report_id}</a>: {r.source_title}</li>)}</ol>
           <h3>Environment & safety sources</h3>
           <ol className="refs">{psi && Object.values(psi.sources).map(s => <li key={s.url}><a href={s.url} target="_blank" rel="noreferrer">{s.label}</a></li>)}</ol>
           <p className="small muted">The 3D scene is procedural (three.js, @react-three/fiber, drei, postprocessing). It is not a NASA model. {card ? `${card.model.n_train} training rows.` : ''}</p>

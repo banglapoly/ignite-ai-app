@@ -78,7 +78,7 @@ export function ConditionsPanel({ env, card, inp, setInp, gas, setGas, gases, pl
       <label className="field">
         <span>Flow direction {env.gravity_g > 0 && <small className="muted">(at 1/lunar/Martian g: concurrent = upward burning, opposed = downward)</small>}</span>
         <select value={inp.flow_direction} onChange={e => { onStop(); set('flow_direction', e.target.value) }}>
-          {['concurrent', 'opposed', 'quiescent'].map(d => <option key={d} value={d}>{DIRECTION_LABEL[d]}{menv && !menv.flow_directions.includes(d) ? ' — not tested' : ''}</option>)}
+          {['concurrent', 'opposed', 'quiescent'].map(d => <option key={d} value={d}>{DIRECTION_LABEL[d]}{menv && !menv.flow_directions.includes(d) ? ', not tested' : ''}</option>)}
         </select>
       </label>
       <div className="demo-row">

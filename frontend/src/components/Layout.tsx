@@ -1,24 +1,81 @@
-import { useEffect, useState } from 'react'
-import { FLOW, Link, NAV, PAGES } from '../lib/router'
+import { useEffect, useRef, useState } from 'react'
+import { FLOW, Link, PAGES, navigate } from '../lib/router'
 import { isStaticMode, onModeChange } from '../lib/api'
 import { useWorkspace } from '../lib/workspace/WorkspaceContext'
 
+type Item = { href: string; label: string }
+type Entry = Item | { label: string; id: string; items: Item[] }
+
+const ENTRIES: Entry[] = [
+  { href: '/dashboard', label: 'Today' },
+  { href: '/simulator', label: 'Conditions' },
+  { label: 'Evidence', id: 'evidence', items: [
+    { href: '/predict', label: 'Nearest tests' },
+    { href: '/ask', label: 'Ask the record' },
+  ] },
+  { href: '/learn', label: 'Learn' },
+  { label: 'Record', id: 'record', items: [
+    { href: '/sources', label: 'Sources' },
+    { href: '/data', label: 'Model' },
+    { href: '/safety', label: 'Safety notes' },
+  ] },
+]
+
+function active(path: string, href: string) {
+  if (href === '/dashboard') return path === '/dashboard' || path === '/workspace'
+  return path === href
+}
+
 export function Nav({ path }: { path: string }) {
   const [open, setOpen] = useState(false)
-  useEffect(() => setOpen(false), [path])
+  const [menu, setMenu] = useState<string | null>(null)
+  const navRef = useRef<HTMLElement | null>(null)
+  const ws = useWorkspace()
+  useEffect(() => { setOpen(false); setMenu(null) }, [path])
+  useEffect(() => {
+    if (!menu) return
+    const onDown = (e: MouseEvent) => { if (navRef.current && !navRef.current.contains(e.target as Node)) setMenu(null) }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenu(null) }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey) }
+  }, [menu])
+  const close = () => { setOpen(false); setMenu(null) }
+  function start() {
+    const id = ws.createInvestigation({ title: 'Untitled investigation', question: '', mode: 'guided' })
+    close()
+    if (id) navigate(`/workspace?id=${id}`)
+  }
   return (
-    <header className="nav">
-      <Link to="/" className="brand"><img src="/logo.svg" className="brand-logo" alt="" width={32} height={32} />IGNITE-AI</Link>
-      <button className="nav-toggle" aria-label="Menu" aria-expanded={open} aria-controls="site-nav" onClick={() => setOpen(o => !o)}>
-        <span /><span /><span />
-      </button>
-      <nav id="site-nav" className={open ? 'open' : ''} aria-label="Pages">
-        {NAV.map(p => {
-          const on = p.path === path || (p.path === '/dashboard' && path === '/workspace')
-          return <Link key={p.path} to={p.path} className={'navlink' + (on ? ' active' : '')} aria-current={on ? 'page' : undefined}>{p.label}</Link>
-        })}
-      </nav>
-      <GuestPill />
+    <header className="site-header">
+      <div className="site-header__inner">
+        <Link to="/" className="brand" onClick={close}><img src="/logo.svg" className="brand-logo" alt="" width={28} height={28} /><span className="brand__text">IGNITE-AI</span></Link>
+        <button type="button" className="nav-toggle" aria-expanded={open} aria-controls="primary-nav" onClick={() => setOpen(v => !v)}>{open ? 'Close' : 'Menu'}</button>
+        <nav ref={navRef} id="primary-nav" className={open ? 'is-open' : ''} aria-label="Primary">
+          {ENTRIES.map(entry => {
+            if ('href' in entry) {
+              const on = active(path, entry.href)
+              return <Link key={entry.href} to={entry.href} aria-current={on ? 'page' : undefined} onClick={close}>{entry.label}</Link>
+            }
+            const expanded = menu === entry.id
+            const on = entry.items.some(item => active(path, item.href))
+            return (
+              <div key={entry.id} className={'nav-menu' + (expanded ? ' is-open' : '')}>
+                <button type="button" className={'nav-menu__trigger' + (on ? ' is-active' : '')} aria-expanded={expanded} aria-controls={`nav-menu-${entry.id}`} onClick={() => setMenu(expanded ? null : entry.id)}>
+                  {entry.label}<span className="nav-menu__caret" aria-hidden="true">{expanded ? '\u2212' : '+'}</span>
+                </button>
+                <div id={`nav-menu-${entry.id}`} className="nav-menu__panel" hidden={!expanded}>
+                  {entry.items.map(item => <Link key={item.href} to={item.href} aria-current={active(path, item.href) ? 'page' : undefined} onClick={close}>{item.label}</Link>)}
+                </div>
+              </div>
+            )
+          })}
+        </nav>
+        <div className="header-actions">
+          <span className="user-chip" title="Guest on this browser. Not an account and not synced.">{ws.persistence === 'saved' ? 'Guest' : ws.persistence === 'held' ? 'Guest, save held' : 'Guest, not saved'}</span>
+          <button type="button" className="btn btn--solid" onClick={start}>New investigation</button>
+        </div>
+      </div>
     </header>
   )
 }
