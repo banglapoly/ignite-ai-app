@@ -4,14 +4,17 @@ import { MATERIAL_LABEL, OUTCOME_COLOR, OUTCOME_LABEL } from '../lib/api'
 import { ConditionsPanel, PredictionPanel } from '../components/Conditions'
 import { FactCard, KeyFindings } from '../components/Sections'
 import EnvTabs, { TAB_ICON } from '../components/EnvTabs'
-import { Link } from '../lib/router'
+import { Link, navigate } from '../lib/router'
 import { useSim } from '../lib/sim'
+import { useWorkspace } from '../lib/workspace/WorkspaceContext'
+import type { FlowDirection } from '../lib/workspace/logic'
 import type { FlameState } from '../three/Flame'
 
 const FlameScene = lazy(() => import('../components/FlameScene'))
 
 export default function Simulator({ card }: { card: ModelCard | null }) {
   const { env, inp, setInpF, gas, setGas, gases, pred, err, playing, play, stop, crossing, demoLog } = useSim()
+  const ws = useWorkspace()
   const state: FlameState = pred ? (pred.in_training_range ? pred.prediction : 'refused') : null
   const ppO2 = inp ? (inp.oxygen_pct / 100) * inp.pressure_kpa : 0
   return (
@@ -37,10 +40,10 @@ export default function Simulator({ card }: { card: ModelCard | null }) {
               <div className="hud-row"><span>Buoyant flow vs Earth <i>estimate √g</i></span><b>{env.gravity_g ? `≈ ${Math.sqrt(env.gravity_g).toFixed(2)}×` : '≈ 0 (none)'}</b></div>
             </div>
             <div className="hud hud-right">
-              <div className="hud-title">FIRE RISK STATUS</div>
+              <div className="hud-title">MODEL ESTIMATE · NOT A RISK SCORE</div>
               {pred && pred.in_training_range && pred.prediction ? (
-                <div className="hud-verdict" style={{ color: OUTCOME_COLOR[pred.prediction], borderColor: OUTCOME_COLOR[pred.prediction] }}>{OUTCOME_LABEL[pred.prediction].toUpperCase()} · {Math.round((pred.probabilities?.[pred.prediction] || 0) * 100)}%</div>
-              ) : <div className="hud-verdict refused">NO PREDICTION · OUTSIDE EVIDENCE</div>}
+                <div className="hud-verdict" style={{ color: OUTCOME_COLOR[pred.prediction], borderColor: OUTCOME_COLOR[pred.prediction] }}>ESTIMATE · {OUTCOME_LABEL[pred.prediction].toUpperCase()} · {Math.round((pred.probabilities?.[pred.prediction] || 0) * 100)}% SHARE</div>
+              ) : <div className="hud-verdict refused">NO ESTIMATE · OUTSIDE LOADED TESTS</div>}
               <div className="hud-row"><span>Range guard</span><b className={pred?.in_training_range ? 'ok' : 'bad'}>{pred?.in_training_range ? 'IN ENVELOPE' : 'REFUSED'}</b></div>
               <div className="hud-row"><span>Gas mix</span><b className={gas === 'air' ? 'ok' : 'bad'}>{gas === 'air' ? 'O₂/N₂ (modelled)' : 'not modelled'}</b></div>
               <div className="hud-row"><span>Material</span><b>{MATERIAL_LABEL[inp.material] || inp.material}</b></div>
@@ -65,10 +68,24 @@ export default function Simulator({ card }: { card: ModelCard | null }) {
             <ConditionsPanel env={env} card={card} inp={inp} setInp={setInpF} gas={gas} setGas={g => setGas(g)} gases={gases} playing={playing} onPlay={play} onStop={stop} />
             <PredictionPanel pred={pred} err={err} env={env} crossing={crossing} demoLog={demoLog} />
           </div>
+          {ws.actionError && <div className="alert" role="alert">{ws.actionError}</div>}
           <div className="page-cta">
-            <span>See the evidence behind this prediction:</span>
-            <Link to="/predict" className="btn">Decision boundary &amp; nearest experiments →</Link>
-            <Link to="/safety" className="btn ghost">Safety measures for {env.short} →</Link>
+            <span>Save or inspect this point:</span>
+            <button className="btn" onClick={() => {
+              const id = ws.createInvestigation({
+                title: `${env.short} · ${MATERIAL_LABEL[inp.material] || inp.material}`,
+                question: '',
+                mode: 'sandbox',
+                scenario: { envId: env.id, gravity_g: env.gravity_g, oxygen_pct: inp.oxygen_pct, pressure_kpa: inp.pressure_kpa, flow_cm_s: inp.flow_cm_s, material: inp.material, flow_direction: inp.flow_direction as FlowDirection, gas_mix: gas },
+              })
+              if (id) navigate(`/workspace?id=${id}`)
+            }}>Save into a new investigation</button>
+            {ws.doc.lastOpenedId && <button className="btn ghost" onClick={() => {
+              const ok = ws.saveScenario(ws.doc.lastOpenedId!, { envId: env.id, gravity_g: env.gravity_g, oxygen_pct: inp.oxygen_pct, pressure_kpa: inp.pressure_kpa, flow_cm_s: inp.flow_cm_s, material: inp.material, flow_direction: inp.flow_direction as FlowDirection, gas_mix: gas }, 'From the sandbox')
+              if (ok) navigate(`/workspace?id=${ws.doc.lastOpenedId}`)
+            }}>Add to the last investigation</button>}
+            <Link to="/predict" className="btn ghost">Evidence and nearest experiments</Link>
+            <Link to="/dashboard" className="btn ghost">Dashboard</Link>
           </div>
         </section>
       )}

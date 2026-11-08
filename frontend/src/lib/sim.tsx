@@ -11,6 +11,7 @@ export type Sim = {
   pred: Prediction | null; err: string | null; bnd: Boundary | null
   menv?: EnvData['dataset']['materials'][string]
   playing: boolean; play: () => void; stop: () => void; demoLog: { o2: number; pred: string | null }[]; crossing: Crossing | null
+  loadScenario: (c: { envId: string; oxygen_pct: number; pressure_kpa: number; flow_cm_s: number; material: string; flow_direction: string; gas_mix: string }) => void
 }
 const Ctx = createContext<Sim | null>(null)
 export const useSim = () => { const s = useContext(Ctx); if (!s) throw new Error('SimProvider missing'); return s }
@@ -31,10 +32,24 @@ export function SimProvider({ path, children }: { path: string; children: React.
   const [crossing, setCrossing] = useState<Crossing | null>(null)
   const playRef = useRef<number | null>(null)
   const lastPred = useRef<string | null>(null)
+  const skipReset = useRef(false)
+  const envIdRef = useRef(envId)
+  envIdRef.current = envId
   const onEnvPage = ENV_PAGES.includes(path)
 
   useEffect(() => { getJSON<{ environments: EnvData[]; gas_mixes: GasMix[] }>('/environments').then(d => { setEnvs(d.environments); setGases(d.gas_mixes) }).catch(e => setErr(String(e))) }, [])
-  useEffect(() => { if (env) { stop(); setInp(env.default); setGas('air'); setCrossing(null); setDemoLog([]) } }, [env?.id])
+  useEffect(() => {
+    if (!env) return
+    if (skipReset.current) { skipReset.current = false; return }
+    stop(); setInp(env.default); setGas('air'); setCrossing(null); setDemoLog([])
+  }, [env?.id])
+  const loadScenario = (c: { envId: string; oxygen_pct: number; pressure_kpa: number; flow_cm_s: number; material: string; flow_direction: string; gas_mix: string }) => {
+    stop()
+    setGas(c.gas_mix || 'air')
+    setInp({ oxygen_pct: c.oxygen_pct, pressure_kpa: c.pressure_kpa, flow_cm_s: c.flow_cm_s, material: c.material, flow_direction: c.flow_direction })
+    setCrossing(null); setDemoLog([])
+    if (c.envId !== envIdRef.current) { skipReset.current = true; setEnvId(c.envId) }
+  }
   // keep ?env= in the address bar on the pages that use it (shareable deep links)
   useEffect(() => { if (env && onEnvPage) { const u = new URL(location.href); if (u.searchParams.get('env') !== env.id) { u.searchParams.set('env', env.id); history.replaceState(null, '', u) } } }, [env?.id, path])
 
@@ -94,6 +109,6 @@ export function SimProvider({ path, children }: { path: string; children: React.
   useEffect(() => () => stop(), [])
   useEffect(() => { if (!['/simulator', '/predict'].includes(path)) stop() }, [path])
 
-  const value: Sim = { envs, gases, envId, setEnvId, env, inp, setInpF: f => setInp(s => s ? f(s) : s), gas, setGas, pred, err, bnd, menv, playing, play, stop, demoLog, crossing }
+  const value: Sim = { envs, gases, envId, setEnvId, env, inp, setInpF: f => setInp(s => s ? f(s) : s), gas, setGas, pred, err, bnd, menv, playing, play, stop, demoLog, crossing, loadScenario }
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

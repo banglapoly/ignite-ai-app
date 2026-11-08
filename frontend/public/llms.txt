@@ -1,21 +1,24 @@
 # IGNITE-AI
 
-> Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit
+> A research workspace for combustion-condition investigations
 
-Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials, trained only on published NASA experiments.
+Open-source (Apache-2.0) research workspace for combustion-condition investigations. Model estimates use only the published experiments loaded in this build and are not a certification.
 - Dataset: 143 experiments from 13 NASA reports; CSV at /static-api/experiments.csv
 - CV accuracy 0.734 (balanced 0.679), leave-reports-out 0.692, baseline 0.608
 - Gravity levels with data: 0 g, 0.165 g (Moon), 0.38 g (Mars), 1 g; the range guard refuses untested material/gravity combinations
 - Moon/Mars buoyancy scaling (sqrt g) values are labelled estimates
 
 ## Pages
-- / : Home — Open-source tool that predicts flame spread over spacecraft materials from published NASA microgravity and partial-gravity experiments.
-- /simulator : 3D Flame Simulator — Interactive 3D flame for Earth, Moon, Mars, ISS and transit-cabin conditions with sourced environment data and oxygen, pressure and airflow sliders.
-- /predict : Prediction & Experiments — Flame-spread prediction with a range guard, decision boundary over real NASA tests, nearest experiments and FLEX CO2 data.
-- /ask : Ask IGNITE-AI — Local question answering over a NASA combustion knowledge base; answers are verbatim quotes with source links.
-- /safety : Safety Measures — Spacecraft fire detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources.
-- /data : Data & Model — The 143-row NASA flame-spread dataset with quotes and the honest model card: cross-validation, per-gravity accuracy, confusion matrix.
-- /sources : Sources & Citations — NASA PSI investigations, NTRS reports, environment and safety sources, FLEX data, and the AI-use disclosure.
+- / : Home — Research workspace that keeps a combustion question, saved conditions, cited experiments, and material comparisons together. Not a flight-safety certification.
+- /dashboard : Dashboard — Guest dashboard of saved investigations, recent activity, and the next missing step. Storage is this browser only.
+- /simulator : Sandbox — Illustrative 3D flame and the gravity, oxygen, pressure, airflow, gas-mix, and material controls, with the option to save a scenario.
+- /workspace : Investigation — One investigation: question, private notes, scenario history, cited evidence, model estimate, and material comparison.
+- /learn : Learn — How to read experiment evidence, a statistical estimate, and the illustrative flame, including partial-gravity provenance.
+- /predict : Evidence — Range guard, decision boundary over loaded tests, and nearest experiments with quotes. Min/max bands are not joint tests.
+- /ask : Ask — Local question answering over a NASA combustion knowledge base; answers are verbatim quotes with source links.
+- /safety : Safety notes — Spacecraft fire detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources.
+- /data : Model — Model card, per-gravity accuracy, confusion matrix, and which data catalogs this build has loaded.
+- /sources : Sources — NASA PSI investigations, NTRS reports, environment and safety sources, FLEX data, and the AI-use disclosure.
 
 ## Data (static JSON, always available)
 - /static-api/model.json

@@ -21,8 +21,8 @@ function linkify(text: string, cites: AskAnswer['citations']) {
   })
 }
 
-export default function AskPanel({ envName }: { envName: string }) {
-  const [q, setQ] = useState('')
+export default function AskPanel({ envName, initialQuestion = '', contextNote }: { envName: string; initialQuestion?: string; contextNote?: string }) {
+  const [q, setQ] = useState(initialQuestion)
   const [a, setA] = useState<AskAnswer | null>(null)
   const [busy, setBusy] = useState(false)
   const [showP, setShowP] = useState(false)
@@ -34,7 +34,7 @@ export default function AskPanel({ envName }: { envName: string }) {
   return (
     <div className="panel ask" id="ask">
       <h3>Ask IGNITE-AI <span className="tag">local retrieval · verbatim NASA quotes · no paid API</span></h3>
-      <p className="small muted">Questions are answered only from the IGNITE-AI knowledge base: NTRS report abstracts, NASA PSI investigation metadata and experimental tables, the curated experiment rows, and NASA mission pages. Every sentence links to its source; if nothing relevant is retrieved, the assistant says so.</p>
+      <p className="small muted">Questions are answered only from the loaded knowledge base: NTRS report abstracts, NASA PSI metadata and tables, the experiment rows, and NASA mission pages. Every sentence links to its source. If nothing relevant is retrieved, the assistant says so. {contextNote}</p>
       <form onSubmit={e => { e.preventDefault(); ask(q) }} className="ask-form">
         <input value={q} onChange={e => setQ(e.target.value)} placeholder={`e.g. How is fire different on the ${envName}?`} maxLength={500} aria-label="Question" />
         <button className="btn" disabled={busy}>{busy ? 'Searching…' : 'Ask'}</button>

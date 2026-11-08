@@ -115,21 +115,21 @@ function template(p: any): { source: string; text: string } {
   const cond = `${GNAME[fmtG(round(g, 3))] ?? `${fmtG(g)} g`}, oxygen ${fmtG(i.oxygen_pct)}%, pressure ${fmtG(i.pressure_kpa)} kPa, airflow ${fmtG(i.flow_cm_s)} cm/s ${i.flow_direction}, ${matLabel(i.material)}` + (gas === 'air' ? '' : `, gas mix ${GAS_LABEL[gas] ?? gas}`)
   const m = p.model
   if (!p.in_training_range) {
-    const lines = [`No prediction. The requested conditions (${cond}) are outside the published experimental envelope used to train this model.`,
+    const lines = [`No model estimate. The requested conditions (${cond}) are outside the published experimental envelope used to train this model.`,
       ...(p.range_violations ?? []).map((r: string) => `\u2022 ${r}`),
-      'A fire-safety tool must not guess outside its evidence. The closest real experiments are listed for reference only.']
+      'The model will not estimate a spread regime outside that evidence. The closest published experiments are listed for reference only. No estimate is not a finding that the condition is safe.']
     return { source: 'template', text: lines.join('\n') }
   }
   const pr = p.probabilities[p.prediction]
-  const lines = [`At ${cond}, the model predicts ${NICE[p.prediction as Outcome]} (probability ${fmtG(pr)}).`,
+  const lines = [`At ${cond}, the statistical model estimates ${NICE[p.prediction as Outcome]} (uncalibrated class share ${fmtG(pr)}). This is not a measurement.`,
     `Model: ${String(m.type).replace(/_/g, '-')} classifier trained on ${m.n_train} published tests across gravity levels (0, 0.165, 0.38 and 1 g); stratified cross-validated accuracy ${fmtG(m.cv_accuracy)}.`]
-  if (p.supporting_experiment) lines.push('Evidence on the predicted side: ' + expText(p.supporting_experiment) + '.')
+  if (p.supporting_experiment) lines.push('Evidence on the estimated side: ' + expText(p.supporting_experiment) + '.')
   if (p.contrast_experiment) lines.push('Nearest evidence on the other side of the boundary: ' + expText(p.contrast_experiment) + '.')
   const u = p.uncertainty
-  if (u) lines.push(`Confidence: ${u.level} (top probability ${fmtG(u.max_probability)}, ${u.neighbours_agreeing} of 3 nearest experiments agree).`)
+  if (u) lines.push(`Uncalibrated model share: top probability ${fmtG(u.max_probability)}. ${u.neighbours_agreeing} of 3 nearest experiments recorded the same outcome. This is not a calibrated confidence, a risk score, or a safety classification.`)
   const accG = (m.oof_accuracy_by_gravity ?? {})[gkey(g)]
   if (g > 0 && accG) lines.push(`Caution: only ${accG.n} real experiments exist at this gravity level, so this output is essentially a lookup of the nearest published test (out-of-fold accuracy at this gravity ${fmtG(accG.accuracy)}).`)
-  if (u?.level === 'low') lines.push('Treat this as a flag for testing, not as a clearance: the nearest published data disagree or are sparse.')
+  if (u?.level === 'low') lines.push('The nearest published data disagree or are sparse. Treat the estimate as a prompt for further reading, not as a clearance.')
   return { source: 'template', text: lines.join('\n') }
 }
 

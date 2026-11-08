@@ -9,7 +9,7 @@ from html import escape as e
 from . import facts as F
 
 TITLE = "IGNITE-AI"
-TAGLINE = "Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit"
+TAGLINE = "A research workspace for combustion-condition investigations"
 
 
 def _a(url, label):
@@ -17,19 +17,25 @@ def _a(url, label):
 
 
 PAGES = [
-    ("/", "Home", "IGNITE-AI \u00b7 Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit",
-     "Open-source tool that predicts flame spread over spacecraft materials from published NASA microgravity and partial-gravity experiments."),
-    ("/simulator", "3D Flame Simulator", "IGNITE-AI \u00b7 3D Flame Simulator",
-     "Interactive 3D flame for Earth, Moon, Mars, ISS and transit-cabin conditions with sourced environment data and oxygen, pressure and airflow sliders."),
-    ("/predict", "Prediction & Experiments", "IGNITE-AI \u00b7 Prediction & Experiments",
-     "Flame-spread prediction with a range guard, decision boundary over real NASA tests, nearest experiments and FLEX CO2 data."),
-    ("/ask", "Ask IGNITE-AI", "IGNITE-AI \u00b7 Ask IGNITE-AI",
+    ("/", "Home", "IGNITE-AI \u00b7 Combustion investigation workspace",
+     "Research workspace that keeps a combustion question, saved conditions, cited experiments, and material comparisons together. Not a flight-safety certification."),
+    ("/dashboard", "Dashboard", "IGNITE-AI \u00b7 Investigation dashboard",
+     "Guest dashboard of saved investigations, recent activity, and the next missing step. Storage is this browser only."),
+    ("/simulator", "Sandbox", "IGNITE-AI \u00b7 Condition sandbox",
+     "Illustrative 3D flame and the gravity, oxygen, pressure, airflow, gas-mix, and material controls, with the option to save a scenario."),
+    ("/workspace", "Investigation", "IGNITE-AI \u00b7 Investigation",
+     "One investigation: question, private notes, scenario history, cited evidence, model estimate, and material comparison."),
+    ("/learn", "Learn", "IGNITE-AI \u00b7 Learn",
+     "How to read experiment evidence, a statistical estimate, and the illustrative flame, including partial-gravity provenance."),
+    ("/predict", "Evidence", "IGNITE-AI \u00b7 Evidence and model estimate",
+     "Range guard, decision boundary over loaded tests, and nearest experiments with quotes. Min/max bands are not joint tests."),
+    ("/ask", "Ask", "IGNITE-AI \u00b7 Ask the knowledge base",
      "Local question answering over a NASA combustion knowledge base; answers are verbatim quotes with source links."),
-    ("/safety", "Safety Measures", "IGNITE-AI \u00b7 Fire Safety Measures",
+    ("/safety", "Safety notes", "IGNITE-AI \u00b7 Safety notes",
      "Spacecraft fire detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources."),
-    ("/data", "Data & Model", "IGNITE-AI \u00b7 Data & Model",
-     "The 143-row NASA flame-spread dataset with quotes and the honest model card: cross-validation, per-gravity accuracy, confusion matrix."),
-    ("/sources", "Sources & Citations", "IGNITE-AI \u00b7 Sources & Citations",
+    ("/data", "Model", "IGNITE-AI \u00b7 Model and loaded data",
+     "Model card, per-gravity accuracy, confusion matrix, and which data catalogs this build has loaded."),
+    ("/sources", "Sources", "IGNITE-AI \u00b7 Sources and citations",
      "NASA PSI investigations, NTRS reports, environment and safety sources, FLEX data, and the AI-use disclosure."),
 ]
 PAGE_INFO = {p[0]: p for p in PAGES}
@@ -178,22 +184,62 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
         out.append("<main>")
         if route == "/":
             out.append(f"<h1>{TITLE}</h1><p><strong>{e(TAGLINE)}</strong></p>"
-                       "<p>IGNITE-AI is an open-source (Apache-2.0) tool that predicts whether a flame will spread over a spacecraft material "
-                       "under given oxygen, pressure, airflow and gravity conditions, using only published NASA experiments. It refuses to predict "
-                       "outside the conditions that were actually tested, shows the nearest real experiments with verbatim quotes, and answers "
-                       "questions from a NASA combustion knowledge base with citations.</p>"
-                       '<p><a href="/simulator">[ Explore Space Fire Safety Tool ]</a></p>')
-            out.append(_crisis())
+                       "<p>IGNITE-AI helps an engineer or researcher ask which published combustion tests are near a chosen gravity, oxygen, pressure, "
+                       "airflow, gas mix, and material, and where the loaded dataset does not support an estimate. A guest investigation stores the question, "
+                       "scenario history, and private notes in this browser. It is a research and education aid. It does not certify a material, clear a vehicle, "
+                       "or claim that a challenge brief has been verified.</p>"
+                       '<p><a href="/dashboard">Open the dashboard</a> · <a href="/simulator">Open the sandbox</a> · <a href="/learn">Learn how to read a result</a></p>')
+            out.append("<section><h2>What an investigation keeps</h2><ul>"
+                       "<li>Your title and question.</li>"
+                       "<li>Saved scenario conditions and history: gravity preset, oxygen, pressure, airflow, flow direction, gas mix, and material.</li>"
+                       "<li>Ranked published experiments with citations. That is the evidence.</li>"
+                       "<li>A statistical model estimate only inside the loaded envelope. Class shares are not a calibrated confidence or a risk score.</li>"
+                       "<li>An illustrative 3D flame. It is not a combustion simulation.</li>"
+                       "<li>A comparison of materials under shared oxygen, pressure, airflow, and gravity. Unsupported combinations stay visible as limitations.</li>"
+                       "<li>A full JSON backup, which includes private notes, and a parameter file or link, which does not.</li></ul></section>")
             out.append("<section><h2>Pages</h2><ul>" + "".join(f'<li><a href="{p}">{e(l)}</a>: {e(d)}</li>' for p, l, _, d in PAGES[1:]) + "</ul></section>")
             m = card["metrics"]
-            out.append(f"<section><h2>Key numbers</h2><ul><li>{n_rows} real NASA flame-spread experiments from {n_reports} reports</li>"
-                       f"<li>4 gravity levels with data (0, 0.165, 0.38, 1 g)</li><li>Cross-validated accuracy {m['cv_accuracy']} vs majority baseline {m['majority_baseline_accuracy']}</li>"
-                       "<li>24 NASA PSI combustion investigations in the knowledge base</li></ul></section>")
+            out.append(f"<section><h2>Numbers from the loaded model card</h2><ul><li>{n_rows} flame-spread rows from {n_reports} reports in this build</li>"
+                       f"<li>Gravity counts are on the model card (0, 0.165, 0.38, and 1 g where rows exist)</li>"
+                       f"<li>Cross-validated accuracy {m['cv_accuracy']} beside majority baseline {m['majority_baseline_accuracy']}</li>"
+                       f"<li>{len(F.INVESTIGATIONS)} PSI investigation entries are listed in the bundled source notes</li></ul>"
+                       "<p>These figures are whatever the shipped model card and source list contain. A later official data release is not loaded and is not estimated.</p></section>")
         else:
             out.append(f"<h1>{e(info[1])}</h1><p>{e(info[3])}</p>")
             if route == "/simulator":
-                out.append("<p>The 3D view is an illustrative rendering driven by the inputs and the model output (flame shape from \u221ag buoyancy scaling, size and colour from O2 and pressure, skew from airflow). It is not a combustion simulation. "
-                           "Environment tabs: Earth (1 g), Moon (0.165 g), Mars (0.38 g), ISS microgravity (~0 g) and a transit cabin (coasting spaceflight is free fall; powered-flight thrust phases are not modelled).</p>")
+                out.append("<p>The sandbox is the free-form condition editor. The 3D view is an illustrative rendering driven by the inputs and the model output (flame shape from \u221ag buoyancy scaling, size and colour from O2 and pressure, skew from airflow). It is not a combustion simulation and not evidence. "
+                           "Environment tabs: Earth (1 g), Moon (0.165 g), Mars (0.38 g), ISS microgravity (~0 g) and a transit cabin (coasting spaceflight is free fall; powered-flight thrust phases are not modelled). "
+                           "Choosing Moon or Mars sets that gravity preset. It does not mean a habitat fire was tested on that body. The facility named on each loaded row is the provenance.</p>")
+                out.append("<p>Save the current point into a new investigation, or add it to the last one you opened. The green slider band is the separate minimum and maximum of that one input. It is not a jointly tested box.</p>")
+                out.append(_environments(env_counts))
+            elif route == "/dashboard":
+                out.append("<section><h2>Guest dashboard</h2>"
+                           "<p>The dashboard lists investigations saved in this browser, the latest activity, and a next step chosen from what is missing: a question, a saved scenario, a material comparison, private notes, or a backup. "
+                           "There is no account in this prototype. The guest id is a label for this browser’s storage adapter, not authentication and not encryption. "
+                           "If storage is blocked, the session stays in memory and says so. If the saved JSON is corrupt or from an unknown schema version, it is left in place until you choose to replace it. "
+                           "Import accepts a versioned workspace backup or a parameter file. A parameter file restores conditions only.</p>"
+                           "<p>Guided investigations walk question, conditions, evidence, comparison, and notes. The sandbox shows every section at once and is the same control set as the condition editor. "
+                           "Nothing here syncs to another device. Download a full backup before treating the browser as an archive.</p></section>")
+            elif route == "/workspace":
+                out.append("<section><h2>One investigation</h2>"
+                           "<p>An investigation has a title, a question, private notes, saved scenarios, and saved material comparisons. "
+                           "Notes are omitted from parameter links and from the parameter JSON. A full backup includes them and is still just a file you download. "
+                           "Opening a parameter link does not create an account and does not reveal another person’s notes.</p>"
+                           "<p>Evidence is the nearest loaded experiments, ranked by Euclidean distance over range-scaled oxygen, pressure, and airflow, plus penalties when the material, gravity, or flow direction differ. "
+                           "Similarity is 1/(1+distance). It ranks distance. It is not a probability that two tests are the same case. "
+                           "A joint match is reported only when a loaded row is within the stated tolerances on oxygen, pressure, airflow, and the same material, gravity, and flow direction, and the gas mix is oxygen/nitrogen. "
+                           "Otherwise an in-range model class is labeled as a min/max box, not as a tested combination. Gas mixes other than oxygen/nitrogen, unknown materials, and untested gravity pairings produce no estimate.</p>"
+                           "<p>The model estimate and the 3D flame are shown in separate sections so they are not read as measurements. "
+                           "Comparisons recompute each material at the shared oxygen, pressure, airflow, gravity, and gas mix. Two saved scenarios that differ in more than the material are labeled as two points, not as a controlled comparison.</p></section>")
+            elif route == "/learn":
+                out.append(_crisis())
+                out.append("<section><h2>Three different outputs</h2><ul>"
+                           "<li><strong>Experiment evidence.</strong> Published rows, a distance rank, a quote, and a link. This is the evidence.</li>"
+                           "<li><strong>Statistical model estimate.</strong> A class share from the gradient-boosting model, only inside the loaded envelope. Not a calibrated confidence, a risk score, or a certificate.</li>"
+                           "<li><strong>Illustrative flame.</strong> A qualitative 3D sketch. Not flame physics and not additional evidence.</li></ul>"
+                           "<p>Partial-gravity presets select 0.165 g or 0.38 g and show cited context. Whether a row exists, and in which facility, is read from the loaded table. "
+                           "Drop-tower, centrifuge, parabolic-flight, and rocket facilities are not the same thing as a surface habitat test. "
+                           "Safety notes, sources, and the model card stay on their own pages.</p></section>")
                 out.append(_environments(env_counts))
             elif route == "/predict":
                 out.append(_envelope(card))
@@ -219,7 +265,7 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
 def llms_txt(card: dict, n_rows: int, n_reports: int) -> str:
     m = card["metrics"]
     lines = [f"# {TITLE}", "", f"> {TAGLINE}", "",
-             "Open-source (Apache-2.0) flame-spread regime predictor for spacecraft materials, trained only on published NASA experiments.",
+             "Open-source (Apache-2.0) research workspace for combustion-condition investigations. Model estimates use only the published experiments loaded in this build and are not a certification.",
              f"- Dataset: {n_rows} experiments from {n_reports} NASA reports; CSV at /static-api/experiments.csv",
              f"- CV accuracy {m['cv_accuracy']} (balanced {m['cv_balanced_accuracy']}), leave-reports-out {m['leave_reports_out_accuracy']}, baseline {m['majority_baseline_accuracy']}",
              "- Gravity levels with data: 0 g, 0.165 g (Moon), 0.38 g (Mars), 1 g; the range guard refuses untested material/gravity combinations",

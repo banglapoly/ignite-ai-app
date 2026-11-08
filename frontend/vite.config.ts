@@ -14,4 +14,7 @@ export default defineConfig(({ command }) => ({
     proxy: { '/api': 'http://localhost:8000' },
   },
   build: { chunkSizeWarningLimit: 1600 },
+  // Local preview only. A quick tunnel's hostname changes, and Vite otherwise rejects it.
+  // The server still binds to 127.0.0.1; this does not publish the machine.
+  preview: { allowedHosts: true },
 }))

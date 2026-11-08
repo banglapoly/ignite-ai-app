@@ -109,7 +109,7 @@ export default function BoundaryPlot({ data, current, inRange }: Props) {
           <span style={{ color: OUTCOME_COLOR[hover.outcome] }}>{OUTCOME_LABEL[hover.outcome]}</span> — {hover.outcome_detail}
         </div>
       )}
-      <p className="plot-note">Slice shown at {data.third.replace('_', ' ').replace('pct', '%').replace('kpa', 'kPa').replace('cm s', 'cm/s')} = {data.third_value}. Shading = model class (stronger = higher probability). Markers are the real published experiments for this material; click one to open its NTRS record.</p>
+      <p className="plot-note">Slice shown at {data.third.replace('_', ' ').replace('pct', '%').replace('kpa', 'kPa').replace('cm s', 'cm/s')} = {data.third_value}. Shading is the model class; stronger colour is a higher uncalibrated class share, not a calibrated confidence. Markers are the published experiments for this material. The shaded box is not proof that every joint combination inside it was tested. Click a marker to open its NTRS record.</p>
     </div>
   )
 }

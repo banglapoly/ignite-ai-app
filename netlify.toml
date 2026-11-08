@@ -21,6 +21,21 @@
 # dist/_redirects from IGNITE_API_URL above; _redirects rules are applied before these.
 # Explicit page routes (same set the FastAPI server renders). "/" is dist/index.html.
 [[redirects]]
+  from   = "/dashboard"
+  to     = "/dashboard/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/workspace"
+  to     = "/workspace/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/learn"
+  to     = "/learn/index.html"
+  status = 200
+
+[[redirects]]
   from   = "/simulator"
   to     = "/simulator/index.html"
   status = 200

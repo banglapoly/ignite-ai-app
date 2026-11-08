@@ -1,5 +1,6 @@
 import type { EnvData, GasMix, Inputs, MaterialEnv, ModelCard, Prediction } from '../lib/api'
 import { DIRECTION_LABEL, MATERIAL_LABEL, OUTCOME_COLOR, OUTCOME_LABEL, OUTCOMES, gkey } from '../lib/api'
+import { coverageStatement } from '../lib/workspace/logic'
 
 function fmt(v: number, d = 1) { return Number.isInteger(v) ? String(v) : v.toFixed(d) }
 
@@ -24,7 +25,7 @@ export function RangeSlider({ label, sub, unit, value, min, max, step, env, onCh
       <input type="range" min={0} max={1000} step={1} value={toPos(Math.min(Math.max(value, min), max))} aria-label={label}
         onChange={e => onChange(+fromPos(+e.target.value).toFixed(3))}
         style={{ background: `linear-gradient(90deg, #172036 0%, #172036 ${a}%, #1f7a5c ${a}%, #1f7a5c ${Math.max(b, a + 0.8)}%, #172036 ${Math.max(b, a + 0.8)}%)` }} />
-      <div className="slider-env">{env ? <>tested here: {fmt(env[0], 2)}–{fmt(env[1], 2)} {unit}</> : <>no tests for this material at this gravity</>}{out && <b> · outside → no prediction</b>}</div>
+      <div className="slider-env">{env ? <>lowest to highest tested for this input: {fmt(env[0], 2)}–{fmt(env[1], 2)} {unit}</> : <>no tests for this material at this gravity</>}{out && <b> · outside → no estimate</b>}</div>
     </label>
   )
 }
@@ -83,7 +84,7 @@ export function ConditionsPanel({ env, card, inp, setInp, gas, setGas, gases, pl
       <div className="demo-row">
         {!playing ? <button className="btn" onClick={onPlay} disabled={!menv}>▶ Slide O₂ down through the tested range</button> : <button className="btn ghost" onClick={onStop}>■ Stop</button>}
       </div>
-      <p className="small muted">Green band = the range actually tested for this material at {env.short}. Outside it, or for an untested material, gravity or gas mix, the range guard refuses to predict.</p>
+      <p className="small muted">The green band is the separate minimum and maximum of this one input for this material at {env.short}. It is not a box of jointly tested combinations. Outside it, or for an untested material, gravity, or gas mix, the model does not estimate a class.</p>
     </div>
   )
 }
@@ -94,23 +95,25 @@ export function PredictionPanel({ pred, err, crossing, demoLog, env }: {
 }) {
   const u = pred?.uncertainty
   const acc = pred?.model.oof_accuracy_by_gravity?.[gkey(env.gravity_g)]
+  const coverage = pred ? coverageStatement({ ...pred.inputs, gravity_g: pred.inputs.gravity_g }, pred.nearest_experiments, pred.in_training_range) : null
   return (
     <div className="panel result">
-      {err && <div className="alert">API error: {err}. Is the backend running on port 8000?</div>}
+      {err && <div className="alert">Could not compute an estimate: {err}</div>}
+      {coverage && <div className={`coverage ${coverage.kind}`}><b>{coverage.kind === 'exact' ? 'Joint match in the loaded tests' : coverage.kind === 'box' ? 'Inside the min/max box, not a joint test' : 'Unsupported combination'}</b><p>{coverage.text}</p></div>}
       {pred && !pred.in_training_range && (
         <div className="refusal">
-          <div className="refusal-title">⛔ No prediction: outside the published experimental evidence</div>
+          <div className="refusal-title">No model estimate: outside the loaded tests</div>
           <ul>{pred.range_violations?.map(r => <li key={r}>{r}</li>)}</ul>
-          <p>A fire-safety tool that quietly guesses is worse than no tool. Treat these conditions as <b>untested and potentially flammable</b>. The nearest real experiments are listed below for reference only.</p>
+          <p>The model will not estimate a spread regime here. Nearby experiments are context only. No estimate is not a finding that the condition is safe.</p>
         </div>
       )}
       {pred && pred.in_training_range && pred.prediction && pred.probabilities && (
         <>
           <div className="verdict" style={{ borderColor: OUTCOME_COLOR[pred.prediction] }}>
-            <div className="verdict-label">Predicted flame-spread regime</div>
+            <div className="verdict-label">Statistical model estimate · not a measurement</div>
             <div className="verdict-class" style={{ color: OUTCOME_COLOR[pred.prediction] }}>{OUTCOME_LABEL[pred.prediction]}</div>
-            <div className={`conf conf-${u?.level}`}>confidence: {u?.level}</div>
           </div>
+          <p className="small muted">Uncalibrated class shares from the loaded model. Not a calibrated confidence, a risk score, or a safety classification.</p>
           <div className="probs">
             {OUTCOMES.map(o => (
               <div key={o} className="prob-row">
@@ -120,8 +123,8 @@ export function PredictionPanel({ pred, err, crossing, demoLog, env }: {
               </div>
             ))}
           </div>
-          {u && <div className="unc small">top probability {u.max_probability} · margin {u.margin_to_second} · {u.neighbours_agreeing}/3 nearest tests agree · nearest distance {u.nearest_distance}</div>}
-          {env.gravity_g > 0 && acc && <div className="caution small">⚠ Only {acc.n} real tests exist at {env.short}; out-of-fold accuracy at this gravity is {(acc.accuracy * 100).toFixed(0)}%. Read this as "what the nearest published test showed", not as a general model.</div>}
+          {u && <div className="unc small">top class share {u.max_probability} · margin to the next class {u.margin_to_second} · {u.neighbours_agreeing}/3 nearest tests recorded the same outcome · nearest distance {u.nearest_distance}</div>}
+          {env.gravity_g > 0 && acc && <div className="caution small">Only {acc.n} loaded tests are at {env.short}. Out-of-fold accuracy at this gravity is {(acc.accuracy * 100).toFixed(0)}%. Read the estimate beside the nearest published test, not as a general partial-gravity model.</div>}
         </>
       )}
       {crossing && (
