@@ -68,9 +68,9 @@ export default function BoundaryPlot({ data, current, inRange }: Props) {
         </defs>
         <rect x={m.l} y={m.t} width={iw} height={ih} fill="url(#hatch)" />
         {cells}
-        {xt.map(t => <g key={'x' + t}><line x1={sx(t)} x2={sx(t)} y1={m.t + ih} y2={m.t + ih + 5} stroke="#6b7aa8" /><text x={sx(t)} y={m.t + ih + 18} className="tick" textAnchor="middle">{t}</text></g>)}
-        {yt.map(t => <g key={'y' + t}><line x1={m.l - 5} x2={m.l} y1={sy(t)} y2={sy(t)} stroke="#6b7aa8" /><text x={m.l - 8} y={sy(t) + 4} className="tick" textAnchor="end">{t}</text></g>)}
-        <rect x={m.l} y={m.t} width={iw} height={ih} fill="none" stroke="#2c3864" />
+        {xt.map(t => <g key={'x' + t}><line className="plot-axis" x1={sx(t)} x2={sx(t)} y1={m.t + ih} y2={m.t + ih + 5} /><text x={sx(t)} y={m.t + ih + 18} className="tick" textAnchor="middle">{t}</text></g>)}
+        {yt.map(t => <g key={'y' + t}><line className="plot-axis" x1={m.l - 5} x2={m.l} y1={sy(t)} y2={sy(t)} /><text x={m.l - 8} y={sy(t) + 4} className="tick" textAnchor="end">{t}</text></g>)}
+        <rect className="plot-frame" x={m.l} y={m.t} width={iw} height={ih} fill="none" />
         <text x={m.l + iw / 2} y={H - 8} className="axlabel" textAnchor="middle">{AX_LABEL[data.x]}</text>
         <text transform={`translate(14 ${m.t + ih / 2}) rotate(-90)`} className="axlabel" textAnchor="middle">{AX_LABEL[data.y]}</text>
         {data.points.map(p => {
@@ -91,9 +91,9 @@ export default function BoundaryPlot({ data, current, inRange }: Props) {
         })}
         {cx !== undefined && cy !== undefined && (
           <g pointerEvents="none">
-            <circle cx={sx(cx)} cy={sy(cy)} r={11} fill="none" stroke={inRange ? '#fff' : '#ff4d6d'} strokeWidth={2} strokeDasharray={inRange ? '' : '3 3'} />
-            <line x1={sx(cx) - 16} x2={sx(cx) + 16} y1={sy(cy)} y2={sy(cy)} stroke="#fff" strokeOpacity={0.6} />
-            <line y1={sy(cy) - 16} y2={sy(cy) + 16} x1={sx(cx)} x2={sx(cx)} stroke="#fff" strokeOpacity={0.6} />
+            <circle className="plot-cross" cx={sx(cx)} cy={sy(cy)} r={11} fill="none" strokeWidth={2} strokeDasharray={inRange ? '' : '3 3'} />
+            <line className="plot-cross" x1={sx(cx) - 16} x2={sx(cx) + 16} y1={sy(cy)} y2={sy(cy)} />
+            <line className="plot-cross" y1={sy(cy) - 16} y2={sy(cy) + 16} x1={sx(cx)} x2={sx(cx)} />
           </g>
         )}
       </svg>

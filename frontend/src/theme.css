@@ -91,8 +91,10 @@ select, input[type=number], input[type=text], input[type=search], textarea, .ask
 .hud { background: var(--surface); color: var(--fg); }
 .hud-title, .hud-row span, .viewport-caption { color: var(--fg-soft); }
 .hud-row b { color: var(--fg); }
-.plot .tick { fill: var(--fg-soft); }
-.plot .axlabel { fill: var(--fg); }
+.plot .tick, .plot .axlabel { fill: var(--fg-soft); }
+.plot-axis, .plot-frame, .plot-cross { stroke: var(--fg-soft); }
+.plot-cross { stroke-opacity: 0.85; }
+.plot rect, .plot circle { transition: opacity 160ms ease, fill 160ms ease; }
 .explain-text, .exp-q, .fact-q { color: var(--fg-soft); }
 .warn-text, .caution { color: var(--warn); }
 html[data-theme="dark"] .brand-logo,

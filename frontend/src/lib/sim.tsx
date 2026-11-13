@@ -92,19 +92,29 @@ export function SimProvider({ path, children }: { path: string; children: React.
     if (cur) lastPred.current = cur
   }, [pred])
 
-  function stop() { if (playRef.current) clearInterval(playRef.current); playRef.current = null; setPlaying(false) }
+  function stop() { if (playRef.current) cancelAnimationFrame(playRef.current); playRef.current = null; setPlaying(false) }
   const play = () => {
     if (!menv || !inp) return
     stop(); setDemoLog([]); setCrossing(null); lastPred.current = null; setGas('air')
     const hi = menv.oxygen_pct[1], lo = menv.oxygen_pct[0]
     const step = Math.max(0.1, +((hi - lo) / 16).toFixed(2))
     let o2 = hi
+    let last = performance.now()
+    let acc = 0
     setInp(s => s && ({ ...s, oxygen_pct: o2 })); setPlaying(true)
-    playRef.current = window.setInterval(() => {
-      o2 = +(o2 - step).toFixed(2)
-      if (o2 < lo - 1e-9) { stop(); return }
-      setInp(s => s && ({ ...s, oxygen_pct: o2 }))
-    }, 420)
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000)
+      last = now
+      acc += dt
+      if (acc >= 0.42) {
+        acc = 0
+        o2 = +(o2 - step).toFixed(2)
+        if (o2 < lo - 1e-9) { stop(); return }
+        setInp(s => s && ({ ...s, oxygen_pct: o2 }))
+      }
+      playRef.current = requestAnimationFrame(tick)
+    }
+    playRef.current = requestAnimationFrame(tick)
   }
   useEffect(() => () => stop(), [])
   useEffect(() => { if (!['/simulator', '/predict'].includes(path)) stop() }, [path])
