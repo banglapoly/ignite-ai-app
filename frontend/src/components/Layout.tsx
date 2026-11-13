@@ -157,8 +157,8 @@ export function NextLinks({ path }: { path: string }) {
   const prev = flow[i - 1], next = flow[i + 1]
   return (
     <div className="nextlinks section wide">
-      {prev ? <Link to={prev.path} className="btn ghost">← {prev.label}</Link> : <span />}
-      {next && <Link to={next.path} className="btn">{next.label} →</Link>}
+      {prev ? <Link to={prev.path} className="btn ghost">Back: {prev.label}</Link> : <span />}
+      {next && <Link to={next.path} className="btn">Next: {next.label}</Link>}
     </div>
   )
 }

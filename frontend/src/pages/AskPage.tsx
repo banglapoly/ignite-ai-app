@@ -12,9 +12,9 @@ export default function AskPage() {
       <section className="section wide page-body"><AskPanel envName={env?.name || 'ISS'} /></section>
       <section className="section wide how-rag">
         <div className="cards three">
-          <article className="card"><h3>1 · Retrieve</h3><p>TF-IDF (1–2-word terms) over about 1,500 passages, with a small fixed synonym list (for example Moon ↔ lunar) and at most three passages per source.</p></article>
-          <article className="card"><h3>2 · Quote</h3><p>The best-matching sentences are shown word for word, each with a numbered link. Lines built from real table rows are marked <b>DATA</b>. Naming two investigations gives a side-by-side table from PSI metadata.</p></article>
-          <article className="card"><h3>3 · Or decline</h3><p>If the best match is weak, the question has no fire or space term, or its key words are missing from the passages, it says it can't answer. Optional local Ollama generation is off by default.</p></article>
+          <article className="card"><h3>1. Retrieve</h3><p>TF-IDF (1 to 2 word terms) over about 1,500 passages, with a small fixed synonym list (for example Moon and lunar) and at most three passages per source.</p></article>
+          <article className="card"><h3>2. Quote</h3><p>The best-matching sentences are shown word for word, each with a numbered link. Lines built from real table rows are marked <b>DATA</b>. Naming two investigations gives a side-by-side table from PSI metadata.</p></article>
+          <article className="card"><h3>3. Or decline</h3><p>If the best match is weak, the question has no fire or space term, or its key words are missing from the passages, it says it can't answer. Optional local Ollama generation is off by default.</p></article>
         </div>
       </section>
       <NextLinks path="/ask" />

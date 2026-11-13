@@ -1,0 +1,160 @@
+{
+  "base": "http://127.0.0.1:4173",
+  "violations": 0,
+  "pages": [
+    {
+      "route": "/",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-home.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/dashboard",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-dashboard.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/how-it-works",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-how-it-works.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/simulator",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-simulator.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/learn",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-learn.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/predict",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-predict.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/sources",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-sources.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/data",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-data.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/workspace",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-workspace.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/ask",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-ask.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/safety",
+      "theme": "light",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\light-safety.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-home.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/dashboard",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-dashboard.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/how-it-works",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-how-it-works.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/simulator",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-simulator.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/learn",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-learn.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/predict",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-predict.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/sources",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-sources.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/data",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-data.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/workspace",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-workspace.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/ask",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-ask.png",
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "route": "/safety",
+      "theme": "dark",
+      "screenshot": "F:\\spaceapp\\space\\frontend\\contrast-report\\dark-safety.png",
+      "violationCount": 0,
+      "violations": []
+    }
+  ]
+}

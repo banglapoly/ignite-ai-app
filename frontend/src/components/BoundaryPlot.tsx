@@ -63,7 +63,7 @@ export default function BoundaryPlot({ data, current, inRange }: Props) {
       <svg viewBox={`0 0 ${W} ${H}`} className="plot" role="img" aria-label="Decision boundary plot">
         <defs>
           <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-            <line x1="0" y1="0" x2="0" y2="8" stroke="#1c2544" strokeWidth="3" />
+            <line x1="0" y1="0" x2="0" y2="8" stroke="var(--fg-soft)" strokeWidth="3" />
           </pattern>
         </defs>
         <rect x={m.l} y={m.t} width={iw} height={ih} fill="url(#hatch)" />
@@ -83,8 +83,8 @@ export default function BoundaryPlot({ data, current, inRange }: Props) {
             <a key={p.row_id} href={p.source_url} target="_blank" rel="noreferrer">
               <g opacity={faded ? 0.3 : 1} onMouseEnter={() => setHover(p)} onMouseLeave={() => setHover(null)} style={{ cursor: 'pointer' }}>
                 {p.outcome === 'no_spread' ? <path d={`M${X - 5},${Y - 5}L${X + 5},${Y + 5}M${X + 5},${Y - 5}L${X - 5},${Y + 5}`} stroke={col} strokeWidth={2.6} />
-                  : p.outcome === 'marginal_spread' ? <rect x={X - 4.5} y={Y - 4.5} width={9} height={9} fill={col} stroke="#0b1020" transform={`rotate(45 ${X} ${Y})`} />
-                    : <circle cx={X} cy={Y} r={5} fill={col} stroke="#0b1020" strokeWidth={1.2} />}
+                  : p.outcome === 'marginal_spread' ? <rect x={X - 4.5} y={Y - 4.5} width={9} height={9} fill={col} stroke="var(--fg)" transform={`rotate(45 ${X} ${Y})`} />
+                    : <circle cx={X} cy={Y} r={5} fill={col} stroke="var(--fg)" strokeWidth={1.2} />}
               </g>
             </a>
           )
@@ -100,7 +100,7 @@ export default function BoundaryPlot({ data, current, inRange }: Props) {
       <div className="plot-legend">
         {OUTCOMES.map(o => <span key={o}><i style={{ background: OUTCOME_COLOR[o] }} />{OUTCOME_LABEL[o]}</span>)}
         <span><i className="hatch" />outside tested envelope (no prediction)</span>
-        <span className="muted">● spread · ◆ marginal · ✕ no spread · faded = different {data.third === 'pressure_kpa' ? 'pressure' : data.third === 'flow_cm_s' ? 'flow' : 'O₂'} or flow direction than the slice</span>
+        <span className="muted">Circle: spread. Diamond: marginal. Cross: no spread. Faded markers use a different {data.third === 'pressure_kpa' ? 'pressure' : data.third === 'flow_cm_s' ? 'flow' : 'oxygen'} or flow direction than this slice.</span>
       </div>
       {hover && (
         <div className="plot-tip">

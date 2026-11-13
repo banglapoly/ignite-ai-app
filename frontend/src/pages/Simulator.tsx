@@ -3,7 +3,7 @@ import type { ModelCard } from '../lib/api'
 import { MATERIAL_LABEL, OUTCOME_COLOR, OUTCOME_LABEL } from '../lib/api'
 import { ConditionsPanel, PredictionPanel } from '../components/Conditions'
 import { FactCard, KeyFindings } from '../components/Sections'
-import EnvTabs, { TAB_ICON } from '../components/EnvTabs'
+import EnvTabs from '../components/EnvTabs'
 import { Link, navigate } from '../lib/router'
 import { useSim } from '../lib/sim'
 import { useWorkspace } from '../lib/workspace/WorkspaceContext'
@@ -59,7 +59,7 @@ export default function Simulator({ card }: { card: ModelCard | null }) {
       {env && inp && (
         <section className="section wide envsec" id="environment">
           <div className="env-head">
-            <h2>{TAB_ICON[env.id]} {env.name}: {env.tagline}</h2>
+            <h2>{env.name}: {env.tagline}</h2>
             <p className="small">{env.data_note}{env.dataset.oof_accuracy && env.gravity_g > 0 ? ` Out-of-fold accuracy at this gravity: ${(env.dataset.oof_accuracy.accuracy * 100).toFixed(0)}% (n=${env.dataset.oof_accuracy.n}).` : ''}</p>
           </div>
           <KeyFindings env={env} />

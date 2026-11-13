@@ -9,9 +9,9 @@ export const OUTCOME_LABEL: Record<Outcome, string> = {
   spread: 'Sustained spread',
 }
 export const OUTCOME_COLOR: Record<Outcome, string> = {
-  no_spread: '#4cc9f0',
-  marginal_spread: '#f9c74f',
-  spread: '#ff5d3a',
+  no_spread: 'var(--outcome-none)',
+  marginal_spread: 'var(--outcome-marginal)',
+  spread: 'var(--outcome-spread)',
 }
 
 export interface Experiment {

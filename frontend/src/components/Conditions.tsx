@@ -25,7 +25,7 @@ export function RangeSlider({ label, sub, unit, value, min, max, step, env, onCh
       <input type="range" min={0} max={1000} step={1} value={toPos(Math.min(Math.max(value, min), max))} aria-label={label}
         onChange={e => onChange(+fromPos(+e.target.value).toFixed(3))}
         style={{ background: `linear-gradient(90deg, var(--line) 0%, var(--line) ${a}%, var(--good) ${a}%, var(--good) ${Math.max(b, a + 0.8)}%, var(--line) ${Math.max(b, a + 0.8)}%)` }} />
-      <div className="slider-env">{env ? <>lowest to highest tested for this input: {fmt(env[0], 2)}–{fmt(env[1], 2)} {unit}</> : <>no tests for this material at this gravity</>}{out && <b> · outside → no estimate</b>}</div>
+      <div className="slider-env">{env ? <>lowest to highest tested for this input: {fmt(env[0], 2)}–{fmt(env[1], 2)} {unit}</> : <>no tests for this material at this gravity</>}{out && <b> · outside the loaded tests, so no estimate</b>}</div>
     </label>
   )
 }
@@ -68,7 +68,7 @@ export function ConditionsPanel({ env, card, inp, setInp, gas, setGas, gases, pl
       <div className="field">
         <span>Gas mix</span>
         <div className="chips">
-          {gases.map(x => <button key={x.id} className={`chip ${gas === x.id ? 'on' : ''} ${x.modelled ? '' : 'chip-warn'}`} onClick={() => { onStop(); setGas(x.id) }}>{x.label}{!x.modelled && ' ⚠'}</button>)}
+          {gases.map(x => <button key={x.id} className={`chip ${gas === x.id ? 'on' : ''} ${x.modelled ? '' : 'chip-warn'}`} onClick={() => { onStop(); setGas(x.id) }}>{x.label}{!x.modelled && ' (not modelled)'}</button>)}
         </div>
         {g && !g.modelled && <p className="small warn-text">{g.note} {g.source && <a href={g.source.url} target="_blank" rel="noreferrer">Source</a>}</p>}
       </div>
@@ -129,12 +129,12 @@ export function PredictionPanel({ pred, err, crossing, demoLog, env }: {
       )}
       {crossing && (
         <div className="crossing">
-          <b>Boundary crossed at {crossing.at}% O₂:</b> {OUTCOME_LABEL[crossing.from as keyof typeof OUTCOME_LABEL]} → {OUTCOME_LABEL[crossing.to as keyof typeof OUTCOME_LABEL]}
+          <b>Boundary crossed at {crossing.at}% O₂:</b> {OUTCOME_LABEL[crossing.from as keyof typeof OUTCOME_LABEL]} to {OUTCOME_LABEL[crossing.to as keyof typeof OUTCOME_LABEL]}
           {crossing.b && <div>▸ Evidence on the new side: {crossing.b}</div>}
           {crossing.a && <div>▸ Other side of the boundary: {crossing.a}</div>}
         </div>
       )}
-      {demoLog.length > 0 && <div className="demolog">{demoLog.map(d => <span key={d.o2} title={d.pred || 'refused'} style={{ background: d.pred ? OUTCOME_COLOR[d.pred as keyof typeof OUTCOME_COLOR] : '#555' }}>{d.o2}</span>)}</div>}
+      {demoLog.length > 0 && <div className="demolog">{demoLog.map(d => <span key={d.o2} title={d.pred || 'refused'} style={{ background: d.pred ? OUTCOME_COLOR[d.pred as keyof typeof OUTCOME_COLOR] : 'var(--fg-soft)', color: 'var(--on-outcome)' }}>{d.o2}</span>)}</div>}
       {pred && (
         <div className="explain">
           <div className="explain-head">Explanation <span className="tag">{pred.explanation.source === 'template' ? 'deterministic template · numbers only from the prediction object' : 'local LLM (validated)'}</span></div>

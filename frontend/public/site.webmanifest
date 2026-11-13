@@ -1,7 +1,7 @@
 {
   "name": "IGNITE-AI",
   "short_name": "IGNITE-AI",
-  "description": "Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit",
+  "description": "A research workspace for combustion-condition investigations. Estimates use published NASA tests and are not a safety certification.",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }

@@ -1,5 +1,5 @@
-# IGNITE-AI 🔥🛰️
-**Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit**
+# IGNITE-AI
+A research workspace for combustion-condition investigations.
 
 Challenge: *Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data* · License: **Apache-2.0**
 
@@ -56,7 +56,7 @@ The old `/demo` link redirects to `/simulator`. Unknown paths return a 404 page.
 
 **3D Flame Simulator (`/simulator`)**, from top to bottom:
 1. **3D viewport.** A procedural flame (layered shader shells with a blue base, a sooty yellow body and a halo, plus embers, smoke and airflow streaks, with bloom) sits in a combustion chamber inside a procedural module or habitat. The window view changes with the environment. The flame reacts to the inputs:
-   - **gravity:** teardrop → sphere, using √g buoyancy;
+   - **gravity:** teardrop at 1 g, nearer a sphere as gravity falls, using a square-root buoyancy factor;
    - **O₂ and pressure:** size, brightness and soot colour;
    - **fan speed:** skew and elongation;
    - **model output:** `marginal` pulses weakly, `no_spread` goes out and leaves smoke, and a refusal shows a grey "unknown" flame.
@@ -123,7 +123,7 @@ Real flame-spread data at partial gravity are scarce. IGNITE-AI uses only what e
 ## Ask IGNITE-AI (local RAG)
 `backend/src/compute/kb.py` implements retrieval-augmented question answering with **no paid API and no model download**:
 - **Knowledge base (about 1,500 passages).** NTRS abstracts (chunked), PSI investigation metadata and publication lists, PSI experimental tables (small tables row by row, large ones summarised, FLEX statistics computed from the table), the 143 experiment rows with their quotes, the curated environment and safety facts, and NASA page paragraphs. Every passage keeps its source URL.
-- **Retrieval.** scikit-learn TF-IDF (1–2-grams, sublinear tf), with a small deterministic query expansion (for example "look" → shape/spherical, "Moon" ↔ "lunar"), a boost for curated facts, and diversity limits per source.
+- **Retrieval.** scikit-learn TF-IDF (1 to 2 grams, sublinear tf), with a small deterministic query expansion (for example "look" also searches shape and spherical, and "Moon" also searches lunar), a boost for curated facts, and diversity limits per source.
 - **Answer.** Extractive. The best-matching sentences are shown **verbatim in quotation marks** with `[n]` links. Statements templated from real table rows are marked **DATA**. If two or more investigations are named (for example "Compare FLEX and BASS-II"), a side-by-side table is built from PSI metadata.
 - **Declines** when the best score is below 0.07, when the question has no fire or space term, or when less than 60% of the question's specific (IDF-weighted) words appear in the retrieved passages. Example: "What is the capital of France?" returns a refusal with no citations.
 - **Optional local generation.** Set `IGNITE_LLM=ollama` (and `IGNITE_LLM_MODEL`). It is off by default. The prompt contains only the retrieved passages, and the output is rejected unless it cites `[n]` and every number in it appears in the passages.

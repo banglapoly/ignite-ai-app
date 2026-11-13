@@ -7,7 +7,7 @@ export default function SafetyPage() {
   const { env } = useSim()
   return (
     <>
-      <PageHead kicker="Safety measures" title="Fire safety measures & insights">
+      <PageHead kicker="Safety notes" title="Fire safety notes from NASA sources">
         Detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources, for each environment. Pick an environment below.
       </PageHead>
       <EnvTabs />

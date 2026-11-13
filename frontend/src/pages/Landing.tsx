@@ -47,12 +47,12 @@ export default function Landing({ card }: { card: ModelCard | null }) {
       <section className="section wide">
         <h2>Start here</h2>
         <div className="cards pagecards">
-          <Link to="/dashboard" className="card pagecard"><span className="pc-ico">🗂️</span><h3>Dashboard</h3><p>Saved investigations, recent activity, and a next step based on what is still missing.</p></Link>
-          <Link to="/simulator" className="card pagecard"><span className="pc-ico">🔥</span><h3>Sandbox</h3><p>Move the controls and watch the illustrative flame before you save a scenario into an investigation.</p></Link>
-          <Link to="/learn" className="card pagecard"><span className="pc-ico">📘</span><h3>Learn</h3><p>How to read evidence, estimates, and the illustration, including what partial-gravity presets do and do not mean.</p></Link>
-          <Link to="/predict" className="card pagecard"><span className="pc-ico">📈</span><h3>Evidence</h3><p>The range guard, the model slice, and the nearest published tests with quotes.</p></Link>
-          <Link to="/sources" className="card pagecard"><span className="pc-ico">📚</span><h3>Sources</h3><p>PSI investigations, NTRS reports, and the citations behind the loaded notes.</p></Link>
-          <Link to="/data" className="card pagecard"><span className="pc-ico">🧮</span><h3>Model</h3><p>The model card read from this build, per-gravity accuracy, and which catalogs are actually loaded.</p></Link>
+          <Link to="/dashboard" className="card pagecard"><h3>Dashboard</h3><p>Saved investigations, recent activity, and a next step based on what is still missing.</p></Link>
+          <Link to="/simulator" className="card pagecard"><h3>Sandbox</h3><p>Move the controls and watch the illustrative flame before you save a scenario into an investigation.</p></Link>
+          <Link to="/learn" className="card pagecard"><h3>Learn</h3><p>How to read evidence, estimates, and the illustration, including what partial-gravity presets do and do not mean.</p></Link>
+          <Link to="/predict" className="card pagecard"><h3>Evidence</h3><p>The range guard, the model slice, and the nearest published tests with quotes.</p></Link>
+          <Link to="/sources" className="card pagecard"><h3>Sources</h3><p>PSI investigations, NTRS reports, and the citations behind the loaded notes.</p></Link>
+          <Link to="/data" className="card pagecard"><h3>Model</h3><p>The model card read from this build, per-gravity accuracy, and which catalogs are actually loaded.</p></Link>
         </div>
         <p className="narrow-p">Counts above are read from the model card and PSI list shipped with this build. They are not a claim about a future data release, and this prototype does not assert that a challenge brief has been verified. Guest saves stay in this browser until you export them.</p>
       </section>

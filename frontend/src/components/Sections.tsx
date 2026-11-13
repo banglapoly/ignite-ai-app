@@ -3,7 +3,6 @@ import type { EnvData, FlexSummary, ModelCard, PsiInfo, SafetySection, Experimen
 import { GRAVITY_LABEL, MATERIAL_LABEL, OUTCOME_COLOR, OUTCOME_LABEL, getJSON } from '../lib/api'
 import DataTable from './DataTable'
 
-const ICON: Record<string, string> = { radar: '📡', fan: '🌀', extinguisher: '🧯', layers: '🧵', crew: '👩‍🚀', planet: '🪐', rocket: '🚀' }
 function Pct({ v }: { v: number }) { return <>{(v * 100).toFixed(1)}%</> }
 
 export function FactCard({ f }: { f: EnvData['facts'][number] }) {
@@ -53,7 +52,7 @@ export function SafetyBlock({ env }: { env: EnvData }) {
       <div className="safety-grid">
         {secs.map(s => (
           <article key={s.id} className="panel safety">
-            <h3><span className="ico">{ICON[s.icon] || '•'}</span>{s.title}</h3>
+            <h3>{s.title}</h3>
             {s.items.map((f, i) => (
               <div key={i} className="sitem">
                 <b>{f.label}:</b> {f.value}
@@ -99,7 +98,7 @@ export function Resources({ card }: { card: ModelCard | null }) {
           <h3>NASA Physical Sciences Informatics (PSI): primary official source</h3>
           <p className="small">Investigation metadata (objectives, hardware, dates, DOIs, publication lists) and every public experimental table were harvested anonymously from the <a href="https://psi.nasa.gov/physci/repo/" target="_blank" rel="noreferrer">PSI repository</a> (data licence CC0-1.0 where stated). They feed Ask IGNITE-AI and corroborate the training rows. The raw PSI data files are mostly very large video and image archives. Some legacy files (for example the BASS-II test-matrix spreadsheet) returned "NoSuchKey" from PSI storage, so we cite them instead of using them.</p>
           <div className="dt-scroll"><table className="env"><thead><tr><th>Investigation</th><th>Title</th><th>Platform</th><th>Dates</th><th>Tables</th></tr></thead>
-            <tbody>{psi?.investigations.map(i => <tr key={i.psi}><td><a href={i.url} target="_blank" rel="noreferrer">{i.acronym} · {i.psi}</a></td><td>{i.title}</td><td>{i.platform || 'none'}</td><td>{i.start ? `${i.start} → ${i.end}` : 'not listed'}</td><td>{i.tables.length}</td></tr>)}</tbody></table></div>
+            <tbody>{psi?.investigations.map(i => <tr key={i.psi}><td><a href={i.url} target="_blank" rel="noreferrer">{i.acronym} · {i.psi}</a></td><td>{i.title}</td><td>{i.platform || 'none'}</td><td>{i.start ? `${i.start} to ${i.end}` : 'not listed'}</td><td>{i.tables.length}</td></tr>)}</tbody></table></div>
           <p className="small">Also: {psi?.links.map((l, i) => <span key={l.url}>{i ? ' · ' : ''}<a href={l.url} target="_blank" rel="noreferrer">{l.label}</a></span>)}</p>
         </div>
         <div className="panel">
@@ -145,11 +144,11 @@ export function ModelSection({ card }: { card: ModelCard | null }) {
         <div className="panel">
           <h3>Confusion matrix (out-of-fold)</h3>
           {m && (
-            <table className="cm"><thead><tr><th>true ↓ / predicted →</th>{m.confusion_matrix.labels.map(l => <th key={l}>{OUTCOME_LABEL[l]}</th>)}</tr></thead>
+            <table className="cm"><thead><tr><th>True (rows) / Predicted (columns)</th>{m.confusion_matrix.labels.map(l => <th key={l}>{OUTCOME_LABEL[l]}</th>)}</tr></thead>
               <tbody>{m.confusion_matrix.matrix.map((row, i) => {
                 const tot = row.reduce((a, b) => a + b, 0)
                 return <tr key={i}><th style={{ color: OUTCOME_COLOR[m.confusion_matrix.labels[i]] }}>{OUTCOME_LABEL[m.confusion_matrix.labels[i]]}</th>
-                  {row.map((v, j) => <td key={j} style={{ background: `rgba(${i === j ? '80,200,140' : '255,90,90'},${tot ? (v / tot) * 0.7 : 0})` }}>{v}</td>)}</tr>
+                  {row.map((v, j) => <td key={j} style={{ background: `color-mix(in srgb, ${i === j ? 'var(--good)' : 'var(--danger)'} ${tot ? Math.round((v / tot) * 45) : 0}%, var(--surface))`, color: 'var(--fg)' }}>{v}</td>)}</tr>
               })}</tbody></table>
           )}
           <p className="small muted">Weakest on <b>no spread</b>: many extinction points sit right next to sustained flames.</p>
@@ -213,7 +212,7 @@ export function Credits() {
           </ul>
           <h3>Assets and AI tools</h3>
           <ul className="refs">
-            <li>3D scene: procedural geometry and shaders written for this project (no downloaded models, textures or HDR maps). Fonts: your system fonts; icons: Unicode emoji.</li>
+            <li>3D scene: procedural geometry and shaders written for this project (no downloaded models, textures or HDR maps). Fonts: Didact Gothic and Montserrat. Icons: handmade SVG lines.</li>
             <li>Logo: created with AI image generation, then vectorized.</li>
             <li>AI coding assistants helped write code and documentation (see the disclosure below). No AI system produced any data value.</li>
           </ul>

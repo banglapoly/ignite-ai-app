@@ -85,7 +85,7 @@ export function SimProvider({ path, children }: { path: string; children: React.
     if (playing) {
       setDemoLog(l => (l.length && l[l.length - 1].o2 === pred.inputs.oxygen_pct) ? l : [...l, { o2: pred.inputs.oxygen_pct, pred: cur }])
       if (lastPred.current && cur && cur !== lastPred.current) {
-        const s = (e: any) => e ? `${e.report_id}: ${e.oxygen_pct}% O₂, ${e.pressure_kpa} kPa, ${e.flow_cm_s} cm/s → ${OUTCOME_LABEL[e.outcome as keyof typeof OUTCOME_LABEL]} (${e.source_location})` : undefined
+        const s = (e: any) => e ? `${e.report_id}: ${e.oxygen_pct}% O₂, ${e.pressure_kpa} kPa, ${e.flow_cm_s} cm/s, ${OUTCOME_LABEL[e.outcome as keyof typeof OUTCOME_LABEL]} (${e.source_location})` : undefined
         setCrossing({ from: lastPred.current, to: cur, at: pred.inputs.oxygen_pct, a: s(pred.contrast_experiment), b: s(pred.supporting_experiment) })
       }
     }

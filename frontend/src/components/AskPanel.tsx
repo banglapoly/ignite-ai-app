@@ -42,7 +42,7 @@ export default function AskPanel({ envName, initialQuestion = '', contextNote }:
       <div className="chips">{SUGGEST.map(s => <button key={s} className="chip" onClick={() => ask(s)}>{s}</button>)}</div>
       {a && (
         <div className={`answer ${a.answered ? '' : 'declined'}`}>
-          {!a.answered ? <p>🛈 {a.answer}</p> : (
+          {!a.answered ? <p>{a.answer}</p> : (
             <>
               <div className="answer-head">From the retrieved NASA sources <span className="tag">{a.generator}</span></div>
               <ul className="bullets">
