@@ -56,6 +56,8 @@ body { background: var(--bg); color: var(--fg); }
 a { color: var(--primary); }
 h1, h2, h3, .pagehead h1, .course-title, .land-hero h1, .hero h1 { color: var(--fg); background: none; -webkit-text-fill-color: currentColor; }
 .lead, .pagehead-sub, .narrow-p, .tagline, .crisis-text p, .card p, .clabel ul { color: var(--fg-soft); }
+.stat b, .stats b, .clabel h3, .clabel:last-child h3, .gtoggle button.on { color: var(--fg); background: none; }
+.gtoggle button.on { background: var(--primary); color: var(--btn-solid-fg); }
 .land-hero-bg, .compare, .viewport { background: var(--bg); }
 .card, .panel, .fact, .exp, .explain, .answer, .course-card, .perf__card, .path-unit__bar {
   background: var(--surface);
