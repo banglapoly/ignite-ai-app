@@ -73,7 +73,7 @@ export default function Dashboard() {
         <h1 className="course-title">{step ? step.title : 'Start with one question'}</h1>
         <div className="engzy-bar" aria-label="Checklist pieces on the latest investigation"><i style={{ width: `${(done / 4) * 100}%` }} /></div>
         <p className="course-lede">{step ? step.detail : 'No investigations are saved in this browser yet. Write the condition you want to study, then save a scenario.'}</p>
-        <p className="small muted">{done} of 4 pieces on {focus ? `"${focus.title}"` : 'a new investigation'}. Guest id {ws.doc.owner.id.slice(0, 8)}. Stored in this browser only.</p>
+        <p className="small muted">{done} of 4 pieces on {focus ? `"${focus.title}"` : 'a new investigation'}. Guest id {ws.doc.owner.id.slice(0, 8)}. Stored in this browser only. <Link to="/how-it-works">How it works</Link></p>
         <div className="engzy-switch" role="radiogroup" aria-label="How to start">
           <button type="button" role="radio" aria-checked={mode === 'guided'} className={'course-choice' + (mode === 'guided' ? ' is-on' : '')} onClick={() => setMode('guided')}><strong>Guided</strong><span>Question, then conditions, evidence, comparison, and notes.</span></button>
           <button type="button" role="radio" aria-checked={mode === 'sandbox'} className={'course-choice' + (mode === 'sandbox' ? ' is-on' : '')} onClick={() => setMode('sandbox')}><strong>Sandbox</strong><span>Set the controls first, then save a scenario.</span></button>

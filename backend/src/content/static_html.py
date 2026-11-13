@@ -25,6 +25,8 @@ PAGES = [
      "Illustrative 3D flame and the gravity, oxygen, pressure, airflow, gas-mix, and material controls, with the option to save a scenario."),
     ("/workspace", "Investigation", "IGNITE-AI \u00b7 Investigation",
      "One investigation: question, private notes, scenario history, cited evidence, model estimate, and material comparison."),
+    ("/how-it-works", "How it works", "IGNITE-AI \u00b7 How it works",
+     "Plain guide: start an investigation, set gravity, oxygen, pressure and airflow, read the estimate and the cited tests, and save notes in this browser."),
     ("/learn", "Learn", "IGNITE-AI \u00b7 Learn",
      "How to read experiment evidence, a statistical estimate, and the illustrative flame, including partial-gravity provenance."),
     ("/predict", "Evidence", "IGNITE-AI \u00b7 Evidence and model estimate",
@@ -177,7 +179,7 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
           df=None, ask_examples=None) -> str:
     info = PAGE_INFO.get(route)
     out = ['<div id="static-summary" style="max-width:960px;margin:0 auto;padding:24px;font-family:system-ui,sans-serif;color:#dfe6f3;background:#05070d;line-height:1.5">',
-           f'<header><p><img src="/logo.svg" alt="IGNITE-AI logo" width="40" height="40" class="static-logo"> <strong>{TITLE}</strong> \u2014 {e(TAGLINE)}</p>{_nav(route)}</header>']
+           f'<header><p><img src="/logo.svg" alt="IGNITE-AI logo" width="40" height="40" class="static-logo"> <strong>{TITLE}</strong>: {e(TAGLINE)}</p>{_nav(route)}</header>']
     if info is None:
         out.append("<main><h1>Page not found</h1><p>Try one of the pages listed above.</p></main>")
     else:
@@ -231,6 +233,26 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
                            "Otherwise an in-range model class is labeled as a min/max box, not as a tested combination. Gas mixes other than oxygen/nitrogen, unknown materials, and untested gravity pairings produce no estimate.</p>"
                            "<p>The model estimate and the 3D flame are shown in separate sections so they are not read as measurements. "
                            "Comparisons recompute each material at the shared oxygen, pressure, airflow, gravity, and gas mix. Two saved scenarios that differ in more than the material are labeled as two points, not as a controlled comparison.</p></section>")
+            elif route == "/how-it-works":
+                m = card["metrics"]
+                out.append("<section><h2>What this is for</h2>"
+                           "<p>IGNITE-AI helps you investigate how flames behave when gravity is very small, and how that compares with normal Earth gravity. "
+                           "It is a learning and research aid. It does not certify a material or clear a vehicle.</p></section>")
+                out.append("<section><h2>Walkthrough</h2><ol>"
+                           "<li>Start a new investigation from the top bar or from Today. Write a title and the question.</li>"
+                           "<li>Choose guided steps, or the sandbox if you want the controls first.</li>"
+                           "<li>Set gravity (Earth 1 g, Moon preset 0.165 g, Mars preset 0.38 g, ISS or transit about 0 g), oxygen in percent, pressure in kPa, and ventilation in cm/s. "
+                           "The green band is the lowest and highest tested value of that one input. It is not a jointly tested box. A gravity preset is not a habitat test.</li>"
+                           "<li>Read the estimate only when the point is inside the loaded tests. The class shares are not a calibrated confidence or a risk score. Outside the loaded tests there is no estimate.</li>"
+                           "<li>Compare materials at the same oxygen, pressure, airflow, gravity, and gas mix. Unsupported combinations stay visible as limitations.</li>"
+                           "<li>Use the ranked experiments and their report links as the evidence. The 3D flame is an illustration, not a measurement.</li>"
+                           "<li>Save notes in this browser. A full backup includes them. A parameter link does not.</li>"
+                           "<li>Return to Today for saved investigations and the next missing step. Nothing is synced to another device.</li>"
+                           "<li>Switch Light, Dark, or System in the top bar. System follows this computer. The choice is stored in this browser.</li>"
+                           "</ol></section>")
+                out.append(f"<section><h2>The model</h2><p>The classifier in this build is trained on {n_rows} flame-spread rows from {n_reports} NASA reports. "
+                           f"Stratified cross-validated accuracy is {m['cv_accuracy']}. The majority-class baseline on the same rows is {m['majority_baseline_accuracy']}. "
+                           "These numbers are read from the model card. Use them to study the loaded record, not as a safety certification.</p></section>")
             elif route == "/learn":
                 out.append(_crisis())
                 out.append("<section><h2>Three different outputs</h2><ul>"

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FLOW, Link, PAGES, navigate } from '../lib/router'
 import { isStaticMode, onModeChange } from '../lib/api'
 import { useWorkspace } from '../lib/workspace/WorkspaceContext'
+import { applyTheme, readChoice, saveChoice, type ThemeChoice } from '../lib/theme'
 
 type Item = { href: string; label: string }
 type Entry = Item | { label: string; id: string; items: Item[] }
@@ -13,6 +14,7 @@ const ENTRIES: Entry[] = [
     { href: '/predict', label: 'Nearest tests' },
     { href: '/ask', label: 'Ask the record' },
   ] },
+  { href: '/how-it-works', label: 'How it works' },
   { href: '/learn', label: 'Learn' },
   { label: 'Record', id: 'record', items: [
     { href: '/sources', label: 'Sources' },
@@ -72,11 +74,32 @@ export function Nav({ path }: { path: string }) {
           })}
         </nav>
         <div className="header-actions">
+          <ThemeSwitch />
           <span className="user-chip" title="Guest on this browser. Not an account and not synced.">{ws.persistence === 'saved' ? 'Guest' : ws.persistence === 'held' ? 'Guest, save held' : 'Guest, not saved'}</span>
           <button type="button" className="btn btn--solid" onClick={start}>New investigation</button>
         </div>
       </div>
     </header>
+  )
+}
+
+function ThemeSwitch() {
+  const [choice, setChoice] = useState<ThemeChoice>(() => readChoice())
+  useEffect(() => {
+    applyTheme(choice)
+    if (choice !== 'system') return
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const on = () => applyTheme('system')
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [choice])
+  const pick = (next: ThemeChoice) => setChoice(saveChoice(next))
+  return (
+    <div className="theme-switch" role="group" aria-label="Colour theme">
+      {(['light', 'dark', 'system'] as const).map(id => (
+        <button key={id} type="button" aria-pressed={choice === id} onClick={() => pick(id)}>{id === 'light' ? 'Light' : id === 'dark' ? 'Dark' : 'System'}</button>
+      ))}
+    </div>
   )
 }
 

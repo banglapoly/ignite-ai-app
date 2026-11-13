@@ -8,6 +8,7 @@ import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
 import Simulator from './pages/Simulator'
 import Workspace from './pages/Workspace'
+import HowItWorks from './pages/HowItWorks'
 import Learn from './pages/Learn'
 import Predict from './pages/Predict'
 import AskPage from './pages/AskPage'
@@ -29,6 +30,7 @@ export default function App() {
     case '/dashboard': body = <Dashboard />; break
     case '/simulator': body = <Simulator card={card} />; break
     case '/workspace': body = <Workspace card={card} />; break
+    case '/how-it-works': body = <HowItWorks card={card} />; break
     case '/learn': body = <Learn />; break
     case '/predict': body = <Predict card={card} />; break
     case '/ask': body = <AskPage />; break

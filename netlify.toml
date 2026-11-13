@@ -31,6 +31,11 @@
   status = 200
 
 [[redirects]]
+  from   = "/how-it-works"
+  to     = "/how-it-works/index.html"
+  status = 200
+
+[[redirects]]
   from   = "/learn"
   to     = "/learn/index.html"
   status = 200

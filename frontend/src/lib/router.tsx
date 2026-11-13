@@ -7,6 +7,7 @@ export const PAGES = [
   { path: '/dashboard', label: 'Dashboard', title: 'IGNITE-AI · Investigation dashboard' },
   { path: '/simulator', label: 'Sandbox', title: 'IGNITE-AI · Condition sandbox' },
   { path: '/workspace', label: 'Investigation', title: 'IGNITE-AI · Investigation' },
+  { path: '/how-it-works', label: 'How it works', title: 'IGNITE-AI · How it works' },
   { path: '/learn', label: 'Learn', title: 'IGNITE-AI · Learn' },
   { path: '/predict', label: 'Evidence', title: 'IGNITE-AI · Evidence and model estimate' },
   { path: '/ask', label: 'Ask', title: 'IGNITE-AI · Ask the knowledge base' },
@@ -16,7 +17,7 @@ export const PAGES = [
 ]
 /** Primary navigation. Evidence, Ask, and Safety notes stay reachable from Learn, the footer, and the workspace. */
 export const NAV = ['/', '/dashboard', '/simulator', '/learn', '/sources', '/data'].map(path => PAGES.find(p => p.path === path)!)
-export const FLOW = ['/', '/dashboard', '/simulator', '/predict', '/learn', '/safety', '/ask', '/data', '/sources']
+export const FLOW = ['/', '/how-it-works', '/dashboard', '/simulator', '/predict', '/learn', '/safety', '/ask', '/data', '/sources']
 export function normPath(p: string) { const x = p.replace(/\/+$/, '') || '/'; return x === '/demo' ? '/simulator' : x }
 export function navigate(to: string) {
   history.pushState(null, '', to)

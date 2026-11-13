@@ -24,7 +24,7 @@ export function RangeSlider({ label, sub, unit, value, min, max, step, env, onCh
       </div>
       <input type="range" min={0} max={1000} step={1} value={toPos(Math.min(Math.max(value, min), max))} aria-label={label}
         onChange={e => onChange(+fromPos(+e.target.value).toFixed(3))}
-        style={{ background: `linear-gradient(90deg, #172036 0%, #172036 ${a}%, #1f7a5c ${a}%, #1f7a5c ${Math.max(b, a + 0.8)}%, #172036 ${Math.max(b, a + 0.8)}%)` }} />
+        style={{ background: `linear-gradient(90deg, var(--line) 0%, var(--line) ${a}%, var(--good) ${a}%, var(--good) ${Math.max(b, a + 0.8)}%, var(--line) ${Math.max(b, a + 0.8)}%)` }} />
       <div className="slider-env">{env ? <>lowest to highest tested for this input: {fmt(env[0], 2)}–{fmt(env[1], 2)} {unit}</> : <>no tests for this material at this gravity</>}{out && <b> · outside → no estimate</b>}</div>
     </label>
   )
