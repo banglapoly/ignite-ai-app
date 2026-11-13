@@ -1,7 +1,7 @@
 # IGNITE-AI 🔥🛰️
 **Predictive Fire Safety Analytics for Space Station Orbit & Rocket Transit**
 
-Challenge: *Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data* · License: **Apache-2.0**
+Challenge: *Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data* · License: **Apache-2.0**
 
 > **Problem.** Fire behaves differently without gravity: flames become rounded, can be nearly invisible, and some materials burn at lower oxygen in low gravity than in the Earth screening test. The evidence is spread across decades of NASA reports and data archives.
 > **Solution.** IGNITE-AI runs locally. You pick an environment (Earth 1 g, Moon 0.165 g, Mars 0.38 g, ISS ~0 g, or a rocket-transit cabin) and set oxygen, pressure, ventilation fan speed, material and gas mix. A 3D flame reacts live. A classifier trained **only on 143 published NASA experiments** predicts `spread` / `marginal_spread` / `no_spread`, **refuses to predict outside the tested envelope** (including untested gravity levels and gas mixes), and shows the real experiments behind each answer. An offline assistant, **Ask IGNITE-AI**, answers questions from a NASA combustion knowledge base with verbatim, linked quotes.

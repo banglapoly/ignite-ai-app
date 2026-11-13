@@ -238,7 +238,7 @@ export function Disclosure() {
       </section>
       <section id="about" className="section narrow">
         <h2>About</h2>
-        <p>IGNITE-AI addresses the challenge <b>Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data</b>. It runs fully on a local machine (FastAPI + React + scikit-learn), is licensed Apache-2.0, and uses only public NASA data. NASA does not endorse this project.</p>
+        <p>IGNITE-AI addresses the challenge <b>Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data</b>. The brief asks for a dashboard that summarizes, ranks, and interprets PSI combustion investigations for fire safety in habitable crew environments. It runs fully on a local machine (FastAPI + React + scikit-learn), is licensed Apache-2.0, and uses only public NASA data. NASA does not endorse this project.</p>
       </section>
     </>
   )

@@ -1,0 +1,375 @@
+{
+  "captured": "13 November 2026",
+  "filter": "PSI Research Area = Combustion Science",
+  "count": 24,
+  "investigations": [
+    {
+      "accession": "PSI-10",
+      "acronym": "ACME/Flame Design",
+      "title": "Advanced Combustion via Microgravity Experiments / Flame Design",
+      "objectives": "The primary objectives of this flight experiment are:\nA. Obtain soot-inception limits of quasi-steady normal and inverse spherical diffusion flames as functions of flow rate, Zst, amount of inert (N2 or CO2), and pressure for C2H4 and CH4 flames. Identify the corresponding temperatures in hot regions. Obtain similar limits and temperatures for inverse and normal coflow flames.\nB. Obtain detailed measurements in quasi-steady normal and inverse spherical diffusion flames for C2H4 and CH4. Determine the effects of flow rate, Zst, amount of N2, and pressure on flame temperature, size, color, and soot volume fraction. Evaluate the possible existence of steady flames.\nC. Obtain extinction limits as functions of Zst, amount of N2, and pressure for normal and inverse spherical C2H4 and CH4 flames. Identify the corresponding temperatures in hot regions. Identify the presence of radiative or kinetic extinction. Evaluate whether pseudo-flammability limits can be obtained for these flames.",
+      "keywords": "chemical kinetics     ethylene     radiative extinction     thin filament pyrometry     dilution     flame growth     stoichiometric mixture fraction",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Flames of Gaseous Fuels",
+      "hardware": "Advanced Combustion via Microgravity Experiments (ACME)  Combustion Integrated Rack (CIR)  Reconfiguration of Combustion Integrated Rack (CIR)",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-10"
+    },
+    {
+      "accession": "PSI-20",
+      "acronym": "ACME BRE",
+      "title": "Advanced Combustion via Microgravity Experiments - Burning Rate Emulator",
+      "objectives": "The BRE flight program seeks to establish the burning conditions in a quiescent microgravity ambient in terms of material properties.\nThe specific flight objectives are as follows.\n  1. Observe burning behavior in long-duration microgravity for CH4/N2 and C2H4/N2mixtures on porous circular burners of 25  and 50 mm diameter. Consider O2/N2 ambients with various pressures and ambient O2 concentrations and pressures. NASA - considered atmosphere for human space missions will be examined: 14.7 psia, 21 % oxygen: 10.2 psia, 26.5 %; and 8.2 psia, 34 % oxygen. Emphasize fuel conditions that can be related to a diverse range of condensed fuels.\n  2. Consider the conditions of Objective 1 for ambients of O2/CO2 (desired).\n  3. Consider the conditions of Objectives 1 – 2 for extinction limits.",
+      "keywords": "Buoyancy     Diffusion Flames     Fire Safety     Heat Flux     Radiative Extinction     Polymer     ACME     Extinction Limit     Flammability     Modeling     Triple Flame",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Flames of Gaseous Fuels",
+      "hardware": "Combustion Integrated Rack (CIR)  ACME",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20"
+    },
+    {
+      "accession": "PSI-21",
+      "acronym": "ACME CLD Flame",
+      "title": "Advanced Combustion via Microgravity Experiments / Coflow Laminar Diffusion Flame",
+      "objectives": "In order to provide the experimental data needed to allow rigorous testing of computational models at the extremes of the fuel dilution spectrum, we have the following objectives:\nA) Characterize the behavior of weak coflow diffusion flames of methane and ethylene, as a function of velocity and fuel dilution, through measurement of flame shape, lift-off heights, temperatures and extinction limits.\nB) Characterize the sooting tendencies of diffusion flames with long residence times, as a function of velocity and fuel dilution, through measurement of flame shape, gas temperatures in the soot-free portion of the flame, soot luminosity, soot temperatures, and soot volume fractions.",
+      "keywords": "microgravity     ACME CLD Flame     Fuels     laminar diffusion flames     Combustion Integrated Rack     Flames",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Flames of gaseous fuel",
+      "hardware": "Combustion Integrated Rack (CIR)  ACME",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-21"
+    },
+    {
+      "accession": "PSI-22",
+      "acronym": "ACME E-FIELD Flames",
+      "title": "Advanced Combustion via Microgravity Experiments Electric-Field Effects on Laminar Diffusion Flames",
+      "objectives": "The objective of this investigation is to better understand the relationship between electric field voltage and chemi-ion current, analyze the dynamic response of flames to electric field changes, evaluate soot formation, and characterize stabilized near-limit lifted flames.",
+      "keywords": "Methane flames     Coflow burner     OH PLIF     Carbon monoxide     Ion-driven Convection     Diffusion Flames     Electric field flames     CO PLIF     Impinging flame     Chemi-ionization",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Laminar Flames",
+      "hardware": "Combustion Integrated Rack (CIR)  ACME",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-22"
+    },
+    {
+      "accession": "PSI-23",
+      "acronym": "ACME s-Flame",
+      "title": "Advanced Combustion via Microgravity Experiments-Structure and Response of Spherical Diffusion Flames",
+      "objectives": "A series of experiments is proposed with the following specific objectives, in both soot-free and sooty flames, to compare with detailed computational simulation to assess transport properties and detailed chemical kinetics (including chemiluminescence):\n    Objective A. Measure and characterize the transient structure (such as temperature and species distribution) of diffusion flames established at initially non-steady, spherical flame structures for mixtures of different H2/CH4/diluent ratios   (soot-free) and different C2H4/diluent ratios (sooty), for different flow rates.\n    Objective B. Determine the quasi-steady convective/chemical-kinetic extinction limits (low system Damköhler numbers) and radiative/chemical-kinetic extinction limits (high system Damköhler numbers) for mixtures of different H2/CH4/diluent ratios (soot-free) and different C2H4/diluent ratios (sooty).\n    Objective C. Determine the existence (for different Zeldovich number, Ze), onset (as a function Da), and nature (i.e. mode, frequency, amplitude) of pulsating instabilities theoretically predicted to occur in transient spherical diffusion flames using fuel/diluent mixtures that are above a critical Lewis number.",
+      "keywords": "Activation-energy asymptotics     Excess enthalpy     Flame structure     Soret     Diffusion Flames     Fickian diffusion     Hydrogen–air flames     ACME",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Flames of gaseous fuels",
+      "hardware": "Combustion Integrated Rack (CIR)  ACME",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-23"
+    },
+    {
+      "accession": "PSI-25",
+      "acronym": "BASS-II",
+      "title": "Burning and Suppression of Solids - II",
+      "objectives": "BASS-II results contribute to the combustion computational models used in the design of fire detection and suppression systems in microgravity and on Earth.\nObjectives Include:\n  1) Study the ignition, flame growth, flame spread, and extinction limits for solid fuels burning in low-velocity forced flows in microgravity.\n  2) Begin to bridge the gap between the normal gravity NASA-STD-6001 Test #1 method, ground-based microgravity tests, and actual material flammability in microgravity.\n  3) Provide SoFIE PIs with preliminary data to refine Science Requirements.\n  4)  Practical, realistic (thicker) fuels in typical geometries will be examined, including slabs, cylinders, and spherical sections.\n\nThe primary variables include:\n     • Forced flow velocity (speed and direction)\n     • Ambient oxygen concentration (via working volume nitrogen vitiation)\n     • Sample geometry (rods, spherical section, slabs, films, and fabric sheets",
+      "keywords": "Flame Spread     extinction limits     MSG     Fire Suppression     Solid Fuels     Forced Flow Velocity     BASS     Fire Safety",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Microgravity Science Glovebox (MSG)",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25"
+    },
+    {
+      "accession": "PSI-26",
+      "acronym": "BASS",
+      "title": "Burning and Suppression of Solids",
+      "objectives": "The two main objectives for BASS are to:\n    1.) Begin to bridge the gap between the normal gravity NASA-STD-6001 Test#1 method, ground-based microgravity tests, and actual material flammability in microgravity. The relation between these can be investigated by observing flames burning for the longer times available in flight. Practical, realistic (thicker) fuels in typical geometries will be examined, including wake flames which have characteristics of a fire burning behind another object (for example, a fire burning in tight area which may not be easily accessible).\n    2.) Assess the effectiveness of an inert, gaseous extinguishing agent (similar to that used on ISS) in putting out flames over different materials, geometries, preheating, and flow.",
+      "keywords": "Flame Spread     Fire suppression system     Damkohler number     Boundary layer     Fire safety     Forced Flow Flame     Kinetic regime",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Microgravity Science Glovebox",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26"
+    },
+    {
+      "accession": "PSI-39",
+      "acronym": "CFI",
+      "title": "Cool Flames Investigation",
+      "objectives": "The objectives of this investigation are to:\n    1) Examine the combustion behavior of n-dodecane and mixtures of n-dodecane/iso-dodecane at pressures ranging from 0.25 atm to 5 atm.\n    2) Analyze the effects of helium dilution on cool flame behavior.\n    3) Examine the behavior of combustion characteristics.\n    4) Investigate the relationship between droplet size, pressure, and flame extinction, and (5) understand the consequence of soot formation during cool flame combustion.",
+      "keywords": "Droplet combustion     Extinction     Helium dilution     n-dodecane cool flames     Flame dynamics     Alkane chemistry     Negative Temperature Coefficient (NTC)     Low-temperature chemistry     hydrocarbon fuel combustion     Renewable jet fuel",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Droplets",
+      "hardware": "Multi-User Droplet Combustion Apparatus (MDCA)  Combustion Integrated Rack (CIR)",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39"
+    },
+    {
+      "accession": "PSI-47",
+      "acronym": "DAFT / DAFT-2",
+      "title": "Dust and Aerosol Measurement Feasibility Test / Dust and Aerosol Measurement Feasibility Test-2",
+      "objectives": "The focus of DAFT / DAFT-2 was to mitigate the risk for the Smoke Aerosol Measurement Experiment (SAME). SAME relied on a commercially available condensate nuclei counter, the TSI P-Trak,  to quantify smoke aerosols in a microgravity environment, however there were concerns that th P-Trak would not be reliable in microgravity as it relies on gravity to recycle isopropyl alcohol used in the measurement process.\nDAFT / DAFT-2 tests that a modified P-Trak particulate counter would be accurate in microgravity.\n\nSummarized objectives include:\n    1) Demonstrate the Functionality of the Modified TSI P-Trak in Microgravity\n    2) Compare the TSI P-Trak Performance against the DustTrak control\n    3) Create and Analyze Aerosol Standards in Microgravity\n    4) Ensure the reliability of future aerosol experiments",
+      "keywords": "DAFT     Condensate Nuclei Counter     Laser scattering aerosol device     Fire safety     Space hardware testing     P-Trak particulate counter     Capillary Fluid Motion     Combustion     Smoke     Fire prevention",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "TSI P-Trak",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-47"
+    },
+    {
+      "accession": "PSI-60",
+      "acronym": "",
+      "title": "Computational and Experimental Analysis of SPICE Data Sets",
+      "objectives": "This ground investigation  sought to increase understanding of the issues that control the large discrepancy between soot formation in 1g and in 0g flames.  The objective of this investigation was to integrate computational and experimental methods to derive temperature distributions and soot volume fractions from the Smoke Point in Coflow Experiment (SPICE) data available in PSI. By analyzing over 1600 raw DSLR images and incorporating advanced soot models, the study sought to improve understanding of soot formation, oxidation, radiative re-absorption, and aggregate growth in heavily sooting flames. The work further aimed to reconcile microgravity and normal gravity flame behavior, identify key physical and chemical processes influencing smoke point development, and provide a framework for evaluating model parameter sensitivity.",
+      "keywords": "SPICE     Soot     Coflow     Flames     Laminar diffusion flames",
+      "platform": "",
+      "projectType": "Ground Investigation",
+      "subarea": "Gaseous",
+      "hardware": "",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-60"
+    },
+    {
+      "accession": "PSI-62",
+      "acronym": "",
+      "title": "Concurrent Flame Spread Modeling using Flamelet Generated Manifolds in Microgravity with Comparison to BASS Experiments using Two-Color Tomography",
+      "objectives": "The objective of this research was to develop and validate new flamelet generated manifold (FGM) modeling techniques for concurrent flame spread in microgravity. Concurrent flame spread presented one of the greatest modeling challenges in combustion science due to the intricate coupling between heat transfer, mass transport, and chemical kinetics near the solid-vapor interface. Traditional modeling strategies often relied on hybridized turbulence and chemistry models that were not fully consistent and failed to capture important intermediate reaction pathways.\nTo overcome these shortcomings, this PSI grant advanced the use of an unsteady flamelet generated manifold (UFGM) framework that reduced the complexity of reacting systems by mapping them into lower-dimensional manifolds. The research aimed to leverage this methodology to simulate solid fuel combustion processes with high fidelity, using the NASA Burning and Suppression of Solids (BASS and BASS-II) experiments as benchmarks. Ultimately, the long-term goal was to enable accurate prediction of flammability limits for spacecraft materials and to provide a tool that could also serve as a subgrid-scale model in large-eddy simulations of fires, supporting spacecraft safety and hazard mitigation.",
+      "keywords": "BASS     Flamelet Generated Manifolds     Flame Spread",
+      "platform": "",
+      "projectType": "Ground Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-62"
+    },
+    {
+      "accession": "PSI-68",
+      "acronym": "FLEX-2",
+      "title": "Flame Extinguishment Experiment - 2",
+      "objectives": "The primary goal of the FLEX-2 flight experiments is to extend the results of FLEX-1 to fuels and environmental conditions that mimic real combustor conditions, as well as, provide benchmark experimental data on bi-component droplet combustion over a wide range of initial conditions in order to validate numerical simulations and to develop new theoretical models.\n\nDetailed experimental objectives can be further itemized as:\n  1. Investigate the role of liquid-phase mixing on the burning characteristics of bi-component fuel droplets.\n  2. Examine the steady and unsteady liquid and gas-phase phenomena in pure fuel combustion.\n  3. Study flame extinction mechanisms and their boundaries.\n  4. Analyze the soot formation process, including soot volume fraction soot-shell dynamics.\n  5. Determine the influence of droplet interactions on the flammability limits and extinction behavior of droplet arrays.\n  6. Validate theoretical models of droplet combustion through comprehensive experimental data collection in microgravity environments.",
+      "keywords": "FLEX     Decane     Radiative Extinction     Flame Extinction     Microgravity Combustion     Diffusive Extinction     Multiple Droplet Combustion Apparatus     Droplet Combustion     Spacecraft Fire Safety     Ethanol     Soot Formation",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Combustion Integrated Rack (CIR)  Multi-user Droplet Combustion Appartatus (MDCA)",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-68"
+    },
+    {
+      "accession": "PSI-69",
+      "acronym": "FLEX",
+      "title": "Flame Extinguishment Experiment",
+      "objectives": "The FLEX (Flame Extinguishment Experiment) investigation aims to map the flammability limits of liquid fuels in microgravity environments, measure the effectiveness of various gaseous fire suppressants such as CO2, He, and SF6, and develop reliable predictive models for combustion limits under reduced gravity conditions. The mission seeks to validate and improve simplified models by incorporating detailed chemical reactions, heat transfer, and material movement, using both space-based data and extensive ground-based tests. Key flight experiment goals include obtaining high-resolution measurements of droplet burning rates, flame extinction behavior, heat radiation, soot levels, and temperature profiles, while systematically analyzing the effects of different ambient conditions and suppressant concentrations. These investigations are essential for advancing the fundamental understanding of combustion processes in microgravity and enhancing fire safety protocols for future space missions.",
+      "keywords": "FLEX     Droplet     Diffusion Flames     Fuel Sooting     Spacecraft Fire Safety     Flames",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Combustion Integrated Rack (CIR)-Fluids and Combustion Facility (FCF)  Multi-user Droplet Combustion Appartatus (MDCA)",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69"
+    },
+    {
+      "accession": "PSI-98",
+      "acronym": "SAFFIRE-I",
+      "title": "Spacecraft Fire Safety Experiment-I",
+      "objectives": "The objectives of this investigation were to:\n(1) determine how rapidly a large scale fire grows in low-gravity and (2) investigate the low-g flammability limits compared to those obtained in NASA’s normal\ngravity material flammability screening test.",
+      "keywords": "Cygnus     SAFFIRE     Flame Spread     Surface Combustion     Fire Safety     Fire     Oxidizer flux     Solid burning rate     Smoldering",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire, Smoke Distribution",
+      "hardware": "Saffire 1 enclosure in Cygnus",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98"
+    },
+    {
+      "accession": "PSI-99",
+      "acronym": "SAFFIRE-II",
+      "title": "Spacecraft Fire Experiment-II",
+      "objectives": "The objectives of SAFFIRE-II are to determine how rapidly a large scale fire grows in low-gravity and to investigate the low-g flammability limits compared to those obtained in NASA’s normal gravity material flammability screening test.",
+      "keywords": "fire     Cygnus     SAFFIRE     Smoldering     fire safety     Nomex     SHS     Smoke Distribution",
+      "platform": "Cygnus Spacecraft",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Surface Combustion",
+      "hardware": "Cygnus Pressurized Cargo Module  SAFFIRE",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99"
+    },
+    {
+      "accession": "PSI-100",
+      "acronym": "SAFFIRE-III",
+      "title": "Spacecraft Fire Experiment-III",
+      "objectives": "The objectives of this investigation were to:\n(1) determine how rapidly a large scale fire grows in low-gravity and (2) investigate the low-g flammability limits compared to those obtained in NASA’s normal gravity material flammability screening test.",
+      "keywords": "SAFFIRE     Fire Safety     Surface Combustion     Smoldering     Flame Spread     low-gravity fire testing     flammability",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Saffire III enclosure in Cygnus",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-100"
+    },
+    {
+      "accession": "PSI-101",
+      "acronym": "SAME-R",
+      "title": "Smoke Aerosol Measurement Experiment-Reflight",
+      "objectives": "Similar to the original SAME investigation, the primary objective of the SAME-R investigation was to quantify the sizes that the liquid smoke particulate achieves in low gravity and to relate the droplet size distribution to the smoke generation and smoke transport conditions in the experiment. One of the problems encountered during the SAME investigation was that after the thermal precipitators were returned to the ground, it was found that all the TEM grids were severely contaminated with some unidentified foreign particles, making these grids unusable although some of them showed shapes of certain types of smoke particles. Based on that experience the SAME-R investigation employed several modification covering new materials, extended operating conditions, and diagnostic equipments.",
+      "keywords": "Soot     Flames     Pyrell     SAME     Transmission Electron Microscopy     Silicon Rubber     Spacecraft Fire Safety     Teflon     Cotton     Smoke     Kapton     SAME-2",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Comparitive Soot Diagnostic Hardware; Refer to final report",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101"
+    },
+    {
+      "accession": "PSI-102",
+      "acronym": "SAME",
+      "title": "Smoke and Aerosol Measurement Experiment",
+      "objectives": "One of the major goals of this investigation was to quantify the sizes that the liquid smoke particulate achieves in low gravity and to relate the droplet size distribution to the smoke generation and smoke transport conditions in the experiment. A numerical code was to be developed to predict the smoke droplet growth as a function of the fuel pyrolysis rate, the thermodynamic properties of the pyrolysis vapor, and the flow environment.",
+      "keywords": "Smoke     Surface Combustion     Fire Safety     Bio-Astronautics     Smoldering",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Comparitive Soot Diagnostic Hardware",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102"
+    },
+    {
+      "accession": "PSI-106",
+      "acronym": "SLICE",
+      "title": "Structure and Liftoff In Combustion Experiment",
+      "objectives": "Objective: The objective of this investigation is to better understand the structure and stability of laminar diffusion flames in microgravity.\n\nSpecific objectives of this investigation were:\n1. To investigate the structure of laminar diffusion flames in microgravity to understand the stabilizing mechanisms at the flames base.\n2. Determine the liftoff velocity limits for different fuels and burner diameters.\n3. Evaluate the impact of fuel dilution with nitrogen on soot formation and flame stability.\n4. Quantify the effects of microgravity on flame length and radiative heat loss compared to normal gravity conditions.\n5. Validate numerical models for flame dynamics, soot production, and thermal radiation in non-premixed flames.",
+      "keywords": "fuel dilution     Diffusion Flame     inlet velocity     Fuels",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "",
+      "hardware": "",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-106"
+    },
+    {
+      "accession": "PSI-107",
+      "acronym": "SPICE",
+      "title": "Smoke Point In Co-flow Experiment",
+      "objectives": "The objective of SPICE is to better understand the complex process of combustion by observing flames in a microgravity environment aboard the International Space Station (ISS) and analogous ground experiments.\n\nSpecific objectives were:\n(1) Identify the laminar smoke-point properties of non-buoyant jet diffusion flames under various co-flow conditions in microgravity.\n(2) Determine the effects of burner diameter and co-flow velocity on the luminous flame lengths and smoke points.\n(3) Quantify the sooting propensity of different fuels, such as ethylene, propane, and propylene mixtures.\n(4) Validate the correlation between luminous flame shape and residence time under microgravity conditions.\n(5) Investigate the impact of air and fuel flow rate variations on smoke point phenomena in space.",
+      "keywords": "Soot     Emisssions     Laminar diffusion flames     butane-lighter flame",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Fire Safety",
+      "hardware": "Microgravity Science Glovebox (MSG)",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107"
+    },
+    {
+      "accession": "PSI-115",
+      "acronym": "",
+      "title": "Utilization of the Smoke Aerosol Measurement Experiment Data for Advanced Modeling and Simulation of Smoke Generation in Micro-Gravity",
+      "objectives": "The objective of this investigation was to use numerical simulation to explore the influence of gravity on pyrolysis smoke growth from a fundamental perspective. The intention of this effort is to quantify the differences between microgravity and Earth gravity smoke, and to identify the fluid dynamic mechanisms that cause the differences.",
+      "keywords": "SAME Data     Nanoparticles     Ground-based research     Dibutyl pthalate     thermophoresis     Aerosol Smoke Generation     Navier-Stokes nodal approach     Numerical Simulation     Particle settling",
+      "platform": "Not Applicable",
+      "projectType": "Ground Investigation",
+      "subarea": "Smoke Aerosol, Combustion Simulation",
+      "hardware": "",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-115"
+    },
+    {
+      "accession": "PSI-117",
+      "acronym": "",
+      "title": "Effect of External Thermo-Convective Perturbation on Cool Flame Dynamics: A Multidimensional Multi-Physics CFD Analysis",
+      "objectives": "The objective of this ground investigation was to use flight data obtained from PSI through NASA’s Flame Extinguishment Experiment (FLEX) to quantify how externally imposed thermal and convective perturbations regulated the dynamics and ultimate fate of already established droplet cool flames, and to explain run-to-run variability by isolating the roles of deliberate heating and unintentional drift-induced convection. Focusing on both small and large droplets, the work mapped stability windows for ignition, sustained oscillation, transitions to hot ignition and warm-flame behavior, and extinction under microgravity. By leveraging and extending the FLEX data in the PSI, this study produced reusable models and sensitivity analyses that coupled low-temperature chemistry with transport and radiative effects.",
+      "keywords": "Cool Flames     thermo-convective perturbation     Droplet combustion     FLEX",
+      "platform": "",
+      "projectType": "Ground Investigation",
+      "subarea": "Droplet",
+      "hardware": "",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-117"
+    },
+    {
+      "accession": "PSI-142",
+      "acronym": "",
+      "title": "Quantitative Studies of Cool Flame Transitions at Radiation / Stretch Extinction Using Counterflow Flames",
+      "objectives": "By using the Flame Extinguishment (FLEX) experimental data from the Physical Sciences Informatics (PSI) system of combustion science, the purpose of this grant was to conduct new simulations and ground-based experiments using ozone-sensitized counterflow flames to:\n    1) Develop a new diagram of the flammability limits of diffusional cool flames affected by radiation, diffusion, and convection.\n    2) Bridge the knowledge gap between the flammability limits and extinction limits of hot flames and cool flames.\n    3) Verify the phenomena observed on the ISS flame extinguishment experiments.\n    4) Obtain new, quantitative data of extinction limit, flame temperature, and species distribution for the validation of kinetic and radiation models involving cool flames.\n    5) Extend the cool flame experiments from the original ISS droplet experiments to a more general ground-based combustion system involving radiation, diffusion, convection, and low-temperature chemistry while maintaining a one-dimensional geometry.",
+      "keywords": "Cool Flame Transitions     Ground-based experiments     Flames     Radiation     Low temperature flames     Counterflow flames     Extinction Limit     n-alkane     FLEX     Dibutyl Ether     Modeling     Kinetic experiments     Emissions     Supercritical Reacting Fluids     Low temperature chemistry     PSI Grant",
+      "platform": "Not Applicable",
+      "projectType": "Ground Investigation",
+      "subarea": "Spacecraft Fire Safety",
+      "hardware": "Principal Investigator Laboratory Hardware",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-142"
+    },
+    {
+      "accession": "PSI-159",
+      "acronym": "ACME CFI-G",
+      "title": "Advanced Combustion via Microgravity Experiments / Cool Flames Investigation with Gases",
+      "objectives": "1. Plan and support flight testing on the International Space Station (ISS).\n2. Determine the conditions for which cool diffusion flames occur for propane, n-butane, and n-pentane; normal and inverse flames; and a broad range of Zst, Tad, and fluent flow rate.\n3. Support the flight tests with advanced CFD simulations.\n4. Identify or develop a chemical kinetics mechanism that yields good agreement between the CFD predictions and the ISS measurements.\n5. Disseminate the results as widely as possible.",
+      "keywords": "chemical kinetics     ethane     heat loss     low-temperature combustion     porous burner     dilution     formaldehyde     intensified video camera     n-butane     negative-temperature coefficient",
+      "platform": "International Space Station (ISS)",
+      "projectType": "Microgravity Investigation",
+      "subarea": "Flames of Gaseous Fuels",
+      "hardware": "ACME  Combustion Integrated Rack (CIR)",
+      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159"
+    }
+  ],
+  "trainingLink": {
+    "PSI-25": "In the 143 training rows. Notes on the Zhao et al. 2015 rows (NTRS 20150008962) cite the PSI-25 BASS-II table.",
+    "PSI-26": "Not yet linked. The Zhao 2015 paper is titled BASS / BASS-II, and four of those rows are labeled BASS series, but the notes cite PSI-25 rather than PSI-26.",
+    "PSI-99": "In the 143 training rows. Notes on the Saffire-I/II rows (NTRS 20170008805) cite the PSI-99 SAFFIRE-II table.",
+    "PSI-98": "Not yet linked. The Saffire-I/II paper is in the training rows, but the notes cite PSI-99, not PSI-98.",
+    "PSI-69": "Not in the 143 training rows. A separate FLEX droplet table from this investigation is shown on the Evidence page and is not used to train the classifier."
+  },
+  "trainingLinkDefault": "Not yet linked to the 143 training rows.",
+  "officialResources": [
+    {
+      "group": "Data",
+      "title": "PSI Data Repository: Combustion Science",
+      "url": "https://psi.nasa.gov/physci/repo/search?q=combustion",
+      "note": "Physical Sciences Informatics (PSI) source of the data upon which the NASA Space App is to be based.",
+      "primary": true
+    },
+    {
+      "group": "Data",
+      "title": "NASA Combustion Science",
+      "url": "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/",
+      "note": "Basic information about most of the combustion investigations for which data is found in the PSI Data Repository.",
+      "primary": false
+    },
+    {
+      "group": "Guides",
+      "title": "A Researcher's Guide to International Space Station Combustion Science",
+      "url": "https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/",
+      "note": "A 2015 review of NASA combustion research conducted on, or planned for, the International Space Station.",
+      "primary": false
+    },
+    {
+      "group": "Guides",
+      "title": "NASA ScienceCasts: The Power of Studying Combustion on the ISS",
+      "url": "https://www.youtube.com/watch?v=W1oXykoz9zg",
+      "note": "Introduction to NASA combustion research on the International Space Station, a 3.6-minute video from 2018.",
+      "primary": false
+    },
+    {
+      "group": "Fire history",
+      "title": "Apollo 1",
+      "url": "https://sma.nasa.gov/sma-disciplines/accllp/apollo-1",
+      "note": "The crew, the fire during a pre-launch test, the investigation, and the lessons learned.",
+      "primary": false
+    },
+    {
+      "group": "Fire history",
+      "title": "Apollo 13",
+      "url": "https://sma.nasa.gov/sma-disciplines/accllp/apollo-13",
+      "note": "The crew, the mission, the oxygen tank explosion on the way to the Moon, the investigation, and the lessons learned.",
+      "primary": false
+    },
+    {
+      "group": "Fire history",
+      "title": "25 Years Ago: Fire Aboard Space Station Mir",
+      "url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/",
+      "note": "A fire caused by an oxygen generator failure aboard Mir in 1997, during joint operations before the International Space Station.",
+      "primary": false
+    },
+    {
+      "group": "Earth benefits",
+      "title": "Fireman's Air Tanks",
+      "url": "https://spinoff.nasa.gov/node/9582",
+      "note": "1970s adaptation of spacesuit technology for firefighter air tanks and breathing gear.",
+      "primary": false
+    },
+    {
+      "group": "Earth benefits",
+      "title": "Fire Detector",
+      "url": "https://spinoff.nasa.gov/node/9407",
+      "note": "A 1970s shuttle smoke detector that separates smoke from dust, with industrial uses such as mining.",
+      "primary": false
+    },
+    {
+      "group": "Earth benefits",
+      "title": "New Technology for the Fire Attire",
+      "url": "https://spinoff.nasa.gov/node/9918",
+      "note": "A 1980s use of NASA spacesuit technology in firefighter clothing.",
+      "primary": false
+    }
+  ]
+}

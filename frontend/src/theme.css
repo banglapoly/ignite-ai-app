@@ -114,3 +114,10 @@ html[data-theme="dark"] .perf__icon img {
 .how-steps h2 { font-size: 1.05rem; margin: 0 0 .35rem; }
 .how-diagram { width: min(720px, 100%); height: auto; margin-top: .4rem; }
 .how-diagram text { font-family: var(--font-body); }
+.nasa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: .6rem 0 1rem; }
+.nasa-group, .psi-card { border: 1px solid var(--line); background: var(--surface); border-radius: 2px; padding: .8rem .9rem; color: var(--fg); }
+.nasa-group h3, .psi-card h3 { margin: 0 0 .4rem; }
+.psi-list { display: grid; gap: 10px; }
+.psi-meta { display: flex; flex-wrap: wrap; gap: .35rem 1rem; color: var(--fg-soft); font-size: .85rem; }
+.rank-bar { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: .2rem 0 .7rem; }
+.rank-bar select { font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 2px; padding: .3rem .4rem; }

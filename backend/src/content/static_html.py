@@ -5,6 +5,8 @@ the science, the environments with sourced facts, safety measures, data sources 
 model details. React replaces this markup when it mounts.
 """
 from __future__ import annotations
+import json
+from pathlib import Path
 from html import escape as e
 from . import facts as F
 
@@ -14,6 +16,69 @@ TAGLINE = "A research workspace for combustion-condition investigations"
 
 def _a(url, label):
     return f'<a href="{e(url)}">{e(label)}</a>'
+
+
+def _ext(url, label):
+    return f'<a href="{e(url)}" target="_blank" rel="noopener noreferrer">{e(label)}</a>'
+
+
+def _psi_catalog():
+    path = Path(__file__).resolve().parents[3] / "frontend" / "src" / "data" / "psi24.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _objective_summary(text: str, limit: int = 320) -> str:
+    clean = " ".join((text or "").split())
+    if len(clean) <= limit:
+        return clean
+    cut = clean[:limit]
+    dot = cut.rfind(". ")
+    return cut[:dot + 1] if dot > 80 else cut.rstrip() + "..."
+
+
+def _nasa_sources_html() -> str:
+    data = _psi_catalog()
+    parts = ["<section><h2>NASA data sources</h2>",
+             "<p>Official NASA Space Apps 2026 resource titles and links, published 13 November 2026. "
+             "These references were not added to the 143 training rows, and the classifier was not retrained. "
+             "The challenge asks for a dashboard that summarizes, ranks, and interprets PSI combustion investigations "
+             "for fire safety in habitable crew environments: spacecraft, stations, lunar and Mars bases, and pressurized rovers. "
+             "Rocket and propellant fires are out of scope. PSI has no partial-gravity combustion data yet. "
+             "LUCI and FM2 are expected later.</p>"]
+    for group in ("Data", "Guides", "Fire history", "Earth benefits"):
+        items = [r for r in data["officialResources"] if r["group"] == group]
+        parts.append(f"<h3>{e(group)}</h3><ul>")
+        for item in items:
+            note = f" {e(item['note'])}" if item.get("note") else ""
+            primary = " (primary data source)" if item.get("primary") else ""
+            parts.append(f"<li>{_ext(item['url'], item['title'])}{e(primary)}.{note}</li>")
+        parts.append("</ul>")
+    parts.append("</section>")
+    return "".join(parts)
+
+
+def _psi_cards_html() -> str:
+    data = _psi_catalog()
+    links = data.get("trainingLink") or {}
+    default = data.get("trainingLinkDefault") or "Not yet linked to the 143 training rows."
+    parts = ["<section><h2>PSI Combustion Science investigations</h2>",
+             "<p>Twenty-four investigations from the PSI Research Area Combustion Science metadata captured on 13 November 2026. "
+             "On the live Evidence page they sort by a word match to the current gravity, material, and flow. "
+             "A match is 2 points when a gravity, material, or flow word from the current conditions appears in the title, acronym, objectives, keywords, platform, project type, sub-area, or hardware name. "
+             "Oxygen is 1 point when the record says oxygen or O2. The score is not a flammability score. "
+             "None of these 24 records contain the words partial gravity, lunar, or Martian. "
+             "Of these 24, the 143-row table cites PSI-25 (BASS-II) and PSI-99 (SAFFIRE-II) in row notes. "
+             "The 143 rows also include drop-tower, shuttle, Saffire IV, V, and VI, and a lunar sounding-rocket row, which are not all in this list.</p><ul>"]
+    for inv in data["investigations"]:
+        acronym = inv["acronym"] or "No acronym in the PSI record"
+        summary = _objective_summary(inv.get("objectives") or "")
+        mark = links.get(inv["accession"], default)
+        parts.append(
+            f"<li><strong>{e(acronym)}</strong> ({e(inv['accession'])}): {e(inv['title'])}. "
+            f"{e(summary)} Training rows: {e(mark)} {_ext(inv['url'], 'PSI page')}</li>"
+        )
+    parts.append("</ul></section>")
+    return "".join(parts)
 
 
 PAGES = [
@@ -26,11 +91,11 @@ PAGES = [
     ("/workspace", "Investigation", "IGNITE-AI \u00b7 Investigation",
      "One investigation: question, private notes, scenario history, cited evidence, model estimate, and material comparison."),
     ("/how-it-works", "How it works", "IGNITE-AI \u00b7 How it works",
-     "Plain guide: start an investigation, set gravity, oxygen, pressure and airflow, read the estimate and the cited tests, and save notes in this browser."),
+     "Plain guide: start an investigation, set gravity, oxygen, pressure and airflow, read the estimate and the cited tests, and see where the NASA data comes from."),
     ("/learn", "Learn", "IGNITE-AI \u00b7 Learn",
      "How to read experiment evidence, a statistical estimate, and the illustrative flame, including partial-gravity provenance."),
     ("/predict", "Evidence", "IGNITE-AI \u00b7 Evidence and model estimate",
-     "Range guard, decision boundary over loaded tests, and nearest experiments with quotes. Min/max bands are not joint tests."),
+     "Range guard, nearest experiments, the official NASA resource list, and the 24 PSI Combustion Science investigations ranked by a stated word match."),
     ("/ask", "Ask", "IGNITE-AI \u00b7 Ask the knowledge base",
      "Local question answering over a NASA combustion knowledge base; answers are verbatim quotes with source links."),
     ("/safety", "Safety notes", "IGNITE-AI \u00b7 Safety notes",
@@ -253,6 +318,10 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
                 out.append(f"<section><h2>The model</h2><p>The classifier in this build is trained on {n_rows} flame-spread rows from {n_reports} NASA reports. "
                            f"Stratified cross-validated accuracy is {m['cv_accuracy']}. The majority-class baseline on the same rows is {m['majority_baseline_accuracy']}. "
                            "These numbers are read from the model card. Use them to study the loaded record, not as a safety certification.</p></section>")
+                out.append("<section><h2>Where the data comes from</h2>"
+                           "<p>The official challenge names the PSI Data Repository as the source of the combustion investigations. "
+                           "This build's classifier still uses the loaded flame-spread rows. Those rows were not extended, and the model was not retrained.</p></section>")
+                out.append(_nasa_sources_html())
             elif route == "/learn":
                 out.append(_crisis())
                 out.append("<section><h2>Three different outputs</h2><ul>"
@@ -266,6 +335,8 @@ def build(card: dict, n_rows: int, n_reports: int, env_counts: dict, flex: dict,
             elif route == "/predict":
                 out.append(_envelope(card))
                 out.append(_model(card, n_rows, n_reports, flex, kb_stats))
+                out.append(_nasa_sources_html())
+                out.append(_psi_cards_html())
             elif route == "/ask":
                 out.append(_ask(ask_examples or []))
             elif route == "/safety":

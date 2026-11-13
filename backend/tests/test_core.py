@@ -75,7 +75,9 @@ def test_every_page_has_static_text():
         ex = [("Is lunar gravity more flammable than Earth?", kb.ask("Is lunar gravity more flammable than Earth?"))] if route == "/ask" else None
         html = static_html.build(card, len(df), df["report_id"].nunique(), envc, psi_data.flex_summary(), kb.stats(), route=route, df=df, ask_examples=ex)
         assert "<h1>" in html and all(f'href="{p}"' in html for p, *_ in static_html.PAGES), route
-        assert "[Team" not in html and "Space Apps" not in html, route
+        assert "[Team" not in html, route
+        if route not in ("/how-it-works", "/predict"):
+            assert "Space Apps" not in html, route
         assert len(html) > 1500, (route, len(html))
     txt = static_html.llms_txt(card, len(df), df["report_id"].nunique())
     assert all(p in txt for p, *_ in static_html.PAGES) and "[Team" not in txt

@@ -1,6 +1,7 @@
 import type { ModelCard } from '../lib/api'
 import { Link } from '../lib/router'
 import { PageHead } from '../components/Layout'
+import NasaSources from '../components/NasaSources'
 
 export default function HowItWorks({ card }: { card: ModelCard | null }) {
   const n = card?.model.n_train
@@ -68,6 +69,13 @@ export default function HowItWorks({ card }: { card: ModelCard | null }) {
           ) : <p>The model card is still loading. The counts on this page are read from that card, not typed in by hand.</p>}
           <p>Use it to study the loaded record. Do not use it as a safety certification.</p>
           <p><Link to="/data">Open the model card</Link> · <Link to="/sources">Open the sources</Link></p>
+        </section>
+
+        <section className="course-card" id="where-the-data-comes-from">
+          <h2>Where the data comes from</h2>
+          <p>The official challenge names the PSI Data Repository as the source of the combustion investigations. This build's classifier still uses the 143 flame-spread rows from the NASA reports already loaded. Those rows were not extended, and the model was not retrained. The links below are the official NASA Space Apps resource list.</p>
+          <NasaSources compact />
+          <p className="small">PSI has no partial-gravity combustion data yet. LUCI and FM2 are expected later. Rocket and propellant fires are outside the research in that repository. The Evidence page ranks the 24 Combustion Science investigations against the conditions you set. <a href="/predict#ranked-investigations">Open ranked investigations</a></p>
         </section>
 
         <svg className="how-diagram" viewBox="0 0 720 88" role="img" aria-label="Flow from question to saved record">

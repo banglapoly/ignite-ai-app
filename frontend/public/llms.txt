@@ -13,9 +13,9 @@ Open-source (Apache-2.0) research workspace for combustion-condition investigati
 - /dashboard : Dashboard — Guest dashboard of saved investigations, recent activity, and the next missing step. Storage is this browser only.
 - /simulator : Sandbox — Illustrative 3D flame and the gravity, oxygen, pressure, airflow, gas-mix, and material controls, with the option to save a scenario.
 - /workspace : Investigation — One investigation: question, private notes, scenario history, cited evidence, model estimate, and material comparison.
-- /how-it-works : How it works — Plain guide: start an investigation, set gravity, oxygen, pressure and airflow, read the estimate and the cited tests, and save notes in this browser.
+- /how-it-works : How it works — Plain guide: start an investigation, set gravity, oxygen, pressure and airflow, read the estimate and the cited tests, and see where the NASA data comes from.
 - /learn : Learn — How to read experiment evidence, a statistical estimate, and the illustrative flame, including partial-gravity provenance.
-- /predict : Evidence — Range guard, decision boundary over loaded tests, and nearest experiments with quotes. Min/max bands are not joint tests.
+- /predict : Evidence — Range guard, nearest experiments, the official NASA resource list, and the 24 PSI Combustion Science investigations ranked by a stated word match.
 - /ask : Ask — Local question answering over a NASA combustion knowledge base; answers are verbatim quotes with source links.
 - /safety : Safety notes — Spacecraft fire detection, ventilation shutdown, suppression, material selection and crew procedures from NASA sources.
 - /data : Model — Model card, per-gravity accuracy, confusion matrix, and which data catalogs this build has loaded.

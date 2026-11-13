@@ -314,3 +314,33 @@ test('loaded partial-gravity rows cite facilities and environment presets match 
   assert.match(facilities, /drop tower|centrifuge|parabolic|shepard|white sands|rocket/)
   assert.equal(/lunar surface habitat/.test(facilities), false)
 })
+
+test('PSI investigation rank uses only words present in the metadata', async () => {
+  const { rankInvestigation } = await import('../src/data/rankInvestigations.ts')
+  const micro = {
+    accession: 'PSI-1', acronym: 'BASS-II', title: 'Burning and Suppression of Solids',
+    objectives: 'Map flame spread over a fabric in microgravity with an imposed flow.',
+    keywords: 'cotton fabric', platform: 'International Space Station (ISS)', projectType: 'Microgravity Investigation',
+    subarea: 'Spacecraft Fire Safety', hardware: 'Microgravity Science Glovebox', url: 'https://psi.nasa.gov/physci/repo/data/investigations/PSI-1',
+  }
+  const ground = { ...micro, accession: 'PSI-2', objectives: 'A ground investigation of counterflow flames.', projectType: 'Ground Investigation', keywords: '', title: 'Counterflow flames' }
+  const lowG = rankInvestigation(micro, { gravityG: 0, flowCmS: 5, flowDirection: 'concurrent', material: 'SIBAL_fabric' })
+  const earth = rankInvestigation(ground, { gravityG: 1, flowCmS: 0, flowDirection: 'quiescent', material: 'PMMA_thick' })
+  const moon = rankInvestigation(micro, { gravityG: 0.165, flowCmS: 0, flowDirection: 'quiescent', material: 'PMMA_thick' })
+  assert.ok(lowG.matches.includes('microgravity'))
+  assert.ok(lowG.matches.includes('fabric'))
+  assert.ok(lowG.matches.includes('flow'))
+  assert.ok(earth.matches.includes('ground investigation'))
+  assert.equal(earth.matches.includes('microgravity'), false)
+  assert.equal(moon.matches.includes('partial gravity'), false)
+  assert.equal(moon.score, 0)
+  const catalog = JSON.parse(fs.readFileSync(path.join(here, '../src/data/psi24.json'), 'utf8'))
+  assert.equal(catalog.investigations.length, 24)
+  assert.equal(catalog.officialResources.length, 10)
+  assert.match(catalog.trainingLink['PSI-25'], /143 training rows/)
+  assert.match(catalog.trainingLink['PSI-99'], /PSI-99/)
+  assert.match(catalog.trainingLinkDefault, /Not yet linked/)
+  const partial = catalog.investigations.map((row: { objectives: string; title: string; keywords: string }) => `${row.title} ${row.objectives} ${row.keywords}`.toLowerCase()).join('\n')
+  assert.equal(partial.includes('partial gravity'), false)
+  assert.equal(partial.includes('lunar'), false)
+})
